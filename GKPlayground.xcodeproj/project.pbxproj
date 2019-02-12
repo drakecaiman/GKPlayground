@@ -12,6 +12,7 @@
 		AEB131D3220ABFC800005B8F /* GKPlaygroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB131D2220ABFC800005B8F /* GKPlaygroundTests.swift */; };
 		AEB131D5220ABFC800005B8F /* GKPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = AEB131C7220ABFC700005B8F /* GKPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEB131DF220AC26000005B8F /* GKStateMachine+ CustomPlaygroundDisplayConvertible .swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB131DE220AC26000005B8F /* GKStateMachine+ CustomPlaygroundDisplayConvertible .swift */; };
+		AEE809BE2211E0FC0009E017 /* NodeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE809BD2211E0FC0009E017 /* NodeMapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		AEB131D4220ABFC800005B8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AEB131DE220AC26000005B8F /* GKStateMachine+ CustomPlaygroundDisplayConvertible .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GKStateMachine+ CustomPlaygroundDisplayConvertible .swift"; sourceTree = "<group>"; };
 		AEB131E0220AC35900005B8F /* TestPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TestPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		AEE809BD2211E0FC0009E017 /* NodeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeMapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				AEB131C8220ABFC700005B8F /* Info.plist */,
 				AEB131DE220AC26000005B8F /* GKStateMachine+ CustomPlaygroundDisplayConvertible .swift */,
 				AE0A40852210407D00910538 /* NodeView.swift */,
+				AEE809BD2211E0FC0009E017 /* NodeMapView.swift */,
 			);
 			path = GKPlayground;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 			files = (
 				AE0A40862210407D00910538 /* NodeView.swift in Sources */,
 				AEB131DF220AC26000005B8F /* GKStateMachine+ CustomPlaygroundDisplayConvertible .swift in Sources */,
+				AEE809BE2211E0FC0009E017 /* NodeMapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

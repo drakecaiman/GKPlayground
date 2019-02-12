@@ -82,8 +82,8 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         
         
         let nodeSpacing : CGFloat = 25.0
-        var nodeOrigin = CGPoint.zero
-//        var nodeOrigin = CGPoint(x: 0.0, y: view.frame.height - nodeSize.height)
+        var nodeOrigin = CGPoint(x: 0.0,
+                                 y: view.frame.height - NodeView.defaultNodeSize.height)
         let arrowheadLength : CGFloat = 8.0
         
         for nextState in self
@@ -91,14 +91,11 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
             let nextStateName = String(describing: type(of: nextState))
             let nextViewFrame = NSRect(origin: nodeOrigin, size: NodeView.defaultNodeSize)
             let nextView = NodeView(frame: nextViewFrame)
-            nextView.name = String(nextStateName.prefix(1))
-//            nextView.autoresizingMask = [.maxXMargin, .minYMargin]
+            nextView.name = nextStateName
             
             view.addSubview(nextView)
-            nodeOrigin.x += 25.0
-//            nodeOrigin.x = nextViewFrame.maxX
-//            nodeOrigin.x += nodeSize.width + nodeSpacing
-//            nodeOrigin.y -= nodeSize.height
+            nodeOrigin.x = nextViewFrame.maxX + nodeSpacing
+            nodeOrigin.y = nextViewFrame.minY - NodeView.defaultNodeSize.height
             
             if false
             {
@@ -163,7 +160,6 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
             }
         }
         
-//        return path
         return view
     }
 }

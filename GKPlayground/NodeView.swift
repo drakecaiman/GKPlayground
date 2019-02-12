@@ -19,6 +19,12 @@ public class NodeView : NSView
     public var nodeColor    : NSColor = .blue
     public var textColor    : NSColor = .white
     
+    var nameParagraphStyle : NSParagraphStyle
+    {
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        return style
+    }
 
 //    convenience init(withName initialName: String)
 //    {
@@ -29,7 +35,7 @@ public class NodeView : NSView
     public override func draw(_ dirtyRect: NSRect)
     {
         //      Get node rect
-        let stateNodeRect = self.frame
+        let stateNodeRect = NSRect(origin: CGPoint.zero, size: self.frame.size)
             .insetBy(dx: nodeBorderWidth, dy: nodeBorderWidth)
         
         let stateNodePath = NSBezierPath(roundedRect: stateNodeRect,
@@ -44,8 +50,14 @@ public class NodeView : NSView
         // TODO: separate Pascal case name
         if let nodeDrawName = self.name
         {
-            NSString(string: nodeDrawName).draw(in: stateNodeRect,
-                                                withAttributes: [.foregroundColor : self.textColor])
+            let nodeNameRect = stateNodeRect.insetBy(dx: nodePadding,
+                                                     dy: nodePadding)
+            let nodeNameAttributes : [NSAttributedString.Key : Any] =
+                [.font              : NSFont.boldSystemFont(ofSize: 12.0),
+                 .foregroundColor   : self.textColor,
+                 .paragraphStyle    : self.nameParagraphStyle]
+            NSString(string: nodeDrawName).draw(in: nodeNameRect,
+                                                withAttributes: nodeNameAttributes)
         }
     }
 }

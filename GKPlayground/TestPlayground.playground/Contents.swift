@@ -45,11 +45,5 @@ let states = [AllState(),
 
 if let view = (states.playgroundDescription as? NSView)
 {
-    for next in view.subviews
-    {
-        print(next.frame)
-    }
+    PlaygroundPage.current.liveView = view
 }
-
-//PlaygroundPage.current.needsIndefiniteExecution = true
-//PlaygroundPage.current.liveView = states.playgroundDescription as? NodeView
