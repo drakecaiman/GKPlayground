@@ -74,12 +74,7 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         
 //      Get views
         let viewRect = NSRect(x: 0, y: 0, width: 200, height: 200)
-        let view = NSView(frame: viewRect)
-        view.wantsLayer = true
-        view.layer?.backgroundColor = .black
-//        view.translatesAutoresizingMaskIntoConstraints = true
-//        view.autoresizesSubviews = false
-        
+        let view = NodeMapView(frame: viewRect)
         
         let nodeSpacing : CGFloat = 25.0
         var nodeOrigin = CGPoint(x: 0.0,
