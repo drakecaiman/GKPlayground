@@ -72,15 +72,18 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
             }
         }
         
-//      Get views
-        let viewRect = NSRect(x: 0, y: 0, width: 200, height: 200)
+        var nodeViews = [String : NodeView]()
+        let viewRect = NSRect(x: 0, y: 0, width: 800, height: 200)
         let view = NodeMapView(frame: viewRect)
         
         let nodeSpacing : CGFloat = 25.0
-        var nodeOrigin = CGPoint(x: 0.0,
-                                 y: view.frame.height - NodeView.defaultNodeSize.height)
-        let arrowheadLength : CGFloat = 8.0
+        var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.selfArrowRadius,
+                                 y: view.frame.height -
+                                    NodeMapView.margin.height -
+                                    NodeMapView.selfArrowRadius - 
+                                    NodeView.defaultNodeSize.height)
         
+//      Create node view for each state
         for nextState in self
         {
             let nextStateName = String(describing: type(of: nextState))
@@ -89,71 +92,25 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
             nextView.name = nextStateName
             
             view.addSubview(nextView)
+            nodeViews[nextStateName] = nextView
             nodeOrigin.x = nextViewFrame.maxX + nodeSpacing
             nodeOrigin.y = nextViewFrame.minY - NodeView.defaultNodeSize.height
-            
-            if false
+        }
+        
+//      Connect views based on state transistions
+        for nextEnterState in self
+        {
+            let nextEnterStateName = String(describing: type(of: nextEnterState))
+            guard let nextEnterView = nodeViews[nextEnterStateName] else { continue }
+            for nextExitStateName in connections[nextEnterStateName] ?? []
             {
-//          Draw arrows
-            if var nextStateTransistions = connections[nextStateName]
-            {
-                let nextPath = NSBezierPath()
-                if nextStateTransistions.contains(nextStateName)
-                {
-//                    let selfArrowStart  = CGPoint(x: nextPath.bounds.minX, y: nextPath.bounds.midY)
-//                    let selfArrowCenter = CGPoint(x: nextPath.bounds.minX, y: nextPath.bounds.maxY)
-//                    let selfArrowEnd    = CGPoint(x: nextPath.bounds.minX + nextPath.bounds.midY,
-//                                                  y: nextPath.bounds.maxY)
-                    let selfArrowCenter = CGPoint(x: nextPath.bounds.minX, y: nextPath.bounds.maxY)
-                    let arrowPath = NSBezierPath()
-                    arrowPath.appendArc(withCenter: selfArrowCenter,
-                                        radius: (nextPath.bounds.maxY - nextPath.bounds.midY),
-                                        startAngle: 270.0,
-                                        endAngle: 0,
-                                        clockwise: true)
-                    let arrowEnd = arrowPath.currentPoint
-                    arrowPath.relativeLine(to: NSPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
-                                                       y: arrowheadLength * sin(CGFloat.pi / 4)))
-                    arrowPath.move(to: arrowEnd)
-                    arrowPath.relativeLine(to: NSPoint(x: -arrowheadLength * cos(CGFloat.pi / 4),
-                                                       y: arrowheadLength * sin(CGFloat.pi / 4)))
-                    
-                    nextStateTransistions.remove(nextStateName)
-                }
-                for nextExitState in nextStateTransistions
-                {
-                    let nextArrowStart = CGPoint(x: nextPath.bounds.maxX,
-                                                 y: nextPath.bounds.midY)
-                    let arrowPath = NSBezierPath()
-                    arrowPath.move(to: nextArrowStart)
-                    arrowPath.relativeLine(to: CGPoint(x: nodeSpacing,
-                                                       y: 0.0))
-                    let arrowEnd = arrowPath.currentPoint
-                    arrowPath.relativeLine(to: NSPoint(x: -arrowheadLength * cos(CGFloat.pi / 4),
-                                                       y: arrowheadLength * sin(CGFloat.pi / 4)))
-                    arrowPath.move(to: arrowEnd)
-                    arrowPath.relativeLine(to: NSPoint(x: -arrowheadLength * cos(CGFloat.pi / 4),
-                                                       y: -arrowheadLength * sin(CGFloat.pi / 4)))
-                    if connections[nextExitState]?.contains(nextStateName) ?? false
-                    {
-                        arrowPath.move(to: nextArrowStart)
-                        arrowPath.relativeLine(to: NSPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
-                                                           y: arrowheadLength * sin(CGFloat.pi / 4)))
-                        arrowPath.move(to: nextArrowStart)
-                        arrowPath.relativeLine(to: NSPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
-                                                           y: -arrowheadLength * sin(CGFloat.pi / 4)))
-                        
-//                      Remove state
-                        connections[nextExitState]?.remove(nextStateName)
-                    }
-                }
-                if nextStateTransistions.count > 0
-                {
-                    
-                }
-            }
+                guard let nextExitView = nodeViews[nextExitStateName] else { continue }
+                nextEnterView.outConnections.append(nextExitView)
+                nextExitView.inConnections.append(nextEnterView)
             }
         }
+        
+        view.connectSubviews()
         
         return view
     }

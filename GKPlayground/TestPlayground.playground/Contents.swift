@@ -40,8 +40,8 @@ class TwoWayState : GKState {}
 
 let states = [AllState(),
               NoneState(),
-              SelfState(),
-              OneWayState()]
+              SelfState()]
+//              OneWayState()]
 
 if let view = (states.playgroundDescription as? NSView)
 {

@@ -19,6 +19,10 @@ public class NodeView : NSView
     public var nodeColor    : NSColor = .blue
     public var textColor    : NSColor = .white
     
+    // TODO: Make weak collections
+    public var inConnections    = [NodeView]()
+    public var outConnections   = [NodeView]()
+    
     var nameParagraphStyle : NSParagraphStyle
     {
         let style = NSMutableParagraphStyle()
