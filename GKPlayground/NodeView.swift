@@ -16,7 +16,7 @@ public class NodeView : NSView
     let nodeBorderWidth : CGFloat   = 1.0
     
     public var name         : String?
-    public var nodeColor    : NSColor = .blue
+    public var nodeColor    : NSColor = NSColor(red: 0x2D, green: 0x7F, blue: 0xC1, alpha: 1.0)
     public var textColor    : NSColor = .white
     
     // TODO: Make weak collections
@@ -36,6 +36,7 @@ public class NodeView : NSView
 //        
 //    }
     
+    // MARK: NSView methods
     public override func draw(_ dirtyRect: NSRect)
     {
         //      Get node rect
@@ -48,7 +49,7 @@ public class NodeView : NSView
         stateNodePath.lineWidth = nodeBorderWidth
         
         self.nodeColor.withAlphaComponent(0.35).setFill()
-//        stateNodePath.fill()
+        stateNodePath.fill()
         self.nodeColor.setStroke()
         stateNodePath.stroke()
         // TODO: separate Pascal case name

@@ -11,10 +11,11 @@ import Foundation
 class NodeMapView : NSView
 {
 //    static let
-    static let margin           : CGSize  = CGSize(width: 12.0, height: 12.0)
-    static let arrowheadLength  : CGFloat = 5.5
-    static let selfArrowRadius  : CGFloat = 12.0
-    static let connectionColor  : NSColor = .gray
+    static let margin               : CGSize  = CGSize(width: 12.0, height: 12.0)
+    static let connectionLineWidth  : CGFloat = 2.0
+    static let arrowheadLength      : CGFloat = 5.5
+    static let selfArrowRadius      : CGFloat = 12.0
+    static let connectionColor      : NSColor = .gray
     
 //    var connectionView : NSView
     private var connectionPaths = [NSBezierPath]()
@@ -61,9 +62,17 @@ class NodeMapView : NSView
         }
     }
     
+    private func newArrowPath() -> NSBezierPath
+    {
+        let path = NSBezierPath()
+        path.lineWidth = NodeMapView.connectionLineWidth
+        
+        return path
+    }
+    
     private func selfArrow(forView nodeView: NodeView) -> NSBezierPath
     {
-        let arrowPath = NSBezierPath()
+        let arrowPath = self.newArrowPath()
 //      Draw arrow shaft
         let selfArrowCenter = CGPoint(x: nodeView.frame.minX,
                                       y: nodeView.frame.maxY)
@@ -80,7 +89,7 @@ class NodeMapView : NSView
     
     private func arrow(from fromView: NodeView, to toView: NodeView) -> NSBezierPath
     {
-        let arrowPath = NSBezierPath()
+        let arrowPath = self.newArrowPath()
         
         let nextArrowStart  = CGPoint(x: fromView.frame.maxX,
                                       y: fromView.frame.midY)

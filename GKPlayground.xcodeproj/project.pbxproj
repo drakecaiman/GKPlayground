@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AE0A40862210407D00910538 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0A40852210407D00910538 /* NodeView.swift */; };
+		AE186DFE2214235C0066DEFD /* NSColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE186DFD2214235C0066DEFD /* NSColor+.swift */; };
 		AEB131CE220ABFC800005B8F /* GKPlayground.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEB131C4220ABFC700005B8F /* GKPlayground.framework */; };
 		AEB131D3220ABFC800005B8F /* GKPlaygroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB131D2220ABFC800005B8F /* GKPlaygroundTests.swift */; };
 		AEB131D5220ABFC800005B8F /* GKPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = AEB131C7220ABFC700005B8F /* GKPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		AE0A40852210407D00910538 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
+		AE186DFD2214235C0066DEFD /* NSColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+.swift"; sourceTree = "<group>"; };
 		AEB131C4220ABFC700005B8F /* GKPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GKPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEB131C7220ABFC700005B8F /* GKPlayground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKPlayground.h; sourceTree = "<group>"; };
 		AEB131C8220ABFC700005B8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				AEB131DE220AC26000005B8F /* GKStateMachine+ CustomPlaygroundDisplayConvertible .swift */,
 				AE0A40852210407D00910538 /* NodeView.swift */,
 				AEE809BD2211E0FC0009E017 /* NodeMapView.swift */,
+				AE186DFD2214235C0066DEFD /* NSColor+.swift */,
 			);
 			path = GKPlayground;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE186DFE2214235C0066DEFD /* NSColor+.swift in Sources */,
 				AE0A40862210407D00910538 /* NodeView.swift in Sources */,
 				AEB131DF220AC26000005B8F /* GKStateMachine+ CustomPlaygroundDisplayConvertible .swift in Sources */,
 				AEE809BE2211E0FC0009E017 /* NodeMapView.swift in Sources */,
