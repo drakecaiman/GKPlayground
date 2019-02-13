@@ -23,6 +23,9 @@ public class NodeView : NSView
     public var inConnections    = [NodeView]()
     public var outConnections   = [NodeView]()
     
+    private var dragStart   : NSPoint?
+    private var dragOffset  : NSPoint?
+    
     var nameParagraphStyle : NSParagraphStyle
     {
         let style = NSMutableParagraphStyle()
@@ -64,5 +67,44 @@ public class NodeView : NSView
             NSString(string: nodeDrawName).draw(in: nodeNameRect,
                                                 withAttributes: nodeNameAttributes)
         }
+    }
+    
+    // MARK: NSResponder methods
+    public override func mouseDown(with event: NSEvent)
+    {
+        self.dragOffset = event.locationInWindow - self.frame.origin
+    }
+    
+    public override func mouseDragged(with event: NSEvent)
+    {
+        guard let dragOffset = self.dragOffset else { return }
+        let currentDragLocation = event.locationInWindow
+        self.frame.origin = currentDragLocation - dragOffset
+        
+        self.superview?.needsDisplay = true
+//        self.superview?.needsToDraw(self.superview?.frame ?? NSRect.zero)
+    }
+    
+    public override func mouseUp(with event: NSEvent)
+    {
+        self.dragOffset = nil
+    }
+}
+
+extension NSPoint
+{
+    static func +(lhs: NSPoint, rhs: NSPoint) -> NSPoint
+    {
+        return NSPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+    }
+    
+    static func -(lhs: NSPoint, rhs: NSPoint) -> NSPoint
+    {
+        return NSPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+    }
+    
+    static func +=(lhs: inout NSPoint, rhs: NSPoint)
+    {
+        lhs = NSPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
 }

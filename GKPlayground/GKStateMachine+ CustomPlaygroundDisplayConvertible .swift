@@ -110,8 +110,6 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
             }
         }
         
-        view.connectSubviews()
-        
         return view
     }
 }

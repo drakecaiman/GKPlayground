@@ -18,7 +18,6 @@ class NodeMapView : NSView
     static let connectionColor      : NSColor = .gray
     
 //    var connectionView : NSView
-    private var connectionPaths = [NSBezierPath]()
     
     // MARK: Initialization
 //    override init(frame frameRect: NSRect)
@@ -36,16 +35,16 @@ class NodeMapView : NSView
 //    }
     
     // MARK: -
-    func connectSubviews()
+    private func drawConnections()
     {
         for subview in self.subviews
         {
             guard let nodeView = subview as? NodeView else { continue }
-            self.connect(nodeView: nodeView)
+            self.drawConnection(forNodeView: nodeView)
         }
     }
     
-    private func connect(nodeView: NodeView)
+    private func drawConnection(forNodeView nodeView: NodeView)
     {
         for nextConnection in nodeView.outConnections
         {
@@ -58,7 +57,8 @@ class NodeMapView : NSView
             {
                 nextArrow = self.arrow(from: nodeView, to: nextConnection)
             }
-            self.connectionPaths.append(nextArrow)
+            NodeMapView.connectionColor.setStroke()
+            nextArrow.stroke()
         }
     }
     
@@ -117,13 +117,7 @@ class NodeMapView : NSView
     // MARK: NSView methods
     override func draw(_ dirtyRect: NSRect)
     {
-        
-        for connectionPath in self.connectionPaths
-        {
-            NodeMapView.connectionColor.setStroke()
-            connectionPath.stroke()
-        }
-//        self.connectionView.layer
+        self.drawConnections()
     }
     
     override func addSubview(_ view: NSView)
