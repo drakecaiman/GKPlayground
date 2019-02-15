@@ -73,15 +73,17 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         }
         
         var nodeViews = [String : NodeView]()
-        let viewRect = NSRect(x: 0, y: 0, width: 800, height: 200)
+        let viewRect = NSRect(x: 0, y: 0, width: 800, height: 800)
         let view = NodeMapView(frame: viewRect)
+        let scrollViewRect = NSRect(x: 0, y: 0, width: 400, height: 400)
+        let nodeScrollView = NSScrollView(frame: scrollViewRect)
+        nodeScrollView.documentView = view
+        nodeScrollView.hasVerticalScroller = true
+        nodeScrollView.hasHorizontalScroller = true
         
         let nodeSpacing : CGFloat = 25.0
         var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.selfArrowRadius,
-                                 y: view.frame.height -
-                                    NodeMapView.margin.height -
-                                    NodeMapView.selfArrowRadius - 
-                                    NodeView.defaultNodeSize.height)
+                                 y: NodeMapView.margin.height + NodeMapView.selfArrowRadius)
         
 //      Create node view for each state
         for nextState in self
@@ -94,7 +96,9 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
             view.addSubview(nextView)
             nodeViews[nextStateName] = nextView
             nodeOrigin.x = nextViewFrame.maxX + nodeSpacing
-            nodeOrigin.y = nextViewFrame.minY - NodeView.defaultNodeSize.height
+            nodeOrigin.y =  nextViewFrame.minY
+                            + NodeView.defaultNodeSize.height
+                            + nodeSpacing
         }
         
 //      Connect views based on state transistions
@@ -110,6 +114,6 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
             }
         }
         
-        return view
+        return nodeScrollView
     }
 }

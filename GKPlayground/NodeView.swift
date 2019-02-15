@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NodeView : NSView
+class NodeView : NSView
 {
     static let defaultNodeSize = CGSize(width: 100.0, height: 32.0)
     
@@ -72,13 +72,18 @@ public class NodeView : NSView
     // MARK: NSResponder methods
     public override func mouseDown(with event: NSEvent)
     {
-        self.dragOffset = event.locationInWindow - self.frame.origin
+        guard let startingDragPosition = self.superview?.convert(event.locationInWindow, to: nil)
+            else { return }
+        // TODO: Delta instead of offset (+ vs -)
+        self.dragOffset = startingDragPosition - self.frame.origin
+        self.dragOffset = self.frame.origin
     }
     
     public override func mouseDragged(with event: NSEvent)
     {
         guard let dragOffset = self.dragOffset else { return }
-        let currentDragLocation = event.locationInWindow
+        guard let currentDragLocation = self.superview?.convert(event.locationInWindow, to: nil)
+            else { return }
         self.frame.origin = currentDragLocation - dragOffset
         
         self.superview?.needsDisplay = true

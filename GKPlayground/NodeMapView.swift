@@ -17,6 +17,9 @@ class NodeMapView : NSView
     static let selfArrowRadius      : CGFloat = 12.0
     static let connectionColor      : NSColor = .gray
     
+    // MARK: NSView properties
+    override var isFlipped: Bool { return true }
+    
 //    var connectionView : NSView
     
     // MARK: Initialization
@@ -62,6 +65,33 @@ class NodeMapView : NSView
         }
     }
     
+    // TODO: Smart layout of nodes on creation based on connection
+    private func layoutNodes()
+    {
+        var layoutGrid = [Int : (Int, Int)]()
+        var nextPosition = (0,0)
+        var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.selfArrowRadius,
+                                 y: self.frame.height -
+                                    NodeMapView.margin.height -
+                                    NodeMapView.selfArrowRadius -
+                                    NodeView.defaultNodeSize.height)
+        
+        for (index, subview) in self.subviews.enumerated()
+        {
+            guard   !layoutGrid.keys.contains(index),
+                    let nodeView = subview as? NodeView else { continue }
+            layoutGrid[index] = nextPosition
+            for nextConnection in nodeView.outConnections
+            {
+                
+            }
+        }
+        
+//        let nodeSpacing : CGFloat = 25.0
+//        nodeOrigin.x = nextViewFrame.maxX + nodeSpacing
+//        nodeOrigin.y = nextViewFrame.minY - NodeView.defaultNodeSize.height
+    }
+    
     private func newArrowPath() -> NSBezierPath
     {
         let path = NSBezierPath()
@@ -75,12 +105,12 @@ class NodeMapView : NSView
         let arrowPath = self.newArrowPath()
 //      Draw arrow shaft
         let selfArrowCenter = CGPoint(x: nodeView.frame.minX,
-                                      y: nodeView.frame.maxY)
+                                      y: nodeView.frame.minY)
         arrowPath.appendArc(withCenter: selfArrowCenter,
                             radius:     NodeMapView.selfArrowRadius,
-                            startAngle: 0,
-                            endAngle:   270.0,
-                            clockwise:  false)
+                            startAngle: 0.0,
+                            endAngle:   90.0,
+                            clockwise:  true)
 //      Draw arrowhead
         arrowPath.addArrowhead()
     
@@ -137,9 +167,9 @@ extension NSBezierPath
     {
         let arrowEnd = self.currentPoint
         self.relativeLine(to: NSPoint(x: -NodeMapView.arrowheadLength * cos(CGFloat.pi / 4),
-                                      y: NodeMapView.arrowheadLength * sin(CGFloat.pi / 4)))
+                                      y: -NodeMapView.arrowheadLength * sin(CGFloat.pi / 4)))
         self.move(to: arrowEnd)
         self.relativeLine(to: NSPoint(x: -NodeMapView.arrowheadLength * cos(CGFloat.pi / 4),
-                                      y: -NodeMapView.arrowheadLength * sin(CGFloat.pi / 4)))
+                                      y: NodeMapView.arrowheadLength * sin(CGFloat.pi / 4)))
     }
 }
