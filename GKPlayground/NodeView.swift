@@ -16,7 +16,7 @@ class NodeView : NSView
     let nodeBorderWidth : CGFloat   = 1.0
     
     public var name         : String?
-    public var nodeColor    : NSColor = NSColor(red: 0x2D, green: 0x7F, blue: 0xC1, alpha: 1.0)
+    public var nodeColor    : NSColor = NSColor(fromInt: 0x2D7FC1)
     public var textColor    : NSColor = .white
     
     // TODO: Make weak collections
