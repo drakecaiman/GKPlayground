@@ -42,14 +42,14 @@ class NodeView : NSView, NSAnimationDelegate
     // MARK: -
     private func repositionNode()
     {
-        
         let newOrigin = CGPoint(x: max(self.frame.origin.x,
                                        (NodeMapView.arrowClearance + NodeMapView.margin.width)),
                                 y: max(self.frame.origin.y,
                                        (NodeMapView.arrowClearance + NodeMapView.margin.height)))
         guard newOrigin != self.frame.origin else { return }
         let newRect = NSRect(origin: newOrigin, size: self.frame.size)
-//        self.run
+        
+//      Make move animations
         let moveAnimations : [NSViewAnimation.Key : Any ] = [.startFrame: self.frame,
                                                              .endFrame: newRect,
                                                              .target: self]
