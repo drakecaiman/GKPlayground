@@ -114,6 +114,9 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
             }
         }
         
+        // TODO: Needed after adding to display?
+        view.resizeToFitNodeViews()
+        
         return nodeScrollView
     }
 }

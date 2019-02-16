@@ -100,13 +100,13 @@ class NodeView : NSView, NSAnimationDelegate
     
     public override func mouseDragged(with event: NSEvent)
     {
-        guard let dragOffset = self.dragOffset else { return }
-        guard let currentDragLocation = self.superview?.convert(event.locationInWindow, to: nil)
+        guard   let dragOffset = self.dragOffset,
+                let currentDragLocation = self.superview?.convert(event.locationInWindow, to: nil)
             else { return }
         self.frame.origin = currentDragLocation - dragOffset
         
+        (self.superview as? NodeMapView)?.resizeToFitNodeViews()
         self.superview?.needsDisplay = true
-//        self.superview?.needsToDraw(self.superview?.frame ?? NSRect.zero)
     }
     
     public override func mouseUp(with event: NSEvent)

@@ -38,6 +38,26 @@ class NodeMapView : NSView
 //    }
     
     // MARK: -
+    // TODO: Try to make private
+    func resizeToFitNodeViews()
+    {
+        let maxX = self.subviews.map { $0.frame.maxX }.max() ?? 0.0
+        let maxY = self.subviews.map { $0.frame.maxY }.max() ?? 0.0
+//        let minX = max(self.subviews.map { $0.frame.minX }.min() ?? 0.0, 0.0)
+//        let minY = max(self.subviews.map { $0.frame.minY }.min() ?? 0.0, 0.0)
+        
+        
+        let newFrameRect = NSRect(x:        0.0,
+                                  y:        0.0,
+                                  width:    maxX
+                                    + 2 * (NodeMapView.arrowClearance + NodeMapView.margin.width),
+                                  height:   maxY
+                                    + 2 * (NodeMapView.arrowClearance + NodeMapView.margin.height))
+        self.frame = newFrameRect
+//        self.frame = newFrameRect.insetBy(dx: -NodeMapView.margin.width,
+//                                          dy: -NodeMapView.margin.height)
+    }
+    
     private func drawConnections()
     {
         for subview in self.subviews
@@ -145,6 +165,13 @@ class NodeMapView : NSView
     }
     
     // MARK: NSView methods
+    override func display()
+    {
+        print("Testing")
+        self.resizeToFitNodeViews()
+        super.display()
+    }
+    
     override func draw(_ dirtyRect: NSRect)
     {
         self.drawConnections()
@@ -158,6 +185,8 @@ class NodeMapView : NSView
             return
         }
         super.addSubview(view)
+        self.resizeToFitNodeViews()
+        self.needsDisplay = true
     }
 }
 
