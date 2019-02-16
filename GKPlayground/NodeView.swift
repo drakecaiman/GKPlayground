@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NodeView : NSView, NSAnimationDelegate
+class NodeView : NSView
 {
     static let defaultNodeSize = CGSize(width: 100.0, height: 32.0)
     
@@ -122,7 +122,7 @@ class NodeView : NSView, NSAnimationDelegate
     public override func draw(_ dirtyRect: NSRect)
     {
         //      Get node rect
-        let stateNodeRect = NSRect(origin: CGPoint.zero, size: self.frame.size)
+        let stateNodeRect = NSRect(origin: .zero, size: self.frame.size)
             .insetBy(dx: nodeBorderWidth, dy: nodeBorderWidth)
         
         let stateNodePath = NSBezierPath(roundedRect: stateNodeRect,
