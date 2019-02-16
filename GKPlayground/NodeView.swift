@@ -76,7 +76,6 @@ class NodeView : NSView
             else { return }
         // TODO: Delta instead of offset (+ vs -)
         self.dragOffset = startingDragPosition - self.frame.origin
-        self.dragOffset = self.frame.origin
     }
     
     public override func mouseDragged(with event: NSEvent)
