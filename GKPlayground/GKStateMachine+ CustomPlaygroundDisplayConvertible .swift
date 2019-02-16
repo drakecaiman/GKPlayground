@@ -29,7 +29,7 @@ extension GKState// : CustomPlaygroundDisplayConvertible
 {
     public var playgroundDescription : Any
     {
-        let stateRect = NSRect(origin: CGPoint.zero, size: NodeView.defaultNodeSize)
+        let stateRect = NSRect(origin: .zero, size: NodeView.defaultNodeSize)
         let stateNodeView = NodeView(frame: stateRect)
         stateNodeView.name = String(describing: type(of: self))
         
