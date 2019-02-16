@@ -38,7 +38,13 @@ class NodeMapView : NSView
 //    }
     
     // MARK: -
-    // TODO: Try to make private
+    func refresh()
+    {
+        self.resizeToFitNodeViews()
+        self.redrawArrows()
+    }
+    
+    // TODO: Try to make private?
     func resizeToFitNodeViews()
     {
         let maxX = self.subviews.map { $0.frame.maxX }.max() ?? 0.0
@@ -56,6 +62,11 @@ class NodeMapView : NSView
         self.frame = newFrameRect
 //        self.frame = newFrameRect.insetBy(dx: -NodeMapView.margin.width,
 //                                          dy: -NodeMapView.margin.height)
+    }
+    
+    func redrawArrows()
+    {
+        self.needsDisplay = true
     }
     
     private func drawConnections()
@@ -127,7 +138,7 @@ class NodeMapView : NSView
         let selfArrowCenter = CGPoint(x: nodeView.frame.minX,
                                       y: nodeView.frame.minY)
         arrowPath.appendArc(withCenter: selfArrowCenter,
-                            radius:     NodeMapView.arrowClearance,
+                            radius:     nodeView.nodePadding,
                             startAngle: 0.0,
                             endAngle:   90.0,
                             clockwise:  true)
@@ -141,10 +152,8 @@ class NodeMapView : NSView
     {
         let arrowPath = self.newArrowPath()
         
-        let nextArrowStart  = CGPoint(x: fromView.frame.maxX,
-                                      y: fromView.frame.midY)
-        let nextArrowEnd    = CGPoint(x: toView.frame.minX,
-                                      y: toView.frame.midY)
+        guard let nextArrowStart  = fromView.outPoint(forView: toView) else { return arrowPath }
+        guard let nextArrowEnd    = toView.inPoint(forView: fromView) else { return arrowPath }
         arrowPath.move(to: nextArrowStart)
         arrowPath.line(to: nextArrowEnd)
         arrowPath.addArrowhead()
@@ -177,6 +186,7 @@ class NodeMapView : NSView
         self.drawConnections()
     }
     
+    // TODO: needed?
     override func addSubview(_ view: NSView)
     {
         guard view is NodeView else
@@ -185,6 +195,16 @@ class NodeMapView : NSView
             return
         }
         super.addSubview(view)
+    }
+    
+    override func didAddSubview(_ subview: NSView)
+    {
+        self.resizeToFitNodeViews()
+        self.needsDisplay = true
+    }
+    
+    override func willRemoveSubview(_ subview: NSView)
+    {
         self.resizeToFitNodeViews()
         self.needsDisplay = true
     }
