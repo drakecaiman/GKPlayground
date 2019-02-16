@@ -14,7 +14,7 @@ class NodeMapView : NSView
     static let margin               : CGSize  = CGSize(width: 12.0, height: 12.0)
     static let connectionLineWidth  : CGFloat = 2.0
     static let arrowheadLength      : CGFloat = 5.5
-    static let selfArrowRadius      : CGFloat = 12.0
+    static let arrowClearance      : CGFloat = 12.0
     static let connectionColor      : NSColor = .gray
     
     // MARK: NSView properties
@@ -70,10 +70,10 @@ class NodeMapView : NSView
     {
         var layoutGrid = [Int : (Int, Int)]()
         var nextPosition = (0,0)
-        var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.selfArrowRadius,
+        var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.arrowClearance,
                                  y: self.frame.height -
                                     NodeMapView.margin.height -
-                                    NodeMapView.selfArrowRadius -
+                                    NodeMapView.arrowClearance -
                                     NodeView.defaultNodeSize.height)
         
         for (index, subview) in self.subviews.enumerated()
@@ -107,7 +107,7 @@ class NodeMapView : NSView
         let selfArrowCenter = CGPoint(x: nodeView.frame.minX,
                                       y: nodeView.frame.minY)
         arrowPath.appendArc(withCenter: selfArrowCenter,
-                            radius:     NodeMapView.selfArrowRadius,
+                            radius:     NodeMapView.arrowClearance,
                             startAngle: 0.0,
                             endAngle:   90.0,
                             clockwise:  true)

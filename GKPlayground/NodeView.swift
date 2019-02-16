@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NodeView : NSView
+class NodeView : NSView, NSAnimationDelegate
 {
     static let defaultNodeSize = CGSize(width: 100.0, height: 32.0)
     
@@ -38,6 +38,26 @@ class NodeView : NSView
 //        self.init(frame: NodeView.defaultNodeSize)
 //        
 //    }
+    
+    // MARK: -
+    private func repositionNode()
+    {
+        
+        let newOrigin = CGPoint(x: max(self.frame.origin.x,
+                                       (NodeMapView.arrowClearance + NodeMapView.margin.width)),
+                                y: max(self.frame.origin.y,
+                                       (NodeMapView.arrowClearance + NodeMapView.margin.height)))
+        guard newOrigin != self.frame.origin else { return }
+        let newRect = NSRect(origin: newOrigin, size: self.frame.size)
+//        self.run
+        let moveAnimations : [NSViewAnimation.Key : Any ] = [.startFrame: self.frame,
+                                                             .endFrame: newRect,
+                                                             .target: self]
+        let repositionAnimation = NSViewAnimation(viewAnimations: [moveAnimations])
+        repositionAnimation.duration = 0.23
+        repositionAnimation.delegate = self
+        repositionAnimation.start()
+    }
     
     // MARK: NSView methods
     public override func draw(_ dirtyRect: NSRect)
@@ -92,6 +112,14 @@ class NodeView : NSView
     public override func mouseUp(with event: NSEvent)
     {
         self.dragOffset = nil
+        
+        self.repositionNode()
+    }
+    
+    // MARK: NSAnimationDelegate methods
+    func animationDidEnd(_ animation: NSAnimation)
+    {
+        self.superview?.needsDisplay = true
     }
 }
 
