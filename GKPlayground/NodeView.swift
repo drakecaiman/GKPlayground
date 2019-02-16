@@ -180,11 +180,14 @@ class NodeView : NSView
         
         self.repositionNode()
     }
-    
-    // MARK: NSAnimationDelegate methods
-    func animationDidEnd(_ animation: NSAnimation)
+}
+
+extension NodeView : NSAnimationDelegate
+{
+    func animation(_ animation: NSAnimation, valueForProgress progress: NSAnimation.Progress) -> Float
     {
-        self.superview?.needsDisplay = true
+        self.nodeMapView?.refresh()
+        return progress
     }
 }
 
