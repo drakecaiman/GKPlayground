@@ -197,17 +197,6 @@ class NodeMapView : NSView
         self.drawConnections()
     }
     
-    // TODO: needed?
-    override func addSubview(_ view: NSView)
-    {
-        guard view is NodeView else
-        {
-            print("view is not a NodeView. It will not be added")
-            return
-        }
-        super.addSubview(view)
-    }
-    
     override func didAddSubview(_ subview: NSView)
     {
         self.resizeToFitNodeViews()
