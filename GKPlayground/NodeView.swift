@@ -190,22 +190,3 @@ extension NodeView : NSAnimationDelegate
         return progress
     }
 }
-
-// TODO: Breakout
-extension NSPoint
-{
-    static func +(lhs: NSPoint, rhs: NSPoint) -> NSPoint
-    {
-        return NSPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
-    }
-    
-    static func -(lhs: NSPoint, rhs: NSPoint) -> NSPoint
-    {
-        return NSPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
-    }
-    
-    static func +=(lhs: inout NSPoint, rhs: NSPoint)
-    {
-        lhs = NSPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
-    }
-}
