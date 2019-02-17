@@ -17,7 +17,7 @@ class NodeView : NSView
     let nodeBorderWidth         : CGFloat = 1.0
     
     public var name         : String?
-    public var nodeColor    : NSColor = NSColor(fromInt: 0x2D7FC1)
+    public var nodeColor    : NSColor = #colorLiteral(red: 0.1160337528, green: 0.8740647007, blue: 0.940814124, alpha: 1)
     public var textColor    : NSColor = .white
     
     public var nodeMapView : NodeMapView? { return self.superview as? NodeMapView }
