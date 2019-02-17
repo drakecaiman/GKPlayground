@@ -8,23 +8,6 @@
 
 import GameplayKit
 
-
-extension String
-{
-    public func cgGlyphs(forFont font: NSFont) -> [CGGlyph]
-    {
-        var glyphs = [CGGlyph]()
-        
-        for c in self
-        {
-            let nextGlyph = font.glyph(withName: String(c))
-            glyphs.append(CGGlyph(nextGlyph))
-        }
-        
-        return glyphs
-    }
-}
-
 extension GKState// : CustomPlaygroundDisplayConvertible
 {
     public var playgroundDescription : Any

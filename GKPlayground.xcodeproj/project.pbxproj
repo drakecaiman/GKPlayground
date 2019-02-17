@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AE05AD5F22196F260038FD28 /* NSPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE05AD5E22196F260038FD28 /* NSPoint+.swift */; };
+		AE05AD6122196F7E0038FD28 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE05AD6022196F7E0038FD28 /* String+.swift */; };
 		AE0A40862210407D00910538 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0A40852210407D00910538 /* NodeView.swift */; };
 		AE186DFE2214235C0066DEFD /* NSColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE186DFD2214235C0066DEFD /* NSColor+.swift */; };
 		AEB131CE220ABFC800005B8F /* GKPlayground.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEB131C4220ABFC700005B8F /* GKPlayground.framework */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		AE05AD5E22196F260038FD28 /* NSPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPoint+.swift"; sourceTree = "<group>"; };
+		AE05AD6022196F7E0038FD28 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		AE0A40852210407D00910538 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
 		AE186DFD2214235C0066DEFD /* NSColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+.swift"; sourceTree = "<group>"; };
 		AEB131C4220ABFC700005B8F /* GKPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GKPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +92,7 @@
 				AE05AD5E22196F260038FD28 /* NSPoint+.swift */,
 				AEE809BD2211E0FC0009E017 /* NodeMapView.swift */,
 				AE186DFD2214235C0066DEFD /* NSColor+.swift */,
+				AE05AD6022196F7E0038FD28 /* String+.swift */,
 			);
 			path = GKPlayground;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE05AD5F22196F260038FD28 /* NSPoint+.swift in Sources */,
+				AE05AD6122196F7E0038FD28 /* String+.swift in Sources */,
 				AE186DFE2214235C0066DEFD /* NSColor+.swift in Sources */,
 				AE0A40862210407D00910538 /* NodeView.swift in Sources */,
 				AEB131DF220AC26000005B8F /* GKStateMachine+ CustomPlaygroundDisplayConvertible .swift in Sources */,
