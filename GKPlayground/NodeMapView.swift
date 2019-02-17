@@ -154,9 +154,20 @@ class NodeMapView : NSView
         
         guard let nextArrowStart  = fromView.outPoint(forView: toView) else { return arrowPath }
         guard let nextArrowEnd    = toView.inPoint(forView: fromView) else { return arrowPath }
+        
+        let lateralDistance = max(abs(nextArrowEnd.x - nextArrowStart.x),
+                                  fromView.nodeConnectionClearance)
+        let clearedOutPoint = NSPoint(x: nextArrowStart.x + lateralDistance,
+                                      y: nextArrowStart.y)
+        let clearedInPoint = NSPoint(x: nextArrowEnd.x - lateralDistance,
+                                     y: nextArrowEnd.y)
         arrowPath.move(to: nextArrowStart)
-        arrowPath.line(to: nextArrowEnd)
+        arrowPath.curve(to: nextArrowEnd,
+                        controlPoint1: clearedOutPoint,
+                        controlPoint2: clearedInPoint)
+
         arrowPath.addArrowhead()
+        
 //        if connections[nextExitState]?.contains(nextStateName) ?? false
 //        {
 //            arrowPath.move(to: nextArrowStart)
