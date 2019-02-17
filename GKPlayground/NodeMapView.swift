@@ -199,14 +199,12 @@ class NodeMapView : NSView
     
     override func didAddSubview(_ subview: NSView)
     {
-        self.resizeToFitNodeViews()
-        self.needsDisplay = true
+        self.refresh()
     }
     
     override func willRemoveSubview(_ subview: NSView)
     {
-        self.resizeToFitNodeViews()
-        self.needsDisplay = true
+        self.refresh()
     }
 }
 
