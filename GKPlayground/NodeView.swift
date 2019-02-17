@@ -114,7 +114,8 @@ class NodeView : NSView
         let maxConnectionPerSide = max(self.inConnections.count, self.outConnections.count)
         let nodeHeight =    2.0 * self.nodePadding
                             + (CGFloat(max(maxConnectionPerSide - 1, 0)) * self.nodeConnectionClearance)
-        self.frame.size = NSSize(width: self.frame.width, height: nodeHeight)
+        self.frame.size = NSSize(width: self.frame.width,
+                                 height: max(nodeHeight, NodeView.defaultNodeSize.height))
         self.nodeMapView?.refresh()
     }
     
