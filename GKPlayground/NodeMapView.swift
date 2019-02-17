@@ -99,24 +99,24 @@ class NodeMapView : NSView
     // TODO: Smart layout of nodes on creation based on connection
     private func layoutNodes()
     {
-        var layoutGrid = [Int : (Int, Int)]()
-        var nextPosition = (0,0)
-        var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.arrowClearance,
-                                 y: self.frame.height -
-                                    NodeMapView.margin.height -
-                                    NodeMapView.arrowClearance -
-                                    NodeView.defaultNodeSize.height)
+//        var layoutGrid = [Int : (Int, Int)]()
+//        var nextPosition = (0,0)
+//        var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.arrowClearance,
+//                                 y: self.frame.height -
+//                                    NodeMapView.margin.height -
+//                                    NodeMapView.arrowClearance -
+//                                    NodeView.defaultNodeSize.height)
         
-        for (index, subview) in self.subviews.enumerated()
-        {
-            guard   !layoutGrid.keys.contains(index),
-                    let nodeView = subview as? NodeView else { continue }
-            layoutGrid[index] = nextPosition
-            for nextConnection in nodeView.outConnections
-            {
-                
-            }
-        }
+//        for (index, subview) in self.subviews.enumerated()
+//        {
+//            guard   !layoutGrid.keys.contains(index),
+//                    let nodeView = subview as? NodeView else { continue }
+//            layoutGrid[index] = nextPosition
+//            for nextConnection in nodeView.outConnections
+//            {
+//
+//            }
+//        }
         
 //        let nodeSpacing : CGFloat = 25.0
 //        nodeOrigin.x = nextViewFrame.maxX + nodeSpacing
