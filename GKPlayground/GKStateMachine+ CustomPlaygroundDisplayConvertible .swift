@@ -60,6 +60,7 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         let view = NodeMapView(frame: viewRect)
         let scrollViewRect = NSRect(x: 0, y: 0, width: 400, height: 400)
         let nodeScrollView = NSScrollView(frame: scrollViewRect)
+        nodeScrollView.drawsBackground = false
         nodeScrollView.documentView = view
         nodeScrollView.hasVerticalScroller = true
         nodeScrollView.hasHorizontalScroller = true

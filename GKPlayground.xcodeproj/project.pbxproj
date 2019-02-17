@@ -89,10 +89,10 @@
 				AEB131C8220ABFC700005B8F /* Info.plist */,
 				AEB131DE220AC26000005B8F /* GKStateMachine+ CustomPlaygroundDisplayConvertible .swift */,
 				AE0A40852210407D00910538 /* NodeView.swift */,
-				AE05AD5E22196F260038FD28 /* NSPoint+.swift */,
 				AEE809BD2211E0FC0009E017 /* NodeMapView.swift */,
-				AE186DFD2214235C0066DEFD /* NSColor+.swift */,
+				AE05AD5E22196F260038FD28 /* NSPoint+.swift */,
 				AE05AD6022196F7E0038FD28 /* String+.swift */,
+				AE186DFD2214235C0066DEFD /* NSColor+.swift */,
 			);
 			path = GKPlayground;
 			sourceTree = "<group>";

@@ -4,7 +4,6 @@ import PlaygroundSupport
 import GKPlayground
 
 // Define some example states
-class AllState : GKState {}
 class NoneState : GKState
 {
     override func isValidNextState(_ stateClass: AnyClass) -> Bool
@@ -19,29 +18,99 @@ class SelfState : GKState
         return stateClass == type(of: self)
     }
 }
-class OneWayState : GKState
+class OutState : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return stateClass == InState.self
+    }
+}
+class InState : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return false
+    }
+}
+class MultipleOutState : GKState
 {
     override func isValidNextState(_ stateClass: AnyClass) -> Bool
     {
         switch stateClass
         {
-        case is NoneState.Type:
+        case is Out1State.Type:
             fallthrough
-        case is SelfState.Type:
+        case is Out2State.Type:
+            fallthrough
+        case is Out3State.Type:
             return true
         default:
             return false
         }
     }
 }
-class TwoWayState : GKState {}
+class Out1State : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return false
+    }
+}
+class Out2State : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return false
+    }
+}
+class Out3State : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return false
+    }
+}
+class MultipleInState : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return false
+    }
+}
+class In1State : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return stateClass == MultipleInState.self
+    }
+}
+class In2State : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return stateClass == MultipleInState.self
+    }
+}
+class In3State : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return stateClass == MultipleInState.self
+    }
+}
 
-//class SelfOneWayState : GKState {}
-
-let states = [AllState(),
-              NoneState(),
+let states = [NoneState(),
               SelfState(),
-              OneWayState()]
+              OutState(),
+              InState(),
+              In1State(),
+              In2State(),
+              In3State(),
+              MultipleInState(),
+              MultipleOutState(),
+              Out1State(),
+              Out2State(),
+              Out3State()]
 
 if let view = (states.playgroundDescription as? NSView)
 {
