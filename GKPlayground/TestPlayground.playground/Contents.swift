@@ -4,6 +4,30 @@ import PlaygroundSupport
 import GKPlayground
 
 // Define some example states
+class Loop1State : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return stateClass == Loop2State.self
+    }
+    
+}
+class Loop2State : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return stateClass == Loop3State.self
+    }
+    
+}
+class Loop3State : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return stateClass == Loop1State.self
+    }
+    
+}
 class NoneState : GKState
 {
     override func isValidNextState(_ stateClass: AnyClass) -> Bool
@@ -99,7 +123,10 @@ class In3State : GKState
     }
 }
 
-let states = [NoneState(),
+let states = [Loop1State(),
+              Loop2State(),
+              Loop3State(),
+              NoneState(),
               SelfState(),
               OutState(),
               InState(),
