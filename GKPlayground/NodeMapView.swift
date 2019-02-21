@@ -134,6 +134,7 @@ class NodeMapView : NSView
     private func selfArrow(forView nodeView: NodeView) -> NSBezierPath
     {
         let arrowPath = self.newArrowPath()
+        guard nodeView.isDescendant(of: self) else { return arrowPath }
 //      Draw arrow shaft
         let selfArrowCenter = CGPoint(x: nodeView.frame.minX,
                                       y: nodeView.frame.minY)
@@ -148,10 +149,13 @@ class NodeMapView : NSView
         return arrowPath
     }
     
+    // TODO: Make optional?
     private func arrow(from fromView: NodeView, to toView: NodeView) -> NSBezierPath
     {
         let arrowPath = self.newArrowPath()
-        
+        guard fromView.isDescendant(of: self),
+                toView.isDescendant(of: self)
+            else { return arrowPath }
         guard let nextArrowStart  = fromView.outPoint(forView: toView) else { return arrowPath }
         guard let nextArrowEnd    = toView.inPoint(forView: fromView) else { return arrowPath }
         
