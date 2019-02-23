@@ -74,18 +74,18 @@ class NodeMapView : NSView
         for subview in self.subviews
         {
             guard let nodeView = subview as? NodeView else { continue }
-            self.drawConnection(forNodeView: nodeView)
+            self.drawConnections(forNodeView: nodeView)
         }
     }
     
-    private func drawConnection(forNodeView nodeView: NodeView)
+    private func drawConnections(forNodeView nodeView: NodeView)
     {
         for nextConnection in nodeView.outConnections
         {
             let nextArrow : NSBezierPath
             if (nextConnection == nodeView)
             {
-                nextArrow = self.selfArrow(forView: nodeView)
+                nextArrow = self.arrow(from: nodeView, to: nodeView, clearing: .over)
             }
             else
             {
@@ -149,8 +149,14 @@ class NodeMapView : NSView
         return arrowPath
     }
     
+    enum ArrowClearingBehavior
+    {
+        case out
+        case over
+        case under
+    }
     // TODO: Make optional?
-    private func arrow(from fromView: NodeView, to toView: NodeView) -> NSBezierPath
+    private func arrow(from fromView: NodeView, to toView: NodeView, clearing: ArrowClearingBehavior = .out) -> NSBezierPath
     {
         let arrowPath = self.newArrowPath()
         guard fromView.isDescendant(of: self),
@@ -159,12 +165,32 @@ class NodeMapView : NSView
         guard let nextArrowStart  = fromView.outPoint(forView: toView) else { return arrowPath }
         guard let nextArrowEnd    = toView.inPoint(forView: fromView) else { return arrowPath }
         
-        let lateralDistance = max(abs(nextArrowEnd.x - nextArrowStart.x),
-                                  fromView.nodeConnectionClearance)
-        let clearedOutPoint = NSPoint(x: nextArrowStart.x + lateralDistance,
+        let clearedOutPoint : NSPoint
+        let clearedInPoint  : NSPoint
+        switch clearing
+        {
+        case .out:
+            let lateralDistance = max(abs(nextArrowEnd.x - nextArrowStart.x),
+                                      fromView.nodeConnectionClearance)
+            clearedOutPoint = NSPoint(x: nextArrowStart.x + lateralDistance,
                                       y: nextArrowStart.y)
-        let clearedInPoint = NSPoint(x: nextArrowEnd.x - lateralDistance,
+            clearedInPoint = NSPoint(x: nextArrowEnd.x - lateralDistance,
                                      y: nextArrowEnd.y)
+        case .over:
+            let distanceFromTopOut = nextArrowStart.y - fromView.frame.minY
+            clearedOutPoint = NSPoint(x: nextArrowStart.x + fromView.frame.width,
+                                      y: nextArrowStart.y - 3.25 * distanceFromTopOut)
+            let distanceFromTopIn = nextArrowStart.y - toView.frame.minY
+            clearedInPoint = NSPoint(x: nextArrowEnd.x - toView.frame.width,
+                                     y: nextArrowEnd.y - 3.25 * distanceFromTopIn)
+        case .under:
+            let distanceFromTopOut = nextArrowStart.y - fromView.frame.minY
+            clearedOutPoint = NSPoint(x: nextArrowStart.x + fromView.frame.width,
+                                      y: nextArrowStart.y + 3.25 * distanceFromTopOut)
+            let distanceFromTopIn = nextArrowStart.y - toView.frame.minY
+            clearedInPoint = NSPoint(x: nextArrowEnd.x - toView.frame.width,
+                                     y: nextArrowEnd.y + 3.25 * distanceFromTopIn)
+        }
         arrowPath.move(to: nextArrowStart)
         arrowPath.curve(to: nextArrowEnd,
                         controlPoint1: clearedOutPoint,
