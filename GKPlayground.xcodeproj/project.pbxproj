@@ -11,6 +11,7 @@
 		AE05AD6122196F7E0038FD28 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE05AD6022196F7E0038FD28 /* String+.swift */; };
 		AE0A40862210407D00910538 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0A40852210407D00910538 /* NodeView.swift */; };
 		AE186DFE2214235C0066DEFD /* NSColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE186DFD2214235C0066DEFD /* NSColor+.swift */; };
+		AE7CF3AA2221C29F005E435A /* Comparable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7CF3A92221C29F005E435A /* Comparable+.swift */; };
 		AEB131CE220ABFC800005B8F /* GKPlayground.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEB131C4220ABFC700005B8F /* GKPlayground.framework */; };
 		AEB131D3220ABFC800005B8F /* GKPlaygroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB131D2220ABFC800005B8F /* GKPlaygroundTests.swift */; };
 		AEB131D5220ABFC800005B8F /* GKPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = AEB131C7220ABFC700005B8F /* GKPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -33,6 +34,7 @@
 		AE05AD6022196F7E0038FD28 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		AE0A40852210407D00910538 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
 		AE186DFD2214235C0066DEFD /* NSColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+.swift"; sourceTree = "<group>"; };
+		AE7CF3A92221C29F005E435A /* Comparable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+.swift"; sourceTree = "<group>"; };
 		AEB131C4220ABFC700005B8F /* GKPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GKPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEB131C7220ABFC700005B8F /* GKPlayground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKPlayground.h; sourceTree = "<group>"; };
 		AEB131C8220ABFC700005B8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				AEE809BD2211E0FC0009E017 /* NodeMapView.swift */,
 				AE05AD5E22196F260038FD28 /* NSPoint+.swift */,
 				AE05AD6022196F7E0038FD28 /* String+.swift */,
+				AE7CF3A92221C29F005E435A /* Comparable+.swift */,
 				AE186DFD2214235C0066DEFD /* NSColor+.swift */,
 			);
 			path = GKPlayground;
@@ -215,6 +218,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE7CF3AA2221C29F005E435A /* Comparable+.swift in Sources */,
 				AE05AD5F22196F260038FD28 /* NSPoint+.swift in Sources */,
 				AE05AD6122196F7E0038FD28 /* String+.swift in Sources */,
 				AE186DFE2214235C0066DEFD /* NSColor+.swift in Sources */,

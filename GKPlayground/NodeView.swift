@@ -10,13 +10,20 @@ import Foundation
 
 class NodeView : NSView
 {
-    static let defaultNodeSize = CGSize(width: 100.0, height: 32.0)
+    static let minNodeSize = CGSize(width: 100.0, height: 32.0)
+    static let maxNodeSize = CGSize(width: 200.0,  height: 178.0)
     
     let nodePadding             : CGFloat = 8.0
     let nodeConnectionClearance : CGFloat = 16.0
     let nodeBorderWidth         : CGFloat = 1.0
     
     public var name         : String?
+    {
+        didSet
+        {
+            self.resizeNode()
+        }
+    }
     public var nodeColor    : NSColor = #colorLiteral(red: 0.1160337528, green: 0.8740647007, blue: 0.940814124, alpha: 1)
     public var textColor    : NSColor = .white
     
@@ -57,7 +64,7 @@ class NodeView : NSView
 
 //    convenience init(withName initialName: String)
 //    {
-//        self.init(frame: NodeView.defaultNodeSize)
+//        self.init(frame: NodeView.minNodeSize)
 //    }
     
     // MARK: -
@@ -128,8 +135,9 @@ class NodeView : NSView
                               attributes:   self.nodeNameStringAttributes)
         let nodeWidth   = maxStringRect.insetBy(dx: -(self.nodePadding + self.nodeBorderWidth),
                                                 dy: -(self.nodePadding + self.nodeBorderWidth)).size.width
-        self.frame.size = NSSize(width: max(nodeWidth, NodeView.defaultNodeSize.width),
-                                 height: max(nodeHeight, NodeView.defaultNodeSize.height))
+        self.frame.size = NSSize(
+            width:  nodeWidth.clamped(to: NodeView.minNodeSize.width...NodeView.maxNodeSize.width),
+            height: nodeHeight.clamped(to: NodeView.minNodeSize.height...NodeView.maxNodeSize.height))
         self.nodeMapView?.refresh()
     }
     

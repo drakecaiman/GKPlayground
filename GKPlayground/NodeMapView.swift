@@ -105,7 +105,7 @@ class NodeMapView : NSView
 //                                 y: self.frame.height -
 //                                    NodeMapView.margin.height -
 //                                    NodeMapView.arrowClearance -
-//                                    NodeView.defaultNodeSize.height)
+//                                    NodeView.minNodeSize.height)
         
 //        for (index, subview) in self.subviews.enumerated()
 //        {
@@ -120,7 +120,7 @@ class NodeMapView : NSView
         
 //        let nodeSpacing : CGFloat = 25.0
 //        nodeOrigin.x = nextViewFrame.maxX + nodeSpacing
-//        nodeOrigin.y = nextViewFrame.minY - NodeView.defaultNodeSize.height
+//        nodeOrigin.y = nextViewFrame.minY - NodeView.minNodeSize.height
     }
     
     private func newArrowPath() -> NSBezierPath

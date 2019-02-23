@@ -12,7 +12,7 @@ extension GKState// : CustomPlaygroundDisplayConvertible
 {
     public var playgroundDescription : Any
     {
-        let stateRect = NSRect(origin: .zero, size: NodeView.defaultNodeSize)
+        let stateRect = NSRect(origin: .zero, size: NodeView.minNodeSize)
         let stateNodeView = NodeView(frame: stateRect)
         stateNodeView.name = String(describing: type(of: self))
         
@@ -73,7 +73,7 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         for nextState in self
         {
             let nextStateName = String(describing: type(of: nextState))
-            let nextViewFrame = NSRect(origin: nodeOrigin, size: NodeView.defaultNodeSize)
+            let nextViewFrame = NSRect(origin: nodeOrigin, size: NodeView.minNodeSize)
             let nextView = NodeView(frame: nextViewFrame)
             nextView.name = nextStateName
             
@@ -81,7 +81,7 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
             nodeViews[nextStateName] = nextView
             nodeOrigin.x = nextViewFrame.maxX + nodeSpacing
             nodeOrigin.y =  nextViewFrame.minY
-                            + NodeView.defaultNodeSize.height
+                            + NodeView.minNodeSize.height
                             + nodeSpacing
         }
         

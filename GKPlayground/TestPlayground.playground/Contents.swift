@@ -123,7 +123,16 @@ class In3State : GKState
     }
 }
 
-let states = [Loop1State(),
+class TestingForAStateWithALongNameState : GKState
+{
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool
+    {
+        return false
+    }
+}
+
+let states = [TestingForAStateWithALongNameState(),
+              Loop1State(),
               Loop2State(),
               Loop3State(),
               NoneState(),
