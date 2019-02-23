@@ -42,11 +42,17 @@ class NodeView : NSView
     private var dragStart   : NSPoint?
     private var dragOffset  : NSPoint?
     
-    var nameParagraphStyle : NSParagraphStyle
+    private var nameParagraphStyle : NSParagraphStyle
     {
         let style = NSMutableParagraphStyle()
         style.alignment = .center
         return style
+    }
+    private var nodeNameStringAttributes : [NSAttributedString.Key : Any]
+    {
+        return [.font               : NSFont.boldSystemFont(ofSize: 12.0),
+                .foregroundColor    : self.textColor,
+                .paragraphStyle     : self.nameParagraphStyle]
     }
 
 //    convenience init(withName initialName: String)
@@ -111,10 +117,18 @@ class NodeView : NSView
     
     private func resizeNode()
     {
+//      Caluclate height based on the most number of connections on a side
         let maxConnectionPerSide = max(self.inConnections.count, self.outConnections.count)
-        let nodeHeight =    2.0 * self.nodePadding
-                            + (CGFloat(max(maxConnectionPerSide - 1, 0)) * self.nodeConnectionClearance)
-        self.frame.size = NSSize(width: self.frame.width,
+        let nodeHeight  = 2.0 * (self.nodePadding + self.nodeBorderWidth)
+            + (CGFloat(max(maxConnectionPerSide - 1, 0)) * self.nodeConnectionClearance)
+//      Calculate width based on node name
+        let maxStringRect = NSString(string: self.name ?? "")
+                .boundingRect(with:         NSRect.infinite.size,
+                              options:      [],
+                              attributes:   self.nodeNameStringAttributes)
+        let nodeWidth   = maxStringRect.insetBy(dx: -(self.nodePadding + self.nodeBorderWidth),
+                                                dy: -(self.nodePadding + self.nodeBorderWidth)).size.width
+        self.frame.size = NSSize(width: max(nodeWidth, NodeView.defaultNodeSize.width),
                                  height: max(nodeHeight, NodeView.defaultNodeSize.height))
         self.nodeMapView?.refresh()
     }
@@ -139,20 +153,16 @@ class NodeView : NSView
         if let nodeDrawName = self.name
         {
             let nodeNameConstraintRect = stateNodeRect.insetBy(dx: nodePadding,
-                                                     dy: nodePadding)
-            let nodeNameAttributes : [NSAttributedString.Key : Any] =
-                [.font              : NSFont.boldSystemFont(ofSize: 12.0),
-                 .foregroundColor   : self.textColor,
-                 .paragraphStyle    : self.nameParagraphStyle]
+                                                               dy: nodePadding)
             let nodeNameBoundingRect = NSString(string: nodeDrawName)
-                .boundingRect(with: nodeNameConstraintRect.size,
-                              options: [],
-                              attributes: nodeNameAttributes)
+                .boundingRect(with:         nodeNameConstraintRect.size,
+                              options:      [],
+                              attributes:   self.nodeNameStringAttributes)
             let rectDifference = nodeNameConstraintRect.height - nodeNameBoundingRect.height
             let nodeNameRect = nodeNameConstraintRect.insetBy(dx: 0.0,
                                                               dy: rectDifference / 2.0)
             NSString(string: nodeDrawName).draw(in: nodeNameRect,
-                                                withAttributes: nodeNameAttributes)
+                                                withAttributes: self.nodeNameStringAttributes)
         }
     }
     
