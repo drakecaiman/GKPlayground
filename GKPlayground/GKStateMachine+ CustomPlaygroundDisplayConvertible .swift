@@ -39,7 +39,7 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
     public var playgroundDescription : Any
     {
 //      Get connections between states
-        var connections = [String : Set<String>]()
+        var connections = [String : NSMutableOrderedSet]()
         for currentState in self
         {
             let currentStateName = String(describing: type(of: currentState))
@@ -49,9 +49,9 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
                 let outStateName = String(describing: type(of: outState))
                 if connections[currentStateName] == nil
                 {
-                    connections[currentStateName] = Set<String>()
+                    connections[currentStateName] = NSMutableOrderedSet()
                 }
-                connections[currentStateName]?.insert(outStateName)
+                connections[currentStateName]?.add(outStateName)
             }
         }
         
@@ -90,7 +90,7 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         {
             let nextEnterStateName = String(describing: type(of: nextEnterState))
             guard let nextEnterView = nodeViews[nextEnterStateName] else { continue }
-            for nextExitStateName in connections[nextEnterStateName] ?? []
+            for case let nextExitStateName as String in connections[nextEnterStateName] ?? []
             {
                 guard let nextExitView = nodeViews[nextExitStateName] else { continue }
                 nextEnterView.outConnections.append(nextExitView)
