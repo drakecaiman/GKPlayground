@@ -12,6 +12,7 @@ class NodeView : NSView
 {
     static let minNodeSize = CGSize(width: 100.0, height: 32.0)
     static let maxNodeSize = CGSize(width: 200.0,  height: 178.0)
+    static let nodeConstraintLayoutManager = CAConstraintLayoutManager()
     
     let nodePadding             : CGFloat = 8.0
     let nodeConnectionClearance : CGFloat = 16.0
@@ -19,8 +20,13 @@ class NodeView : NSView
     
     public var name         : String?
     {
-        didSet
+        get
         {
+            return self.nameLayer.string as? String
+        }
+        set
+        {
+            self.nameLayer.string = newValue
             self.resizeNode()
         }
     }
@@ -49,6 +55,8 @@ class NodeView : NSView
     private var dragStart   : NSPoint?
     private var dragOffset  : NSPoint?
     
+    private var nameLayer = CATextLayer()
+    
     private var nameParagraphStyle : NSParagraphStyle
     {
         let style = NSMutableParagraphStyle()
@@ -66,6 +74,44 @@ class NodeView : NSView
 //    {
 //        self.init(frame: NodeView.minNodeSize)
 //    }
+    
+    override init(frame frameRect: NSRect)
+    {
+        super.init(frame: frameRect)
+        self.wantsLayer = true
+        let nodeLayer = CALayer()
+        nodeLayer.borderWidth = self.nodeBorderWidth
+        nodeLayer.cornerRadius = self.nodePadding
+        nodeLayer.borderColor = self.nodeColor.cgColor
+        nodeLayer.backgroundColor = self.nodeColor.withAlphaComponent(0.35).cgColor
+        nodeLayer.layoutManager = NodeView.nodeConstraintLayoutManager
+//      Initialize name layer
+        self.nameLayer.font = nodeNameStringAttributes[.font] as? NSFont
+        self.nameLayer.fontSize = 12.0
+        self.nameLayer.alignmentMode = .center
+        self.nameLayer.truncationMode = .end
+        self.nameLayer.foregroundColor = self.textColor.cgColor
+        self.nameLayer.addConstraint(CAConstraint(attribute:    .minX,
+                                                  relativeTo:   "superlayer",
+                                                  attribute:    .minX,
+                                                  offset:       self.nodePadding))
+        self.nameLayer.addConstraint(CAConstraint(attribute:    .maxX,
+                                                  relativeTo:   "superlayer",
+                                                  attribute:    .maxX,
+                                                  offset:       -self.nodePadding))
+        self.nameLayer.addConstraint(CAConstraint(attribute:    .midY,
+                                                  relativeTo:   "superlayer",
+                                                  attribute:    .midY))
+        nodeLayer.addSublayer(self.nameLayer)
+        
+        self.layer = nodeLayer
+    }
+    
+    // TODO: Implement
+    required init?(coder decoder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: -
     public func inPoint(forView view: NodeView) -> CGPoint?
@@ -138,40 +184,10 @@ class NodeView : NSView
         self.frame.size = NSSize(
             width:  nodeWidth.clamped(to: NodeView.minNodeSize.width...NodeView.maxNodeSize.width),
             height: nodeHeight.clamped(to: NodeView.minNodeSize.height...NodeView.maxNodeSize.height))
+//      Recalculate name layer height
+        self.nameLayer.frame.size.height = maxStringRect.size.height
+        
         self.nodeMapView?.refresh()
-    }
-    
-    // MARK: NSView methods
-    public override func draw(_ dirtyRect: NSRect)
-    {
-        //      Get node rect
-        let stateNodeRect = NSRect(origin: .zero, size: self.frame.size)
-            .insetBy(dx: nodeBorderWidth, dy: nodeBorderWidth)
-        
-        let stateNodePath = NSBezierPath(roundedRect: stateNodeRect,
-                                         xRadius: nodePadding,
-                                         yRadius: nodePadding)
-        stateNodePath.lineWidth = nodeBorderWidth
-        
-        self.nodeColor.withAlphaComponent(0.35).setFill()
-        stateNodePath.fill()
-        self.nodeColor.setStroke()
-        stateNodePath.stroke()
-        // TODO: separate Pascal case name
-        if let nodeDrawName = self.name
-        {
-            let nodeNameConstraintRect = stateNodeRect.insetBy(dx: nodePadding,
-                                                               dy: nodePadding)
-            let nodeNameBoundingRect = NSString(string: nodeDrawName)
-                .boundingRect(with:         nodeNameConstraintRect.size,
-                              options:      [],
-                              attributes:   self.nodeNameStringAttributes)
-            let rectDifference = nodeNameConstraintRect.height - nodeNameBoundingRect.height
-            let nodeNameRect = nodeNameConstraintRect.insetBy(dx: 0.0,
-                                                              dy: rectDifference / 2.0)
-            NSString(string: nodeDrawName).draw(in: nodeNameRect,
-                                                withAttributes: self.nodeNameStringAttributes)
-        }
     }
     
     // MARK: NSResponder methods

@@ -75,6 +75,7 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
             let nextStateName = String(describing: type(of: nextState))
             let nextViewFrame = NSRect(origin: nodeOrigin, size: NodeView.minNodeSize)
             let nextView = NodeView(frame: nextViewFrame)
+            // TODO: Pascal case conversion
             nextView.name = nextStateName
             
             view.addSubview(nextView)
