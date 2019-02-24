@@ -78,33 +78,11 @@ class NodeView : NSView
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
+//      Initialize layers
         self.wantsLayer = true
-        let nodeLayer = CALayer()
-        nodeLayer.borderWidth = self.nodeBorderWidth
-        nodeLayer.cornerRadius = self.nodePadding
-        nodeLayer.borderColor = self.nodeColor.cgColor
-        nodeLayer.backgroundColor = self.nodeColor.withAlphaComponent(0.35).cgColor
-        nodeLayer.layoutManager = NodeView.nodeConstraintLayoutManager
-//      Initialize name layer
-        self.nameLayer.font = nodeNameStringAttributes[.font] as? NSFont
-        self.nameLayer.fontSize = 12.0
-        self.nameLayer.alignmentMode = .center
-        self.nameLayer.truncationMode = .end
-        self.nameLayer.foregroundColor = self.textColor.cgColor
-        self.nameLayer.addConstraint(CAConstraint(attribute:    .minX,
-                                                  relativeTo:   "superlayer",
-                                                  attribute:    .minX,
-                                                  offset:       self.nodePadding))
-        self.nameLayer.addConstraint(CAConstraint(attribute:    .maxX,
-                                                  relativeTo:   "superlayer",
-                                                  attribute:    .maxX,
-                                                  offset:       -self.nodePadding))
-        self.nameLayer.addConstraint(CAConstraint(attribute:    .midY,
-                                                  relativeTo:   "superlayer",
-                                                  attribute:    .midY))
-        nodeLayer.addSublayer(self.nameLayer)
-        
-        self.layer = nodeLayer
+        self.layer = self.newNodeLayer()
+        self.nameLayer = self.newNameLayer()
+        self.layer?.addSublayer(self.nameLayer)
     }
     
     // TODO: Implement
@@ -114,6 +92,42 @@ class NodeView : NSView
     }
     
     // MARK: -
+    // TODO: static
+    private func newNodeLayer() -> CALayer
+    {
+        let nodeLayer = CALayer()
+        nodeLayer.borderWidth = self.nodeBorderWidth
+        nodeLayer.cornerRadius = self.nodePadding
+        nodeLayer.borderColor = self.nodeColor.cgColor
+        nodeLayer.backgroundColor = self.nodeColor.withAlphaComponent(0.35).cgColor
+        nodeLayer.layoutManager = NodeView.nodeConstraintLayoutManager
+        
+        return nodeLayer
+    }
+    
+    // TODO: static
+    private func newNameLayer() -> CATextLayer
+    {
+        let nameLayer = CATextLayer()
+        nameLayer.font = nodeNameStringAttributes[.font] as? NSFont
+        nameLayer.fontSize = 12.0
+        nameLayer.alignmentMode = .center
+        nameLayer.truncationMode = .end
+        nameLayer.foregroundColor = self.textColor.cgColor
+        nameLayer.addConstraint(CAConstraint(attribute:    .minX,
+                                                  relativeTo:   "superlayer",
+                                                  attribute:    .minX,
+                                                  offset:       self.nodePadding))
+        nameLayer.addConstraint(CAConstraint(attribute:    .maxX,
+                                                  relativeTo:   "superlayer",
+                                                  attribute:    .maxX,
+                                                  offset:       -self.nodePadding))
+        nameLayer.addConstraint(CAConstraint(attribute:    .midY,
+                                                  relativeTo:   "superlayer",
+                                                  attribute:    .midY))
+        return nameLayer
+    }
+    
     public func inPoint(forView view: NodeView) -> CGPoint?
     {
         guard let connectionY = self.connectionY(ofView: view, forConnectionArray: self.inConnections)
