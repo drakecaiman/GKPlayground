@@ -10,12 +10,12 @@ import Foundation
 
 class NodeMapView : NSView
 {
-//    static let
-    static let margin               : CGSize  = CGSize(width: 12.0, height: 12.0)
     static let connectionLineWidth  : CGFloat = 2.0
     static let arrowheadLength      : CGFloat = 5.5
-    static let arrowClearance      : CGFloat = 12.0
+    static let arrowClearance       : CGFloat = 12.0
     static let connectionColor      : NSColor = .gray
+    
+    var margins = NSEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
     
     // MARK: NSView properties
     override var isFlipped: Bool { return true }
@@ -44,24 +44,22 @@ class NodeMapView : NSView
         self.redrawArrows()
     }
     
-    // TODO: Try to make private?
-    func resizeToFitNodeViews()
+    private func resizeToFitNodeViews()
     {
+        // TODO: Use min to find proper width if negative frame origins for NodeView object are supported
+        // TODO: Figure out how to use theys with guard statements
         let maxX = self.subviews.map { $0.frame.maxX }.max() ?? 0.0
         let maxY = self.subviews.map { $0.frame.maxY }.max() ?? 0.0
-//        let minX = max(self.subviews.map { $0.frame.minX }.min() ?? 0.0, 0.0)
-//        let minY = max(self.subviews.map { $0.frame.minY }.min() ?? 0.0, 0.0)
-        
         
         let newFrameRect = NSRect(x:        0.0,
                                   y:        0.0,
                                   width:    maxX
-                                    + 2 * (NodeMapView.arrowClearance + NodeMapView.margin.width),
+                                            + self.margins.left
+                                            + self.margins.right,
                                   height:   maxY
-                                    + 2 * (NodeMapView.arrowClearance + NodeMapView.margin.height))
+                                            + self.margins.top
+                                            + self.margins.bottom)
         self.frame = newFrameRect
-//        self.frame = newFrameRect.insetBy(dx: -NodeMapView.margin.width,
-//                                          dy: -NodeMapView.margin.height)
     }
     
     func redrawArrows()

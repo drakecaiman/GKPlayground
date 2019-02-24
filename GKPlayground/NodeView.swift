@@ -163,10 +163,11 @@ class NodeView : NSView
     
     private func repositionNode()
     {
+        guard let nodeMapView = self.nodeMapView else { return }
         let newOrigin = CGPoint(x: max(self.frame.origin.x,
-                                       (NodeMapView.arrowClearance + NodeMapView.margin.width)),
+                                       (NodeMapView.arrowClearance + nodeMapView.margins.left)),
                                 y: max(self.frame.origin.y,
-                                       (NodeMapView.arrowClearance + NodeMapView.margin.height)))
+                                       (NodeMapView.arrowClearance + nodeMapView.margins.top)))
         guard newOrigin != self.frame.origin else { return }
         let newRect = NSRect(origin: newOrigin, size: self.frame.size)
         

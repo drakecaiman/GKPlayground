@@ -66,8 +66,8 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         nodeScrollView.hasHorizontalScroller = true
         
         let nodeSpacing : CGFloat = 25.0
-        var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.arrowClearance,
-                                 y: NodeMapView.margin.height + NodeMapView.arrowClearance)
+        var nodeOrigin = CGPoint(x: view.margins.left + NodeMapView.arrowClearance,
+                                 y: view.margins.top + NodeMapView.arrowClearance)
         
 //      Create node view for each state
         for nextState in self
