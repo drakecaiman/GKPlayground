@@ -73,6 +73,7 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         for nextState in self
         {
             let nextStateName = String(describing: type(of: nextState))
+            guard nodeViews[nextStateName] == nil else { continue }
             let nextViewFrame = NSRect(origin: nodeOrigin, size: NodeView.minNodeSize)
             let nextView = NodeView(frame: nextViewFrame)
             // TODO: Pascal case conversion
