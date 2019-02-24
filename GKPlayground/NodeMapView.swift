@@ -134,24 +134,6 @@ class NodeMapView : NSView
         return path
     }
     
-    private func selfArrow(forView nodeView: NodeView) -> NSBezierPath
-    {
-        let arrowPath = self.newArrowPath()
-        guard nodeView.isDescendant(of: self) else { return arrowPath }
-//      Draw arrow shaft
-        let selfArrowCenter = CGPoint(x: nodeView.frame.minX,
-                                      y: nodeView.frame.minY)
-        arrowPath.appendArc(withCenter: selfArrowCenter,
-                            radius:     nodeView.nodePadding,
-                            startAngle: 0.0,
-                            endAngle:   90.0,
-                            clockwise:  true)
-//      Draw arrowhead
-        arrowPath.addArrowhead()
-    
-        return arrowPath
-    }
-    
     enum ArrowClearingBehavior
     {
         case out
