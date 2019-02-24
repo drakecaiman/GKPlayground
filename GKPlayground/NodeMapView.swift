@@ -89,7 +89,10 @@ class NodeMapView : NSView
             }
             else
             {
-                nextArrow = self.arrow(from: nodeView, to: nextConnection)
+                let clearing : ArrowClearingBehavior =
+                    nodeView.frame.origin.x <= nextConnection.frame.origin.x ?
+                        .out : .under
+                nextArrow = self.arrow(from: nodeView, to: nextConnection, clearing: clearing)
             }
             NodeMapView.connectionColor.setStroke()
             nextArrow.stroke()
@@ -180,16 +183,16 @@ class NodeMapView : NSView
             let distanceFromTopOut = nextArrowStart.y - fromView.frame.minY
             clearedOutPoint = NSPoint(x: nextArrowStart.x + fromView.frame.width,
                                       y: nextArrowStart.y - 3.25 * distanceFromTopOut)
-            let distanceFromTopIn = nextArrowStart.y - toView.frame.minY
+            let distanceFromTopIn = nextArrowEnd.y - toView.frame.minY
             clearedInPoint = NSPoint(x: nextArrowEnd.x - toView.frame.width,
                                      y: nextArrowEnd.y - 3.25 * distanceFromTopIn)
         case .under:
-            let distanceFromTopOut = nextArrowStart.y - fromView.frame.minY
+            let distanceFromBottomOut = fromView.frame.maxY - nextArrowStart.y
             clearedOutPoint = NSPoint(x: nextArrowStart.x + fromView.frame.width,
-                                      y: nextArrowStart.y + 3.25 * distanceFromTopOut)
-            let distanceFromTopIn = nextArrowStart.y - toView.frame.minY
+                                      y: nextArrowStart.y + 3.25 * distanceFromBottomOut)
+            let distanceFromBottomIn = toView.frame.maxY - nextArrowEnd.y
             clearedInPoint = NSPoint(x: nextArrowEnd.x - toView.frame.width,
-                                     y: nextArrowEnd.y + 3.25 * distanceFromTopIn)
+                                     y: nextArrowEnd.y + 3.25 * distanceFromBottomIn)
         }
         arrowPath.move(to: nextArrowStart)
         arrowPath.curve(to: nextArrowEnd,
