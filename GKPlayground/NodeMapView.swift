@@ -10,18 +10,21 @@ import Foundation
 
 class NodeMapView : NSView
 {
-    static let connectionLineWidth  : CGFloat = 2.0
+    // MARK: Constants
     static let arrowheadLength      : CGFloat = 5.5
     static let arrowClearance       : CGFloat = 12.0
-    static let connectionColor      : NSColor = .gray
     
-    var margins = NSEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
+    // MARK: -
+    public var margins = NSEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
+    public var connectionLineWidth  : CGFloat = 2.0
+    public var connectionColor      : NSColor = .gray
     
     // MARK: NSView properties
     override var isFlipped: Bool { return true }
     
 //    var connectionView : NSView
     
+    // MARK: -
     // MARK: Initialization
 //    override init(frame frameRect: NSRect)
 //    {
@@ -92,7 +95,7 @@ class NodeMapView : NSView
                         .out : .under
                 nextArrow = self.arrow(from: nodeView, to: nextConnection, clearing: clearing)
             }
-            NodeMapView.connectionColor.setStroke()
+            self.connectionColor.setStroke()
             nextArrow.stroke()
         }
     }
@@ -127,7 +130,7 @@ class NodeMapView : NSView
     private func newArrowPath() -> NSBezierPath
     {
         let path = NSBezierPath()
-        path.lineWidth = NodeMapView.connectionLineWidth
+        path.lineWidth = self.connectionLineWidth
         
         return path
     }
@@ -154,7 +157,7 @@ class NodeMapView : NSView
         {
         case .out:
             let lateralDistance = max(abs(nextArrowEnd.x - nextArrowStart.x),
-                                      fromView.nodeConnectionClearance)
+                                      NodeMapView.arrowClearance)
             clearedOutPoint = NSPoint(x: nextArrowStart.x + lateralDistance,
                                       y: nextArrowStart.y)
             clearedInPoint = NSPoint(x: nextArrowEnd.x - lateralDistance,
