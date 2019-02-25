@@ -93,7 +93,7 @@ class NodeView : NSView
         super.init(frame: frameRect)
 //      Initialize layers
         self.wantsLayer = true
-        self.layer = self.newNodeLayer()
+        self.layer = NodeView.newNodeLayer()
         self.nameLayer = self.newNameLayer()
         self.layer?.addSublayer(self.nameLayer)
     }
@@ -105,6 +105,20 @@ class NodeView : NSView
     }
     
     // MARK: -
+    static private func newNodeLayer() -> CALayer
+    {
+        let nodeLayer = CALayer()
+        let nodeColor : CGColor = #colorLiteral(red: 0.1160337528, green: 0.8740647007, blue: 0.940814124, alpha: 1)
+        
+        nodeLayer.cornerRadius      = 8.0
+        nodeLayer.borderWidth       = 1.0
+        nodeLayer.borderColor       = nodeColor
+        nodeLayer.backgroundColor   = nodeColor.copy(alpha: 0.35)
+        nodeLayer.layoutManager     = NodeView.nodeConstraintLayoutManager
+        
+        return nodeLayer
+    }
+    
     // TODO: Internal only?
     public func inPoint(forView view: NodeView) -> CGPoint?
     {
@@ -121,21 +135,6 @@ class NodeView : NSView
             else { return nil }
         return CGPoint(x: self.frame.maxX,
                        y: connectionY)
-    }
-    
-    // TODO: static
-    private func newNodeLayer() -> CALayer
-    {
-        let nodeLayer = CALayer()
-        let nodeColor : CGColor = #colorLiteral(red: 0.1160337528, green: 0.8740647007, blue: 0.940814124, alpha: 1)
-        
-        nodeLayer.cornerRadius      = 8.0
-        nodeLayer.borderWidth       = 1.0
-        nodeLayer.borderColor       = nodeColor
-        nodeLayer.backgroundColor   = nodeColor.copy(alpha: 0.35)
-        nodeLayer.layoutManager     = NodeView.nodeConstraintLayoutManager
-        
-        return nodeLayer
     }
     
     // TODO: static
