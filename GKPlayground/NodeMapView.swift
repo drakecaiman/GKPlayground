@@ -50,7 +50,7 @@ class NodeMapView : NSView
     private func resizeToFitNodeViews()
     {
         // TODO: Use min to find proper width if negative frame origins for NodeView object are supported
-        // TODO: Figure out how to use theys with guard statements
+        // TODO: Figure out how to use theys with guard statements (Use max() with comparer?)
         let maxX = self.subviews.map { $0.frame.maxX }.max() ?? 0.0
         let maxY = self.subviews.map { $0.frame.maxY }.max() ?? 0.0
         

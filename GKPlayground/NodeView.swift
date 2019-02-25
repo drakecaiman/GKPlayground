@@ -96,6 +96,12 @@ class NodeView : NSView
         self.layer = NodeView.newNodeLayer()
         self.nameLayer = self.newNameLayer()
         self.layer?.addSublayer(self.nameLayer)
+        // TODO: Versus
+//        let layer = NodeView.newNodeLayer()
+//        let nameLayer = self.newNameLayer()
+//        layer.addSublayer(self.nameLayer)
+//        self.layer = layer
+//        self.nameLayer = nameLayer
     }
     
     // TODO: Implement
@@ -223,7 +229,7 @@ class NodeView : NSView
     // MARK: NSResponder methods
     public override func mouseDown(with event: NSEvent)
     {
-        guard let startingDragPosition = self.superview?.convert(event.locationInWindow, to: nil)
+        guard let startingDragPosition = self.superview?.convert(event.locationInWindow, from: nil)
             else { return }
         // TODO: Delta instead of offset (+ vs -)
         self.dragOffset = startingDragPosition - self.frame.origin
@@ -232,7 +238,7 @@ class NodeView : NSView
     public override func mouseDragged(with event: NSEvent)
     {
         guard   let dragOffset = self.dragOffset,
-                let currentDragLocation = self.superview?.convert(event.locationInWindow, to: nil)
+                let currentDragLocation = self.superview?.convert(event.locationInWindow, from: nil)
             else { return }
         self.frame.origin = currentDragLocation - dragOffset
         
