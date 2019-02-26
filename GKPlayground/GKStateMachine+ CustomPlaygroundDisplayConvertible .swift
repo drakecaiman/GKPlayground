@@ -8,21 +8,20 @@
 
 import GameplayKit
 
-extension GKState// : CustomPlaygroundDisplayConvertible
+extension GKState : CustomPlaygroundDisplayConvertible
 {
     public var playgroundDescription : Any
+    {
+        return self.stateNodeView
+    }
+    
+    var stateNodeView : NodeView
     {
         let stateRect = NSRect(origin: .zero, size: NodeView.minSize)
         let stateNodeView = NodeView(frame: stateRect)
         stateNodeView.name = String(describing: type(of: self))
         
         return stateNodeView
-    }
-    
-    // TODO: move 'playgroundDescription' here?
-    public var stateView : NSView
-    {
-        return NSView()
     }
 }
 
