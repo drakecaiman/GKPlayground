@@ -31,8 +31,7 @@ class NodeMapView : NSView
     
     private func resizeToFitNodeViews()
     {
-        // TODO: Use min to find proper width if negative frame origins for NodeView object are supported
-        // TODO: Figure out how to use theys with guard statements (Use max() with comparer?)
+        // TODO: Figure out how to use these with guard statements (Use max() with comparer?) (I: 🔆)
         let maxX = self.subviews.map { $0.frame.maxX }.max() ?? 0.0
         let maxY = self.subviews.map { $0.frame.maxY }.max() ?? 0.0
         
@@ -82,7 +81,6 @@ class NodeMapView : NSView
         }
     }
     
-    // TODO: Smart layout of nodes on creation based on connection
     private func layoutNodes()
     {
 //        var layoutGrid = [Int : (Int, Int)]()
@@ -123,7 +121,7 @@ class NodeMapView : NSView
         case over
         case under
     }
-    // TODO: Make optional?
+    // TODO: Make optional? (I: 🔅)
     private func arrow(from fromView: NodeView, to toView: NodeView, clearing: ArrowClearingBehavior = .out) -> NSBezierPath
     {
         let arrowPath = self.newArrowPath()

@@ -25,6 +25,7 @@ extension GKState : CustomPlaygroundDisplayConvertible
     }
 }
 
+// TODO: Implement (LiveViewMessageHandler)? (II: 🔆)
 extension GKStateMachine// : CustomPlaygroundDisplayConvertible
 {
     public var playgroundDescription: Any
@@ -73,9 +74,10 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         {
             let nextStateName = String(describing: type(of: nextState))
             guard nodeViews[nextStateName] == nil else { continue }
+            // TODO: Use `stateView` (I: 🔅)
             let nextViewFrame = NSRect(origin: nodeOrigin, size: NodeView.minSize)
             let nextView = NodeView(frame: nextViewFrame)
-            // TODO: Pascal case conversion
+            // TODO: Pascal case conversion (I: 🔆)
             nextView.name = nextStateName
             
             view.addSubview(nextView)

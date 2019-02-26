@@ -15,7 +15,7 @@ class NodeView : NSView
     static let connectionSpacing : CGFloat = 16.0
     static let nodeConstraintLayoutManager = CAConstraintLayoutManager()
 
-    // TODO: Store name in CATextLayer as NSAttributedString?
+    // TODO: Store name in CATextLayer as NSAttributedString? (I: 🔅)
     public var name : String?
     {
         get
@@ -40,7 +40,7 @@ class NodeView : NSView
         }
         set
         {
-            // TODO: Support other font classes
+            // TODO: Support other font classes (I: 🔆)
             if let newFont = newValue[.font] as? NSFont
             {
                 self.nameLayer.font = newFont
@@ -49,13 +49,13 @@ class NodeView : NSView
             {
                 self.nameLayer.fontSize = newFontSize
             }
-            // TODO: Test for no `.foregroundColor` key
+            // TODO: Test for no `.foregroundColor` key (I: 🔆)
             let newColor = (newValue[.foregroundColor] as! CGColor)
             self.nameLayer.foregroundColor = newColor
         }
     }
     public var padding = NSEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
-    // TODO: Make weak collections
+    // TODO: Make weak collections (I: 🔆)
     public var inConnections    = [NodeView]()
     {
         didSet
@@ -83,6 +83,7 @@ class NodeView : NSView
     private var dragStart   : NSPoint?
     private var dragOffset  : NSPoint?
 
+    // TODO: Implement (I: 🔅)
 //    convenience init(withName initialName: String)
 //    {
 //        self.init(frame: NodeView.minNodeSize)
@@ -96,7 +97,7 @@ class NodeView : NSView
         self.layer = NodeView.newNodeLayer()
         self.nameLayer = self.newNameLayer()
         self.layer?.addSublayer(self.nameLayer)
-        // TODO: Versus
+        // TODO: Versus (I: 🔅)
 //        let layer = NodeView.newNodeLayer()
 //        let nameLayer = self.newNameLayer()
 //        layer.addSublayer(self.nameLayer)
@@ -104,7 +105,7 @@ class NodeView : NSView
 //        self.nameLayer = nameLayer
     }
     
-    // TODO: Implement
+    // TODO: Implement (I: 🔆)
     required init?(coder decoder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
@@ -125,7 +126,7 @@ class NodeView : NSView
         return nodeLayer
     }
     
-    // TODO: Internal only?
+    // TODO: Combine `inPoint`, `outPoint`, `connectionY` with enum param for direction (I: 🔅)
     public func inPoint(forView view: NodeView) -> CGPoint?
     {
         guard let connectionY = self.connectionY(ofView: view, forConnectionArray: self.inConnections)
@@ -134,7 +135,6 @@ class NodeView : NSView
                        y: connectionY)
     }
     
-    // TODO: Internal only?
     public func outPoint(forView view: NodeView) -> CGPoint?
     {
         guard let connectionY = self.connectionY(ofView: view, forConnectionArray: self.outConnections)
@@ -143,7 +143,7 @@ class NodeView : NSView
                        y: connectionY)
     }
     
-    // TODO: static
+    // TODO: static (I: 🔅)
     private func newNameLayer() -> CATextLayer
     {
         let nameLayer = CATextLayer()
@@ -152,7 +152,7 @@ class NodeView : NSView
         nameLayer.alignmentMode     = .center
         nameLayer.truncationMode    = .end
         nameLayer.foregroundColor   = NSColor.white.cgColor
-        // TODO: Adjust on padding set
+        // TODO: Adjust on padding set (make padding computed property based on offsets of constriants?) (I: 🔅)
         nameLayer.addConstraint(CAConstraint(attribute:    .minX,
                                              relativeTo:   "superlayer",
                                              attribute:    .minX,
@@ -202,8 +202,6 @@ class NodeView : NSView
         repositionAnimation.duration = 0.23
         repositionAnimation.delegate = self
         repositionAnimation.start()
-        
-        // TODO: if origin less than zero possible, refresh NodeMapView
     }
     
     private func resizeNode()
@@ -231,7 +229,7 @@ class NodeView : NSView
     {
         guard let startingDragPosition = self.superview?.convert(event.locationInWindow, from: nil)
             else { return }
-        // TODO: Delta instead of offset (+ vs -)
+        // TODO: Delta instead of offset (+ vs -) (I: 🔅)
         self.dragOffset = startingDragPosition - self.frame.origin
     }
     
