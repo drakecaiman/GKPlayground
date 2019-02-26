@@ -22,24 +22,6 @@ class NodeMapView : NSView
     // MARK: NSView properties
     override var isFlipped: Bool { return true }
     
-//    var connectionView : NSView
-    
-    // MARK: -
-    // MARK: Initialization
-//    override init(frame frameRect: NSRect)
-//    {
-//        self.connectionView = NSView(frame: frameRect)
-//        self.connectionView.wantsLayer = true
-//        super.init(frame: frameRect)
-//    }
-    
-//    required init?(coder decoder: NSCoder)
-//    {
-//        fatalError()
-        // TODO: Connection View initializations
-//        super.init(coder: decoder)
-//    }
-    
     // MARK: -
     func refresh()
     {
