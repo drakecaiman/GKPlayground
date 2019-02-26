@@ -23,13 +23,13 @@ extension GKState : CustomPlaygroundDisplayConvertible
 }
 
 // TODO: Implement (LiveViewMessageHandler)? (II: 🔆)
-extension GKStateMachine// : CustomPlaygroundDisplayConvertible
-{
-    public var playgroundDescription: Any
-    {
-        return NSView()
-    }
-}
+//extension GKStateMachine : CustomPlaygroundDisplayConvertible
+//{
+//    public var playgroundDescription: Any
+//    {
+//        return NSView()
+//    }
+//}
 
 extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
 {
