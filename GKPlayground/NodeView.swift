@@ -10,11 +10,13 @@ import Foundation
 
 class NodeView : NSView
 {
+    // MARK: Constants
     static let minSize = CGSize(width: 100.0, height: 32.0)
     static let maxSize = CGSize(width: 200.0,  height: 178.0)
     static let connectionSpacing : CGFloat = 16.0
     static let nodeConstraintLayoutManager = CAConstraintLayoutManager()
 
+    // MARK: -
     // TODO: Store name in CATextLayer as NSAttributedString? (I: 🔅)
     public var name : String?
     {
@@ -74,6 +76,7 @@ class NodeView : NSView
     }
     public var nodeMapView : NodeMapView? { return self.superview as? NodeMapView }
     
+    // MARK: -
     private var nameLayer = CATextLayer()
     private var nameAttributedString : NSAttributedString?
     {
@@ -82,7 +85,8 @@ class NodeView : NSView
     }
     private var dragStart   : NSPoint?
     private var dragOffset  : NSPoint?
-
+    
+    // MARK: - Initializers
     // TODO: Implement (I: 🔅)
 //    convenience init(withName initialName: String)
 //    {
@@ -112,7 +116,7 @@ class NodeView : NSView
     }
     
     // MARK: -
-    static private func newNodeLayer() -> CALayer
+    class private func newNodeLayer() -> CALayer
     {
         let nodeLayer = CALayer()
         let nodeColor : CGColor = #colorLiteral(red: 0.1160337528, green: 0.8740647007, blue: 0.940814124, alpha: 1)
@@ -126,6 +130,7 @@ class NodeView : NSView
         return nodeLayer
     }
     
+    // MARK: -
     // TODO: Combine `inPoint`, `outPoint`, `connectionY` with enum param for direction (I: 🔅)
     public func inPoint(forView view: NodeView) -> CGPoint?
     {
@@ -143,6 +148,7 @@ class NodeView : NSView
                        y: connectionY)
     }
     
+    // MARK: -
     // TODO: static (I: 🔅)
     private func newNameLayer() -> CATextLayer
     {
@@ -224,7 +230,7 @@ class NodeView : NSView
         self.nodeMapView?.refresh()
     }
     
-    // MARK: NSResponder methods
+    // MARK: - NSResponder methods
     public override func mouseDown(with event: NSEvent)
     {
         guard let startingDragPosition = self.superview?.convert(event.locationInWindow, from: nil)
@@ -251,6 +257,7 @@ class NodeView : NSView
     }
 }
 
+// MARK: NSAnimationDelegate conformance
 extension NodeView : NSAnimationDelegate
 {
     func animation(_ animation: NSAnimation, valueForProgress progress: NSAnimation.Progress) -> Float

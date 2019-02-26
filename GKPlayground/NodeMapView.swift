@@ -19,7 +19,7 @@ class NodeMapView : NSView
     public var connectionLineWidth  : CGFloat = 2.0
     public var connectionColor      : NSColor = .gray
     
-    // MARK: NSView properties
+    // MARK: - NSView properties
     override var isFlipped: Bool { return true }
     
     // MARK: -
@@ -29,11 +29,45 @@ class NodeMapView : NSView
         self.redrawArrows()
     }
     
+    // MARK: -
+    private func layoutNodes()
+    {
+        //        var layoutGrid = [Int : (Int, Int)]()
+        //        var nextPosition = (0,0)
+        //        var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.arrowClearance,
+        //                                 y: self.frame.height -
+        //                                    NodeMapView.margin.height -
+        //                                    NodeMapView.arrowClearance -
+        //                                    NodeView.minNodeSize.height)
+        
+        //        for (index, subview) in self.subviews.enumerated()
+        //        {
+        //            guard   !layoutGrid.keys.contains(index),
+        //                    let nodeView = subview as? NodeView else { continue }
+        //            layoutGrid[index] = nextPosition
+        //            for nextConnection in nodeView.outConnections
+        //            {
+        //
+        //            }
+        //        }
+        
+        //        let nodeSpacing : CGFloat = 25.0
+        //        nodeOrigin.x = nextViewFrame.maxX + nodeSpacing
+        //        nodeOrigin.y = nextViewFrame.minY - NodeView.minNodeSize.height
+    }
+    
+    private func redrawArrows()
+    {
+        self.needsDisplay = true
+    }
+    
     private func resizeToFitNodeViews()
     {
         // TODO: Figure out how to use these with guard statements (Use max() with comparer?) (I: 🔆)
-        let maxX = self.subviews.map { $0.frame.maxX }.max() ?? 0.0
-        let maxY = self.subviews.map { $0.frame.maxY }.max() ?? 0.0
+//        let maxX = self.subviews.map { $0.frame.maxX }.max() ?? 0.0
+//        let maxY = self.subviews.map { $0.frame.maxY }.max() ?? 0.0
+        let maxX = self.subviews.max { $0.frame.maxX < $1.frame.maxX }?.frame.maxX ?? 0.0
+        let maxY = self.subviews.max { $0.frame.maxY < $1.frame.maxY }?.frame.maxY ?? 0.0
         
         let newFrameRect = NSRect(x:        0.0,
                                   y:        0.0,
@@ -44,11 +78,6 @@ class NodeMapView : NSView
                                             + self.margins.top
                                             + self.margins.bottom)
         self.frame = newFrameRect
-    }
-    
-    func redrawArrows()
-    {
-        self.needsDisplay = true
     }
     
     private func drawConnections()
@@ -79,32 +108,6 @@ class NodeMapView : NSView
             self.connectionColor.setStroke()
             nextArrow.stroke()
         }
-    }
-    
-    private func layoutNodes()
-    {
-//        var layoutGrid = [Int : (Int, Int)]()
-//        var nextPosition = (0,0)
-//        var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.arrowClearance,
-//                                 y: self.frame.height -
-//                                    NodeMapView.margin.height -
-//                                    NodeMapView.arrowClearance -
-//                                    NodeView.minNodeSize.height)
-        
-//        for (index, subview) in self.subviews.enumerated()
-//        {
-//            guard   !layoutGrid.keys.contains(index),
-//                    let nodeView = subview as? NodeView else { continue }
-//            layoutGrid[index] = nextPosition
-//            for nextConnection in nodeView.outConnections
-//            {
-//
-//            }
-//        }
-        
-//        let nodeSpacing : CGFloat = 25.0
-//        nodeOrigin.x = nextViewFrame.maxX + nodeSpacing
-//        nodeOrigin.y = nextViewFrame.minY - NodeView.minNodeSize.height
     }
     
     private func newArrowPath() -> NSBezierPath
@@ -180,14 +183,7 @@ class NodeMapView : NSView
         return arrowPath
     }
     
-    // MARK: NSView methods
-    override func display()
-    {
-        print("Testing")
-        self.resizeToFitNodeViews()
-        super.display()
-    }
-    
+    // MARK: - NSView methods
     override func draw(_ dirtyRect: NSRect)
     {
         self.drawConnections()
