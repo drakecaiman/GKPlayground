@@ -63,11 +63,11 @@ class NodeMapView : NSView
     
     private func resizeToFitNodeViews()
     {
-        // TODO: Figure out how to use these with guard statements (Use max() with comparer?) (I: 🔆)
-//        let maxX = self.subviews.map { $0.frame.maxX }.max() ?? 0.0
-//        let maxY = self.subviews.map { $0.frame.maxY }.max() ?? 0.0
-        let maxX = self.subviews.max { $0.frame.maxX < $1.frame.maxX }?.frame.maxX ?? 0.0
-        let maxY = self.subviews.max { $0.frame.maxY < $1.frame.maxY }?.frame.maxY ?? 0.0
+        let furthestXView = self.subviews.max { $0.frame.maxX < $1.frame.maxX }
+        let furthestYView = self.subviews.max { $0.frame.maxY < $1.frame.maxY }
+        guard   let maxX = furthestXView?.frame.maxX,
+                let maxY = furthestYView?.frame.maxY
+            else { return }
         
         let newFrameRect = NSRect(x:        0.0,
                                   y:        0.0,
