@@ -87,11 +87,12 @@ class NodeView : NSView
     private var dragOffset  : NSPoint?
     
     // MARK: - Initializers
-    // TODO: Implement (I: 🔅)
-//    convenience init(withName initialName: String)
-//    {
-//        self.init(frame: NodeView.minNodeSize)
-//    }
+    convenience init(withName initialName: String)
+    {
+        let frame = NSRect(origin: CGPoint.zero, size: NodeView.minSize)
+        self.init(frame: frame)
+        self.name = initialName
+    }
     
     override init(frame frameRect: NSRect)
     {

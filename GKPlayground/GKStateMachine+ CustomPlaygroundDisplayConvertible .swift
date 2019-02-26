@@ -17,11 +17,8 @@ extension GKState : CustomPlaygroundDisplayConvertible
     
     var stateNodeView : NodeView
     {
-        let stateRect = NSRect(origin: .zero, size: NodeView.minSize)
-        let stateNodeView = NodeView(frame: stateRect)
-        stateNodeView.name = String(describing: type(of: self))
-        
-        return stateNodeView
+        let stateName = String(describing: type(of: self))
+        return NodeView(withName: stateName)
     }
 }
 
@@ -74,16 +71,14 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         {
             let nextStateName = String(describing: type(of: nextState))
             guard nodeViews[nextStateName] == nil else { continue }
-            // TODO: Use `stateView` (I: 🔅)
-            let nextViewFrame = NSRect(origin: nodeOrigin, size: NodeView.minSize)
-            let nextView = NodeView(frame: nextViewFrame)
+            let nextView = nextState.stateNodeView
+            nextView.frame.origin = nodeOrigin
             // TODO: Pascal case conversion (I: 🔆)
-            nextView.name = nextStateName
             
             view.addSubview(nextView)
             nodeViews[nextStateName] = nextView
-            nodeOrigin.x = nextViewFrame.maxX + nodeSpacing
-            nodeOrigin.y =  nextViewFrame.minY
+            nodeOrigin.x =  nextView.frame.maxX + nodeSpacing
+            nodeOrigin.y =  nextView.frame.minY
                             + NodeView.minSize.height
                             + nodeSpacing
         }
