@@ -8,16 +8,25 @@
 
 import Foundation
 
+/**
+ `NodeView` instances are used in conjunction with `NodeMapView` to illustrate connections between
+ concepts.
+ */
 class NodeView : NSView
 {
     // MARK: Constants
+    /// The mininum width and height for a `NodeView`.
     static let minSize = CGSize(width: 100.0, height: 32.0)
+    /// The maximum width and height for a `NodeView`.
     static let maxSize = CGSize(width: 200.0,  height: 178.0)
+    /// The vertical distance between connection line on either side of a `NodeView`.
     static let connectionSpacing : CGFloat = 16.0
+    /// The global `CAConstraintLayoutManager` used to layout all `NodeView` sublayers.
     static let nodeConstraintLayoutManager = CAConstraintLayoutManager()
 
     // MARK: -
     // TODO: Store name in CATextLayer as NSAttributedString? (I: 🔅)
+    /// The displayed name of the `NodeView`.
     public var name : String?
     {
         get
@@ -30,6 +39,7 @@ class NodeView : NSView
             self.resizeNode()
         }
     }
+    /// The text style attributes used to display the `NodeView` instance's `name`.
     public var nameAttributes : [NSAttributedString.Key : Any]
     {
         get
@@ -56,8 +66,10 @@ class NodeView : NSView
             self.nameLayer.foregroundColor = newColor
         }
     }
+    /// The spacing on each side between the text of the `NodeView` and its borders
     public var padding = NSEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
     // TODO: Make weak collections (I: 🔆)
+    /// An ordered array of all views with connections leading into this `NodeView`.
     public var inConnections    = [NodeView]()
     {
         didSet
@@ -66,6 +78,7 @@ class NodeView : NSView
             self.resizeNode()
         }
     }
+    /// An ordered array of all views with connections from this `NodeView`
     public var outConnections   = [NodeView]()
     {
         didSet
@@ -74,20 +87,30 @@ class NodeView : NSView
             self.resizeNode()
         }
     }
+    /// The `NodeMapView` that contains this `NodeView`.
     public var nodeMapView : NodeMapView? { return self.superview as? NodeMapView }
     
     // MARK: -
+    /// The sublayer used to display this `NodeView` instance's `name`.
     private var nameLayer = CATextLayer()
+    /// The `name` of this `NodeView` with the display attributes applied, as a `NSAttributedString`.
     private var nameAttributedString : NSAttributedString?
     {
         guard let name = self.name else { return nil }
         return NSAttributedString(string: name, attributes: self.nameAttributes)
     }
-    private var dragStart   : NSPoint?
+    /// The distance the cursor is from this `NodeView` instance's origin while it is being dragged. Used to set position during a drag operation.
     private var dragOffset  : NSPoint?
     
     // MARK: - Initializers
-    convenience init(withName initialName: String)
+    /**
+     Creates a new `NodeView` with the given name.
+    
+     - Parameter initialName: The name of the new `NodeView`
+     
+     - Returns: A newly initialized `NodeView` with the given name.
+    */
+    convenience init(withName initialName: String?)
     {
         let frame = NSRect(origin: CGPoint.zero, size: NodeView.minSize)
         self.init(frame: frame)
@@ -117,6 +140,11 @@ class NodeView : NSView
     }
     
     // MARK: -
+    /**
+     Returns a new `CALayer` formatted for display a node.
+     
+     - Returns: A `CALayer` with the default parameters for representing a node.
+     */
     class private func newNodeLayer() -> CALayer
     {
         let nodeLayer = CALayer()
@@ -133,6 +161,13 @@ class NodeView : NSView
     
     // MARK: -
     // TODO: Combine `inPoint`, `outPoint`, `connectionY` with enum param for direction (I: 🔅)
+    /**
+     For a given `NodeView`, returns the point, in this containing `NodeMapView` instance's coordinate space, where that view points to this `NodeView`.
+     
+     - Parameter view: The incoming `NodeView`.
+     
+     - Returns: The connection point on this `NodeView` as a `CGPoint` or nil if there is no connection.
+     */
     public func inPoint(forView view: NodeView) -> CGPoint?
     {
         guard let connectionY = self.connectionY(ofView: view, forConnectionArray: self.inConnections)
@@ -141,6 +176,13 @@ class NodeView : NSView
                        y: connectionY)
     }
     
+    /**
+     Returns the point, in this containing `NodeMapView` instance's coordinate space, where this view connects to the given `NodeView`.
+     
+     - Parameter view: The outgoing `NodeView`.
+     
+     - Returns: The connection point on this `NodeView` as a `CGPoint` or nil if there is no connection.
+     */
     public func outPoint(forView view: NodeView) -> CGPoint?
     {
         guard let connectionY = self.connectionY(ofView: view, forConnectionArray: self.outConnections)
@@ -151,6 +193,11 @@ class NodeView : NSView
     
     // MARK: -
     // TODO: static (I: 🔅)
+    /**
+     Returns a new `CALayer` formatted for display the name of a node.
+     
+     - Returns: A `CALayer` with the default parameters for a `NodeView` instance's label sublayer.
+     */
     private func newNameLayer() -> CATextLayer
     {
         let nameLayer = CATextLayer()
@@ -174,6 +221,11 @@ class NodeView : NSView
         return nameLayer
     }
     
+    /**
+     Sorts the passed `NodeView` array so that any connections to the current instance is the first item.
+     
+     - Parameter connections: The `NodeView` array to sort.
+     */
     private func sortConnections(in connections: inout [NodeView])
     {
         if let selfIndex = connections.firstIndex(of: self)
@@ -183,6 +235,14 @@ class NodeView : NSView
         }
     }
     
+    /**
+     Calculates the vertical position for a node connection for given `NodeView` and collection of connections.
+     
+     - Parameter view:              The referenced `NodeView`.
+     - Parameter connectionArray:   The `NodeView` array representing the desired side.
+     
+     - Returns: A `CGFloat` for the expected vertial position of the desired node connection. Returns `nil` if the view is not found in the provide array.
+     */
     private func connectionY(ofView view: NodeView, forConnectionArray connectionArray: [NodeView]) -> CGFloat?
     {
         guard let viewIndex = connectionArray.firstIndex(of: view) else { return nil }
@@ -191,6 +251,9 @@ class NodeView : NSView
             + (NodeView.connectionSpacing * CGFloat(viewIndex))
     }
     
+    /**
+     Move this 'NodeView` to within the bounds of its superview through animation.
+     */
     private func repositionNode()
     {
         guard let nodeMapView = self.nodeMapView else { return }
@@ -211,6 +274,9 @@ class NodeView : NSView
         repositionAnimation.start()
     }
     
+    /**
+     Resize this `NodeView` to accommodate its name and the number of connections on either side. The size will not exceed `NodeView.maxSize`, nor go below `NodeView.minSize`.
+     */
     private func resizeNode()
     {
 //      Caluclate height based on the most number of connections on a side

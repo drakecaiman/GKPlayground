@@ -15,6 +15,7 @@ extension GKState : CustomPlaygroundDisplayConvertible
         return self.stateNodeView
     }
     
+    /// A `NodeView` formatted and populated to represent this state.
     var stateNodeView : NodeView
     {
         let stateName = String(describing: type(of: self))

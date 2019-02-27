@@ -10,6 +10,9 @@ import Foundation
 
 extension NSBezierPath
 {
+    /**
+     Adds a right-facing arrowhead to the given `NSBezierPath` at the current point.
+     */
     func addArrowhead()
     {
         guard !self.isEmpty else { return }
