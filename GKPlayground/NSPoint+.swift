@@ -22,6 +22,7 @@ extension NSPoint
     
     static func +=(lhs: inout NSPoint, rhs: NSPoint)
     {
-        lhs = NSPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+        lhs.x += rhs.x
+        lhs.y += rhs.y
     }
 }
