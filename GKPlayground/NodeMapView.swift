@@ -82,9 +82,8 @@ class NodeMapView : NSView
     
     private func drawConnections()
     {
-        for subview in self.subviews
+        for case let nodeView as NodeView in self.subviews
         {
-            guard let nodeView = subview as? NodeView else { continue }
             self.drawConnections(forNodeView: nodeView)
         }
     }
