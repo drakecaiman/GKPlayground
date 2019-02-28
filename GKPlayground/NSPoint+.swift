@@ -47,4 +47,16 @@ extension NSPoint
         lhs.x += rhs.x
         lhs.y += rhs.y
     }
+    
+    /**
+     Decrements the components of the left-hand `NSPoint` by the components of the right-hand one.
+     
+     - Parameter lhs: The `NSPoint` to the left of the operator, which will be decremented.
+     - Parameter rhs: The `NSPoint` to the right of the operator; the decrementation value.
+     */
+    static func -=(lhs: inout NSPoint, rhs: NSPoint)
+    {
+        lhs.x -= rhs.x
+        lhs.y -= rhs.y
+    }
 }
