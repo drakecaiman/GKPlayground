@@ -16,15 +16,19 @@ class NodeView : NSView
 {
     // MARK: Constants
     /// The mininum width and height for a `NodeView`.
-    static let minSize = CGSize(width: 100.0, height: 32.0)
+    public static let minSize = CGSize(width: 100.0, height: 32.0)
     /// The maximum width and height for a `NodeView`.
-    static let maxSize = CGSize(width: 200.0,  height: 178.0)
+    public static let maxSize = CGSize(width: 200.0,  height: 178.0)
     /// The vertical distance between connection line on either side of a `NodeView`.
-    static let connectionSpacing : CGFloat = 16.0
+    public static let connectionSpacing : CGFloat = 16.0
+    // MARK: -
     /// The global `CAConstraintLayoutManager` used to layout all `NodeView` sublayers.
-    static let nodeConstraintLayoutManager = CAConstraintLayoutManager()
+    private static let nodeConstraintLayoutManager = CAConstraintLayoutManager()
 
     // MARK: -
+    /// The spacing on each side between the text of the `NodeView` and its borders
+    open var padding = NSEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
+    //MARK: -
     // TODO: Store name in CATextLayer as NSAttributedString? (I: 🔅)
     /// The displayed name of the `NodeView`.
     public var name : String?
@@ -66,8 +70,6 @@ class NodeView : NSView
             self.nameLayer.foregroundColor = newColor
         }
     }
-    /// The spacing on each side between the text of the `NodeView` and its borders
-    public var padding = NSEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
     // TODO: Make weak collections (I: 🔆)
     /// An ordered array of all views with connections leading into this `NodeView`.
     public var inConnections    = [NodeView]()
@@ -145,7 +147,7 @@ class NodeView : NSView
      
      - Returns: A `CALayer` with the default parameters for representing a node.
      */
-    class private func newNodeLayer() -> CALayer
+    class open func newNodeLayer() -> CALayer
     {
         let nodeLayer = CALayer()
         let nodeColor : CGColor = #colorLiteral(red: 0.1160337528, green: 0.8740647007, blue: 0.940814124, alpha: 1)
@@ -157,6 +159,36 @@ class NodeView : NSView
         nodeLayer.layoutManager     = NodeView.nodeConstraintLayoutManager
         
         return nodeLayer
+    }
+    
+    // MARK: -
+    // TODO: static (I: 🔅)
+    /**
+     Returns a new `CALayer` formatted for display the name of a node.
+     
+     - Returns: A `CALayer` with the default parameters for a `NodeView` instance's label sublayer.
+     */
+    open func newNameLayer() -> CATextLayer
+    {
+        let nameLayer = CATextLayer()
+        nameLayer.font              = NSFont.boldSystemFont(ofSize: 12.0)
+        nameLayer.fontSize          = 12.0
+        nameLayer.alignmentMode     = .center
+        nameLayer.truncationMode    = .end
+        nameLayer.foregroundColor   = NSColor.white.cgColor
+        // TODO: Adjust on padding set (make padding computed property based on offsets of constriants?) (I: 🔅)
+        nameLayer.addConstraint(CAConstraint(attribute:    .minX,
+                                             relativeTo:   "superlayer",
+                                             attribute:    .minX,
+                                             offset:       self.padding.left))
+        nameLayer.addConstraint(CAConstraint(attribute:    .maxX,
+                                             relativeTo:   "superlayer",
+                                             attribute:    .maxX,
+                                             offset:       -self.padding.right))
+        nameLayer.addConstraint(CAConstraint(attribute:    .midY,
+                                             relativeTo:   "superlayer",
+                                             attribute:    .midY))
+        return nameLayer
     }
     
     // MARK: -
@@ -192,35 +224,6 @@ class NodeView : NSView
     }
     
     // MARK: -
-    // TODO: static (I: 🔅)
-    /**
-     Returns a new `CALayer` formatted for display the name of a node.
-     
-     - Returns: A `CALayer` with the default parameters for a `NodeView` instance's label sublayer.
-     */
-    private func newNameLayer() -> CATextLayer
-    {
-        let nameLayer = CATextLayer()
-        nameLayer.font              = NSFont.boldSystemFont(ofSize: 12.0)
-        nameLayer.fontSize          = 12.0
-        nameLayer.alignmentMode     = .center
-        nameLayer.truncationMode    = .end
-        nameLayer.foregroundColor   = NSColor.white.cgColor
-        // TODO: Adjust on padding set (make padding computed property based on offsets of constriants?) (I: 🔅)
-        nameLayer.addConstraint(CAConstraint(attribute:    .minX,
-                                             relativeTo:   "superlayer",
-                                             attribute:    .minX,
-                                             offset:       self.padding.left))
-        nameLayer.addConstraint(CAConstraint(attribute:    .maxX,
-                                             relativeTo:   "superlayer",
-                                             attribute:    .maxX,
-                                             offset:       -self.padding.right))
-        nameLayer.addConstraint(CAConstraint(attribute:    .midY,
-                                             relativeTo:   "superlayer",
-                                             attribute:    .midY))
-        return nameLayer
-    }
-    
     /**
      Sorts the passed `NodeView` array so that any connections to the current instance is the first item.
      
@@ -298,7 +301,7 @@ class NodeView : NSView
     }
     
     // MARK: - NSResponder methods
-    public override func mouseDown(with event: NSEvent)
+    override func mouseDown(with event: NSEvent)
     {
         guard let startingDragPosition = self.superview?.convert(event.locationInWindow, from: nil)
             else { return }
@@ -306,7 +309,7 @@ class NodeView : NSView
         self.dragOffset = startingDragPosition - self.frame.origin
     }
     
-    public override func mouseDragged(with event: NSEvent)
+    override func mouseDragged(with event: NSEvent)
     {
         guard   let dragOffset = self.dragOffset,
                 let currentDragLocation = self.superview?.convert(event.locationInWindow, from: nil)
@@ -316,7 +319,7 @@ class NodeView : NSView
         self.nodeMapView?.refresh()
     }
     
-    public override func mouseUp(with event: NSEvent)
+    override func mouseUp(with event: NSEvent)
     {
         self.dragOffset = nil
         

@@ -12,17 +12,17 @@ class NodeMapView : NSView
 {
     // MARK: Constants
     /// The length of each line segment used to draw the arrowhead of a connection line.
-    static let arrowheadLength      : CGFloat = 5.5
+    public static let arrowheadLength      : CGFloat = 5.5
     /// The minimum distance for a connection line to travel out from a node before curving.
-    static let arrowClearance       : CGFloat = 12.0
+    public static let arrowClearance       : CGFloat = 12.0
     
     // MARK: -
     /// The distance on each side between the content of this view and its edges
-    public var margins = NSEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
+    open var margins = NSEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
     /// The width to use when drawing connections between nodes.
-    public var connectionLineWidth  : CGFloat = 2.0
+    open var connectionLineWidth  : CGFloat = 2.0
     /// The color of node connection lines.
-    public var connectionColor      : NSColor = .gray
+    open var connectionColor      : NSColor = .gray
     
     // MARK: - NSView properties
     override var isFlipped: Bool { return true }
@@ -31,7 +31,7 @@ class NodeMapView : NSView
     /**
      Update this view based on changes its subviews.
      */
-    func refresh()
+    public func refresh()
     {
         self.resizeToFitNodeViews()
         self.redrawArrows()

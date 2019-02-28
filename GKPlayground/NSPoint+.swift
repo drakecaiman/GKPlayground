@@ -18,7 +18,7 @@ extension NSPoint
      
      - Returns: A new `NSPoint` composed of the sum of each given point's components.
      */
-    static func +(lhs: NSPoint, rhs: NSPoint) -> NSPoint
+    public static func +(lhs: NSPoint, rhs: NSPoint) -> NSPoint
     {
         return NSPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
@@ -31,7 +31,7 @@ extension NSPoint
      
      - Returns: A new `NSPoint` composed of the difference between each given point's components.
      */
-    static func -(lhs: NSPoint, rhs: NSPoint) -> NSPoint
+    public static func -(lhs: NSPoint, rhs: NSPoint) -> NSPoint
     {
         return NSPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }
@@ -42,7 +42,7 @@ extension NSPoint
      - Parameter lhs: The `NSPoint` to the left of the operator, which will be incremented.
      - Parameter rhs: The `NSPoint` to the right of the operator; the incrementation value.
      */
-    static func +=(lhs: inout NSPoint, rhs: NSPoint)
+    public static func +=(lhs: inout NSPoint, rhs: NSPoint)
     {
         lhs.x += rhs.x
         lhs.y += rhs.y
@@ -54,7 +54,7 @@ extension NSPoint
      - Parameter lhs: The `NSPoint` to the left of the operator, which will be decremented.
      - Parameter rhs: The `NSPoint` to the right of the operator; the decrementation value.
      */
-    static func -=(lhs: inout NSPoint, rhs: NSPoint)
+    public static func -=(lhs: inout NSPoint, rhs: NSPoint)
     {
         lhs.x -= rhs.x
         lhs.y -= rhs.y
