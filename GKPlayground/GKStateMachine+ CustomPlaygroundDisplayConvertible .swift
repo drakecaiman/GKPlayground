@@ -70,18 +70,17 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
 //      Create node view for each state
         for nextState in self
         {
+            // TODO: Pascal case conversion (I: 🔆)
             let nextStateName = String(describing: type(of: nextState))
             guard nodeViews[nextStateName] == nil else { continue }
             let nextView = nextState.stateNodeView
             nextView.frame.origin = nodeOrigin
-            // TODO: Pascal case conversion (I: 🔆)
             
             view.addSubview(nextView)
             nodeViews[nextStateName] = nextView
+            // TODO: Adjust origins after conntections are made? (I: 🔅)
             nodeOrigin.x =  nextView.frame.maxX + nodeSpacing
-            nodeOrigin.y =  nextView.frame.minY
-                            + NodeView.minSize.height
-                            + nodeSpacing
+            nodeOrigin.y =  nextView.frame.maxY + nodeSpacing
         }
         
 //      Connect views based on state transistions

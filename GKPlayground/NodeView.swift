@@ -102,7 +102,7 @@ class NodeView : NSView
         return NSAttributedString(string: name, attributes: self.nameAttributes)
     }
     /// The distance the cursor is from this `NodeView` instance's origin while it is being dragged. Used to set position during a drag operation.
-    private var dragOffset  : CGPoint?
+    private var dragOffset: CGPoint?
     
     // MARK: - Initializers
     /**
@@ -150,7 +150,7 @@ class NodeView : NSView
     class open func newNodeLayer() -> CALayer
     {
         let nodeLayer = CALayer()
-        let nodeColor : CGColor = #colorLiteral(red: 0.1160337528, green: 0.8740647007, blue: 0.940814124, alpha: 1)
+        let nodeColor: CGColor = #colorLiteral(red: 0.1160337528, green: 0.8740647007, blue: 0.940814124, alpha: 1)
         
         nodeLayer.cornerRadius      = 8.0
         nodeLayer.borderWidth       = 1.0
@@ -177,17 +177,17 @@ class NodeView : NSView
         nameLayer.truncationMode    = .end
         nameLayer.foregroundColor   = .white
         // TODO: Adjust on padding set (make padding computed property based on offsets of constriants?) (I: 🔅)
-        nameLayer.addConstraint(CAConstraint(attribute:    .minX,
-                                             relativeTo:   "superlayer",
-                                             attribute:    .minX,
-                                             offset:       self.padding.left))
-        nameLayer.addConstraint(CAConstraint(attribute:    .maxX,
-                                             relativeTo:   "superlayer",
-                                             attribute:    .maxX,
-                                             offset:       -self.padding.right))
-        nameLayer.addConstraint(CAConstraint(attribute:    .midY,
-                                             relativeTo:   "superlayer",
-                                             attribute:    .midY))
+        nameLayer.addConstraint(CAConstraint(attribute:     .minX,
+                                             relativeTo:    "superlayer",
+                                             attribute:     .minX,
+                                             offset:        self.padding.left))
+        nameLayer.addConstraint(CAConstraint(attribute:     .maxX,
+                                             relativeTo:    "superlayer",
+                                             attribute:     .maxX,
+                                             offset:        -self.padding.right))
+        nameLayer.addConstraint(CAConstraint(attribute:     .midY,
+                                             relativeTo:    "superlayer",
+                                             attribute:     .midY))
         return nameLayer
     }
     
@@ -202,10 +202,10 @@ class NodeView : NSView
      */
     public func inPoint(forView view: NodeView) -> CGPoint?
     {
-        guard let connectionY = self.connectionY(ofView: view, forConnectionArray: self.inConnections)
+        guard let connectionY = self.connectionY(ofView:                view,
+                                                 forConnectionArray:    self.inConnections)
             else { return nil }
-        return CGPoint(x: self.frame.minX,
-                       y: connectionY)
+        return CGPoint(x: self.frame.minX, y: connectionY)
     }
     
     /**
@@ -217,10 +217,10 @@ class NodeView : NSView
      */
     public func outPoint(forView view: NodeView) -> CGPoint?
     {
-        guard let connectionY = self.connectionY(ofView: view, forConnectionArray: self.outConnections)
+        guard let connectionY = self.connectionY(ofView:                view,
+                                                 forConnectionArray:    self.outConnections)
             else { return nil }
-        return CGPoint(x: self.frame.maxX,
-                       y: connectionY)
+        return CGPoint(x: self.frame.maxX, y: connectionY)
     }
     
     // MARK: -
@@ -246,7 +246,9 @@ class NodeView : NSView
      
      - Returns: A `CGFloat` for the expected vertial position of the desired node connection. Returns `nil` if the view is not found in the provide array.
      */
-    private func connectionY(ofView view: NodeView, forConnectionArray connectionArray: [NodeView]) -> CGFloat?
+    private func connectionY(ofView view: NodeView,
+                             forConnectionArray connectionArray: [NodeView])
+        -> CGFloat?
     {
         guard let viewIndex = connectionArray.firstIndex(of: view) else { return nil }
         return self.frame.minY
@@ -268,9 +270,9 @@ class NodeView : NSView
         let newRect = CGRect(origin: newOrigin, size: self.frame.size)
         
 //      Make move animations
-        let moveAnimations : [NSViewAnimation.Key : Any ] = [.startFrame:   self.frame,
-                                                             .endFrame:     newRect,
-                                                             .target:       self]
+        let moveAnimations : [NSViewAnimation.Key : Any] = [.startFrame:    self.frame,
+                                                            .endFrame:      newRect,
+                                                            .target:        self]
         let repositionAnimation = NSViewAnimation(viewAnimations: [moveAnimations])
         repositionAnimation.duration = 0.23
         repositionAnimation.delegate = self
@@ -283,14 +285,17 @@ class NodeView : NSView
     private func resizeNode()
     {
 //      Caluclate height based on the most number of connections on a side
-        let maxConnectionPerSide = max(self.inConnections.count, self.outConnections.count)
-        let currentBorderWidth = self.layer?.borderWidth ?? 0.0
-        let currentCornerRadius = self.layer?.cornerRadius ?? 0.0
-        let nodeHeight  = 2.0 * (currentCornerRadius + currentBorderWidth)
+        let maxConnectionPerSide    = max(self.inConnections.count, self.outConnections.count)
+        let currentBorderWidth      = self.layer?.borderWidth ?? 0.0
+        let currentCornerRadius     = self.layer?.cornerRadius ?? 0.0
+        let nodeHeight =
+            2.0 * (currentCornerRadius + currentBorderWidth)
             + (CGFloat(max(maxConnectionPerSide - 1, 0)) * NodeView.connectionSpacing)
 //      Calculate width based on node name
         let maxStringSize = self.nameAttributedString?.size() ?? .zero
-        let nodeWidth = ceil(maxStringSize.width) + self.padding.left + self.padding.right
+        let nodeWidth = ceil(maxStringSize.width)
+                        + self.padding.left
+                        + self.padding.right
         self.frame.size = CGSize(
             width:  nodeWidth.clamped(to: NodeView.minSize.width...NodeView.maxSize.width),
             height: nodeHeight.clamped(to: NodeView.minSize.height...NodeView.maxSize.height))
@@ -330,7 +335,9 @@ class NodeView : NSView
 // MARK: NSAnimationDelegate conformance
 extension NodeView : NSAnimationDelegate
 {
-    func animation(_ animation: NSAnimation, valueForProgress progress: NSAnimation.Progress) -> Float
+    func animation(_ animation: NSAnimation,
+                   valueForProgress progress: NSAnimation.Progress)
+        -> Float
     {
         self.nodeMapView?.refresh()
         return progress

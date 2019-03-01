@@ -12,17 +12,17 @@ class NodeMapView : NSView
 {
     // MARK: Constants
     /// The length of each line segment used to draw the arrowhead of a connection line.
-    public static let arrowheadLength      : CGFloat = 5.5
+    public static let arrowheadLength   : CGFloat = 5.5
     /// The minimum distance for a connection line to travel out from a node before curving.
-    public static let arrowClearance       : CGFloat = 12.0
+    public static let arrowClearance    : CGFloat = 12.0
     
     // MARK: -
     /// The distance on each side between the content of this view and its edges
     open var margins = NSEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
     /// The width to use when drawing connections between nodes.
-    open var connectionLineWidth  : CGFloat = 2.0
+    open var connectionLineWidth    : CGFloat = 2.0
     /// The color of node connection lines.
-    open var connectionColor      : NSColor = .gray
+    open var connectionColor        : NSColor = .gray
     
     // MARK: - NSView properties
     override var isFlipped: Bool { return true }
@@ -88,12 +88,8 @@ class NodeMapView : NSView
         
         let newFrameRect = CGRect(x:        0.0,
                                   y:        0.0,
-                                  width:    maxX
-                                            + self.margins.left
-                                            + self.margins.right,
-                                  height:   maxY
-                                            + self.margins.top
-                                            + self.margins.bottom)
+                                  width:    maxX + self.margins.left + self.margins.right,
+                                  height:   maxY + self.margins.top + self.margins.bottom)
         self.frame = newFrameRect
     }
     
@@ -125,8 +121,7 @@ class NodeMapView : NSView
             else
             {
                 let clearing : ArrowClearingBehavior =
-                    nodeView.frame.origin.x <= nextConnection.frame.origin.x ?
-                        .out : .under
+                    nodeView.frame.origin.x <= nextConnection.frame.origin.x ? .out : .under
                 nextArrow = self.arrow(from: nodeView, to: nextConnection, clearing: clearing)
             }
             self.connectionColor.setStroke()
@@ -172,11 +167,11 @@ class NodeMapView : NSView
     private func arrow(from fromView: NodeView, to toView: NodeView, clearing: ArrowClearingBehavior = .out) -> NSBezierPath
     {
         let arrowPath = self.newArrowPath()
-        guard fromView.isDescendant(of: self),
-                toView.isDescendant(of: self)
+        guard   fromView.isDescendant(of: self),
+                toView.isDescendant(of: self),
+                let nextArrowStart  = fromView.outPoint(forView: toView),
+                let nextArrowEnd    = toView.inPoint(forView: fromView)
             else { return arrowPath }
-        guard let nextArrowStart  = fromView.outPoint(forView: toView) else { return arrowPath }
-        guard let nextArrowEnd    = toView.inPoint(forView: fromView) else { return arrowPath }
         
         let clearedOutPoint : CGPoint
         let clearedInPoint  : CGPoint
@@ -185,10 +180,8 @@ class NodeMapView : NSView
         case .out:
             let lateralDistance = max(abs(nextArrowEnd.x - nextArrowStart.x),
                                       NodeMapView.arrowClearance)
-            clearedOutPoint = CGPoint(x: nextArrowStart.x + lateralDistance,
-                                      y: nextArrowStart.y)
-            clearedInPoint = CGPoint(x: nextArrowEnd.x - lateralDistance,
-                                     y: nextArrowEnd.y)
+            clearedOutPoint = CGPoint(x: nextArrowStart.x + lateralDistance, y: nextArrowStart.y)
+            clearedInPoint  = CGPoint(x: nextArrowEnd.x - lateralDistance, y: nextArrowEnd.y)
         case .over:
             let distanceFromTopOut = nextArrowStart.y - fromView.frame.minY
             clearedOutPoint = CGPoint(x: nextArrowStart.x + fromView.frame.width,
