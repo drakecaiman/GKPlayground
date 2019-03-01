@@ -52,7 +52,7 @@ class NodeView : NSView
                 NSFont.boldSystemFont(ofSize: self.nameLayer.fontSize)
             let font = NSFont(descriptor: currentFont.fontDescriptor, size: self.nameLayer.fontSize)
             return [.font               : font ?? currentFont,
-                    .foregroundColor    : self.nameLayer.foregroundColor ?? NSColor.white.cgColor]
+                    .foregroundColor    : self.nameLayer.foregroundColor ?? .white]
         }
         set
         {
@@ -102,7 +102,7 @@ class NodeView : NSView
         return NSAttributedString(string: name, attributes: self.nameAttributes)
     }
     /// The distance the cursor is from this `NodeView` instance's origin while it is being dragged. Used to set position during a drag operation.
-    private var dragOffset  : NSPoint?
+    private var dragOffset  : CGPoint?
     
     // MARK: - Initializers
     /**
@@ -114,7 +114,7 @@ class NodeView : NSView
     */
     convenience init(withName initialName: String?)
     {
-        let frame = NSRect(origin: CGPoint.zero, size: NodeView.minSize)
+        let frame = CGRect(origin: .zero, size: NodeView.minSize)
         self.init(frame: frame)
         self.name = initialName
     }
@@ -175,7 +175,7 @@ class NodeView : NSView
         nameLayer.fontSize          = 12.0
         nameLayer.alignmentMode     = .center
         nameLayer.truncationMode    = .end
-        nameLayer.foregroundColor   = NSColor.white.cgColor
+        nameLayer.foregroundColor   = .white
         // TODO: Adjust on padding set (make padding computed property based on offsets of constriants?) (I: 🔅)
         nameLayer.addConstraint(CAConstraint(attribute:    .minX,
                                              relativeTo:   "superlayer",
@@ -265,7 +265,7 @@ class NodeView : NSView
                                 y: max(self.frame.origin.y,
                                        (nodeMapView.margins.top + NodeMapView.arrowClearance)))
         guard newOrigin != self.frame.origin else { return }
-        let newRect = NSRect(origin: newOrigin, size: self.frame.size)
+        let newRect = CGRect(origin: newOrigin, size: self.frame.size)
         
 //      Make move animations
         let moveAnimations : [NSViewAnimation.Key : Any ] = [.startFrame:   self.frame,
@@ -289,9 +289,9 @@ class NodeView : NSView
         let nodeHeight  = 2.0 * (currentCornerRadius + currentBorderWidth)
             + (CGFloat(max(maxConnectionPerSide - 1, 0)) * NodeView.connectionSpacing)
 //      Calculate width based on node name
-        let maxStringSize = self.nameAttributedString?.size() ?? NSSize.zero
+        let maxStringSize = self.nameAttributedString?.size() ?? .zero
         let nodeWidth = ceil(maxStringSize.width) + self.padding.left + self.padding.right
-        self.frame.size = NSSize(
+        self.frame.size = CGSize(
             width:  nodeWidth.clamped(to: NodeView.minSize.width...NodeView.maxSize.width),
             height: nodeHeight.clamped(to: NodeView.minSize.height...NodeView.maxSize.height))
 //      Recalculate name layer height

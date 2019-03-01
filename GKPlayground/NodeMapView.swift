@@ -86,7 +86,7 @@ class NodeMapView : NSView
                 let maxY = furthestYView?.frame.maxY
             else { return }
         
-        let newFrameRect = NSRect(x:        0.0,
+        let newFrameRect = CGRect(x:        0.0,
                                   y:        0.0,
                                   width:    maxX
                                             + self.margins.left
@@ -178,30 +178,30 @@ class NodeMapView : NSView
         guard let nextArrowStart  = fromView.outPoint(forView: toView) else { return arrowPath }
         guard let nextArrowEnd    = toView.inPoint(forView: fromView) else { return arrowPath }
         
-        let clearedOutPoint : NSPoint
-        let clearedInPoint  : NSPoint
+        let clearedOutPoint : CGPoint
+        let clearedInPoint  : CGPoint
         switch clearing
         {
         case .out:
             let lateralDistance = max(abs(nextArrowEnd.x - nextArrowStart.x),
                                       NodeMapView.arrowClearance)
-            clearedOutPoint = NSPoint(x: nextArrowStart.x + lateralDistance,
+            clearedOutPoint = CGPoint(x: nextArrowStart.x + lateralDistance,
                                       y: nextArrowStart.y)
-            clearedInPoint = NSPoint(x: nextArrowEnd.x - lateralDistance,
+            clearedInPoint = CGPoint(x: nextArrowEnd.x - lateralDistance,
                                      y: nextArrowEnd.y)
         case .over:
             let distanceFromTopOut = nextArrowStart.y - fromView.frame.minY
-            clearedOutPoint = NSPoint(x: nextArrowStart.x + fromView.frame.width,
+            clearedOutPoint = CGPoint(x: nextArrowStart.x + fromView.frame.width,
                                       y: nextArrowStart.y - 3.25 * distanceFromTopOut)
             let distanceFromTopIn = nextArrowEnd.y - toView.frame.minY
-            clearedInPoint = NSPoint(x: nextArrowEnd.x - toView.frame.width,
+            clearedInPoint = CGPoint(x: nextArrowEnd.x - toView.frame.width,
                                      y: nextArrowEnd.y - 3.25 * distanceFromTopIn)
         case .under:
             let distanceFromBottomOut = fromView.frame.maxY - nextArrowStart.y
-            clearedOutPoint = NSPoint(x: nextArrowStart.x + fromView.frame.width,
+            clearedOutPoint = CGPoint(x: nextArrowStart.x + fromView.frame.width,
                                       y: nextArrowStart.y + 3.25 * distanceFromBottomOut)
             let distanceFromBottomIn = toView.frame.maxY - nextArrowEnd.y
-            clearedInPoint = NSPoint(x: nextArrowEnd.x - toView.frame.width,
+            clearedInPoint = CGPoint(x: nextArrowEnd.x - toView.frame.width,
                                      y: nextArrowEnd.y + 3.25 * distanceFromBottomIn)
         }
         arrowPath.move(to: nextArrowStart)
@@ -214,10 +214,10 @@ class NodeMapView : NSView
 //        if connections[nextExitState]?.contains(nextStateName) ?? false
 //        {
 //            arrowPath.move(to: nextArrowStart)
-//            arrowPath.relativeLine(to: NSPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
+//            arrowPath.relativeLine(to: CGPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
 //                                               y: arrowheadLength * sin(CGFloat.pi / 4)))
 //            arrowPath.move(to: nextArrowStart)
-//            arrowPath.relativeLine(to: NSPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
+//            arrowPath.relativeLine(to: CGPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
 //                                               y: -arrowheadLength * sin(CGFloat.pi / 4)))
 //
 //            //                      Remove state
