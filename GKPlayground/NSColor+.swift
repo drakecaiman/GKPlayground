@@ -25,3 +25,6 @@ extension NSColor
         self.init(red: red, green: green, blue: blue, alpha: 1.0)
     }
 }
+
+// TODO: UIColor equivalent? (II:  🔅)
+// TODO: CGColor equivalent? (II:  🔅)
