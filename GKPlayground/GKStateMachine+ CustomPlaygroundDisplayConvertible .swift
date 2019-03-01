@@ -8,15 +8,15 @@
 
 import GameplayKit
 
-extension GKState : CustomPlaygroundDisplayConvertible
+extension GKState: CustomPlaygroundDisplayConvertible
 {
-    public var playgroundDescription : Any
+    public var playgroundDescription: Any
     {
         return self.stateNodeView
     }
     
     /// A `NodeView` formatted and populated to represent this state.
-    var stateNodeView : NodeView
+    var stateNodeView: NodeView
     {
         let stateName = String(describing: type(of: self))
         return NodeView(withName: stateName)
@@ -32,9 +32,9 @@ extension GKState : CustomPlaygroundDisplayConvertible
 //    }
 //}
 
-extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
+extension Array: CustomPlaygroundDisplayConvertible where Element == GKState
 {
-    public var playgroundDescription : Any
+    public var playgroundDescription: Any
     {
 //      Get connections between states
         var connections = [String : NSMutableOrderedSet]()
@@ -63,7 +63,7 @@ extension Array : CustomPlaygroundDisplayConvertible where Element == GKState
         nodeScrollView.hasVerticalScroller = true
         nodeScrollView.hasHorizontalScroller = true
         
-        let nodeSpacing : CGFloat = 25.0
+        let nodeSpacing: CGFloat = 25.0
         var nodeOrigin = CGPoint(x: view.margins.left + NodeMapView.arrowClearance,
                                  y: view.margins.top + NodeMapView.arrowClearance)
         

@@ -12,7 +12,7 @@ import Foundation
  `NodeView` instances are used in conjunction with `NodeMapView` to illustrate connections between
  concepts.
  */
-class NodeView : NSView
+class NodeView: NSView
 {
     // MARK: Constants
     /// The mininum width and height for a `NodeView`.
@@ -20,7 +20,7 @@ class NodeView : NSView
     /// The maximum width and height for a `NodeView`.
     public static let maxSize = CGSize(width: 200.0,  height: 178.0)
     /// The vertical distance between connection line on either side of a `NodeView`.
-    public static let connectionSpacing : CGFloat = 16.0
+    public static let connectionSpacing: CGFloat = 16.0
     // MARK: -
     /// The global `CAConstraintLayoutManager` used to layout all `NodeView` sublayers.
     private static let nodeConstraintLayoutManager = CAConstraintLayoutManager()
@@ -31,7 +31,7 @@ class NodeView : NSView
     //MARK: -
     // TODO: Store name in CATextLayer as NSAttributedString? (I: 🔅)
     /// The displayed name of the `NodeView`.
-    public var name : String?
+    public var name: String?
     {
         get
         {
@@ -44,7 +44,7 @@ class NodeView : NSView
         }
     }
     /// The text style attributes used to display the `NodeView` instance's `name`.
-    public var nameAttributes : [NSAttributedString.Key : Any]
+    public var nameAttributes: [NSAttributedString.Key : Any]
     {
         get
         {
@@ -90,13 +90,13 @@ class NodeView : NSView
         }
     }
     /// The `NodeMapView` that contains this `NodeView`.
-    public var nodeMapView : NodeMapView? { return self.superview as? NodeMapView }
+    public var nodeMapView: NodeMapView? { return self.superview as? NodeMapView }
     
     // MARK: -
     /// The sublayer used to display this `NodeView` instance's `name`.
     private var nameLayer = CATextLayer()
     /// The `name` of this `NodeView` with the display attributes applied, as a `NSAttributedString`.
-    private var nameAttributedString : NSAttributedString?
+    private var nameAttributedString: NSAttributedString?
     {
         guard let name = self.name else { return nil }
         return NSAttributedString(string: name, attributes: self.nameAttributes)
@@ -333,7 +333,7 @@ class NodeView : NSView
 }
 
 // MARK: NSAnimationDelegate conformance
-extension NodeView : NSAnimationDelegate
+extension NodeView: NSAnimationDelegate
 {
     func animation(_ animation: NSAnimation,
                    valueForProgress progress: NSAnimation.Progress)

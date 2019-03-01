@@ -8,13 +8,13 @@
 
 import Foundation
 
-class NodeMapView : NSView
+class NodeMapView: NSView
 {
     // MARK: Constants
     /// The length of each line segment used to draw the arrowhead of a connection line.
     public static let arrowheadLength   : CGFloat = 5.5
     /// The minimum distance for a connection line to travel out from a node before curving.
-    public static let arrowClearance    : CGFloat = 12.0
+    public static let arrowClearance	: CGFloat = 12.0
     
     // MARK: -
     /// The distance on each side between the content of this view and its edges
@@ -113,14 +113,14 @@ class NodeMapView : NSView
     {
         for nextConnection in nodeView.outConnections
         {
-            let nextArrow : NSBezierPath
+            let nextArrow: NSBezierPath
             if (nextConnection == nodeView)
             {
                 nextArrow = self.arrow(from: nodeView, to: nodeView, clearing: .over)
             }
             else
             {
-                let clearing : ArrowClearingBehavior =
+                let clearing: ArrowClearingBehavior =
                     nodeView.frame.origin.x <= nextConnection.frame.origin.x ? .out : .under
                 nextArrow = self.arrow(from: nodeView, to: nextConnection, clearing: clearing)
             }
@@ -173,8 +173,8 @@ class NodeMapView : NSView
                 let nextArrowEnd    = toView.inPoint(forView: fromView)
             else { return arrowPath }
         
-        let clearedOutPoint : CGPoint
-        let clearedInPoint  : CGPoint
+        let clearedOutPoint	: CGPoint
+        let clearedInPoint	: CGPoint
         switch clearing
         {
         case .out:
