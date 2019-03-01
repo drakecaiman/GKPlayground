@@ -22,7 +22,7 @@ class NodeMapView : NSView
     /// The width to use when drawing connections between nodes.
     open var connectionLineWidth    : CGFloat = 2.0
     /// The color of node connection lines.
-    open var connectionColor        : NSColor = .gray
+	open var connectionColor        : NSColor = #colorLiteral(red: 0.8694332242, green: 0.8694332242, blue: 0.8694332242, alpha: 1)
     
     // MARK: - NSView properties
     override var isFlipped: Bool { return true }

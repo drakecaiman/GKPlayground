@@ -52,7 +52,7 @@ class NodeView : NSView
                 NSFont.boldSystemFont(ofSize: self.nameLayer.fontSize)
             let font = NSFont(descriptor: currentFont.fontDescriptor, size: self.nameLayer.fontSize)
             return [.font               : font ?? currentFont,
-                    .foregroundColor    : self.nameLayer.foregroundColor ?? .white]
+					.foregroundColor    : self.nameLayer.foregroundColor ?? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
         }
         set
         {
@@ -175,7 +175,7 @@ class NodeView : NSView
         nameLayer.fontSize          = 12.0
         nameLayer.alignmentMode     = .center
         nameLayer.truncationMode    = .end
-        nameLayer.foregroundColor   = .white
+        nameLayer.foregroundColor   = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         // TODO: Adjust on padding set (make padding computed property based on offsets of constriants?) (I: 🔅)
         nameLayer.addConstraint(CAConstraint(attribute:     .minX,
                                              relativeTo:    "superlayer",
