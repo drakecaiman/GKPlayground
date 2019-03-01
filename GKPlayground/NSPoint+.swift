@@ -11,7 +11,7 @@ import Foundation
 extension CGPoint
 {
     /**
-     Add the matching components of two `CGPoint` instances and return the sums as a new point
+     Add the matching components of two `CGPoint` instances and return the sums as a new point.
      
      - Parameter lhs: The `CGPoint` to the left of the operator.
      - Parameter rhs: The `CGPoint` to the right of the operator.
@@ -24,7 +24,8 @@ extension CGPoint
     }
     
     /**
-     Subtract the matching components of two `CGPoint` instances and return the difference as a new point
+     Subtract the matching components of two `CGPoint` instances and return the difference as a new
+	 point
      
      - Parameter lhs: The `CGPoint` to the left of the operator.
      - Parameter rhs: The `CGPoint` to the right of the operator.

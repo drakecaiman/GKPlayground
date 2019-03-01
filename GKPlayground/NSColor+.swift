@@ -15,8 +15,10 @@ extension NSColor
      
      - Parameter int: The hexadecimal value of the color.
      
-     - Returns: A new `NSColor` whose red component is based on the 1st two digits, the green component is based on the second two digits, and the blue component is based on the third digits of the provided hexadecimal. Its alpha component is `1.0`.
-     */
+     - Returns: A new `NSColor` whose red component is based on the 1st two digits, the green
+				component is based on the second two digits, and the blue component is based on the
+				third digits of the provided hexadecimal. Its alpha component is `1.0`.
+	 */
     public convenience init(fromInt int: Int)
     {
         let red     = CGFloat((int & (0xff << 16)) >> 16) / 255.0

@@ -11,7 +11,8 @@ import Foundation
 extension String
 {
     /**
-     Returns the characters of this `String` as an array of `CGGlyph` instances from the given `NSFont`.
+     Returns the characters of this `String` as an array of `CGGlyph` instances from the given
+	 `NSFont`.
      
      - Parameter font: The source font for the glyphs.
      

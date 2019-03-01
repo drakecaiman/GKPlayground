@@ -76,7 +76,8 @@ class NodeMapView: NSView
     }
     
     /**
-     Resizes this view to tightly contain its children `NodeView` instances with the margins specified in `margins`.
+     Resizes this view to tightly contain its children `NodeView` instances with the margins
+	 specified in `margins`.
      */
     private func resizeToFitNodeViews()
     {
@@ -160,7 +161,8 @@ class NodeMapView: NSView
      
      - Parameter fromView:  The `NodeView` the resulting arrow is pointing away from.
      - Parameter toView:    The `NodeView` the resulting arrow is pointing towards.
-     - Parameter clearing:  A `ArrowClearingBehavior` value describing  the direction the arrow should travel
+     - Parameter clearing:  A `ArrowClearingBehavior` value describing  the direction the arrow
+							should travel
     
      - Returns: A `BezierPath` representing the desired arrow.
      */

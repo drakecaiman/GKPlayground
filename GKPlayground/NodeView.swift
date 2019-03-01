@@ -95,13 +95,15 @@ class NodeView: NSView
     // MARK: -
     /// The sublayer used to display this `NodeView` instance's `name`.
     private var nameLayer = CATextLayer()
-    /// The `name` of this `NodeView` with the display attributes applied, as a `NSAttributedString`.
+    /// The `name` of this `NodeView` with the display attributes applied, as a
+	/// `NSAttributedString`.
     private var nameAttributedString: NSAttributedString?
     {
         guard let name = self.name else { return nil }
         return NSAttributedString(string: name, attributes: self.nameAttributes)
     }
-    /// The distance the cursor is from this `NodeView` instance's origin while it is being dragged. Used to set position during a drag operation.
+    /// The distance the cursor is from this `NodeView` instance's origin while it is being dragged.
+	/// Used to set position during a drag operation.
     private var dragOffset: CGPoint?
     
     // MARK: - Initializers
@@ -194,11 +196,13 @@ class NodeView: NSView
     // MARK: -
     // TODO: Combine `inPoint`, `outPoint`, `connectionY` with enum param for direction (I: 🔅)
     /**
-     For a given `NodeView`, returns the point, in this containing `NodeMapView` instance's coordinate space, where that view points to this `NodeView`.
+     For a given `NodeView`, returns the point, in this containing `NodeMapView` instance's
+	 coordinate space, where that view points to this `NodeView`.
      
      - Parameter view: The incoming `NodeView`.
      
-     - Returns: The connection point on this `NodeView` as a `CGPoint` or nil if there is no connection.
+     - Returns: The connection point on this `NodeView` as a `CGPoint` or nil if there is no
+				connection.
      */
     public func inPoint(forView view: NodeView) -> CGPoint?
     {
@@ -209,11 +213,13 @@ class NodeView: NSView
     }
     
     /**
-     Returns the point, in this containing `NodeMapView` instance's coordinate space, where this view connects to the given `NodeView`.
+     Returns the point, in this containing `NodeMapView` instance's coordinate space, where this
+	 view connects to the given `NodeView`.
      
      - Parameter view: The outgoing `NodeView`.
      
-     - Returns: The connection point on this `NodeView` as a `CGPoint` or nil if there is no connection.
+     - Returns: The connection point on this `NodeView` as a `CGPoint` or nil if there is no
+				connection.
      */
     public func outPoint(forView view: NodeView) -> CGPoint?
     {
@@ -225,7 +231,8 @@ class NodeView: NSView
     
     // MARK: -
     /**
-     Sorts the passed `NodeView` array so that any connections to the current instance is the first item.
+     Sorts the passed `NodeView` array so that any connections to the current instance is the first
+	 item.
      
      - Parameter connections: The `NodeView` array to sort.
      */
@@ -239,12 +246,14 @@ class NodeView: NSView
     }
     
     /**
-     Calculates the vertical position for a node connection for given `NodeView` and collection of connections.
+     Calculates the vertical position for a node connection for given `NodeView` and collection of
+	 connections.
      
      - Parameter view:              The referenced `NodeView`.
      - Parameter connectionArray:   The `NodeView` array representing the desired side.
      
-     - Returns: A `CGFloat` for the expected vertial position of the desired node connection. Returns `nil` if the view is not found in the provide array.
+     - Returns: A `CGFloat` for the expected vertial position of the desired node connection.
+				Returns `nil` if the view is not found in the provide array.
      */
     private func connectionY(ofView view: NodeView,
                              forConnectionArray connectionArray: [NodeView])
@@ -280,7 +289,8 @@ class NodeView: NSView
     }
     
     /**
-     Resize this `NodeView` to accommodate its name and the number of connections on either side. The size will not exceed `NodeView.maxSize`, nor go below `NodeView.minSize`.
+     Resize this `NodeView` to accommodate its name and the number of connections on either side.
+	 The size will not exceed `NodeView.maxSize`, nor go below `NodeView.minSize`.
      */
     private func resizeNode()
     {
