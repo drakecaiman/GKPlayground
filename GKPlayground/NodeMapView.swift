@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NodeMapView: NSView
+public class NodeMapView: NSView
 {
 	// MARK: Constants
 	/// The length of each line segment used to draw the arrowhead of a connection line.
@@ -25,7 +25,7 @@ class NodeMapView: NSView
 	open var connectionColor        : NSColor = #colorLiteral(red: 0.8694332242, green: 0.8694332242, blue: 0.8694332242, alpha: 1)
 	
 	// MARK: - NSView properties
-	override var isFlipped: Bool { return true }
+	override public var isFlipped: Bool { return true }
 	
 	// MARK: -
 	/**
@@ -226,17 +226,17 @@ class NodeMapView: NSView
 	}
 	
 	// MARK: - NSView methods
-	override func draw(_ dirtyRect: NSRect)
+	override public func draw(_ dirtyRect: NSRect)
 	{
 		self.drawConnections()
 	}
 	
-	override func didAddSubview(_ subview: NSView)
+	override public func didAddSubview(_ subview: NSView)
 	{
 		self.refresh()
 	}
 	
-	override func willRemoveSubview(_ subview: NSView)
+	override public func willRemoveSubview(_ subview: NSView)
 	{
 		self.refresh()
 	}

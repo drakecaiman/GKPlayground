@@ -12,7 +12,7 @@ import Foundation
  `NodeView` instances are used in conjunction with `NodeMapView` to illustrate connections between
  concepts.
  */
-class NodeView: NSView
+public class NodeView: NSView
 {
 	// MARK: Constants
 	/// The mininum width and height for a `NodeView`.
@@ -316,7 +316,7 @@ class NodeView: NSView
 	}
 	
 	// MARK: - NSResponder methods
-	override func mouseDown(with event: NSEvent)
+	override public func mouseDown(with event: NSEvent)
 	{
 		guard let startingDragPosition = self.superview?.convert(event.locationInWindow, from: nil)
 			else { return }
@@ -324,7 +324,7 @@ class NodeView: NSView
 		self.dragOffset = startingDragPosition - self.frame.origin
 	}
 	
-	override func mouseDragged(with event: NSEvent)
+	override public func mouseDragged(with event: NSEvent)
 	{
 		guard   let dragOffset = self.dragOffset,
 			let currentDragLocation = self.superview?.convert(event.locationInWindow, from: nil)
@@ -334,7 +334,7 @@ class NodeView: NSView
 		self.nodeMapView?.refresh()
 	}
 	
-	override func mouseUp(with event: NSEvent)
+	override public func mouseUp(with event: NSEvent)
 	{
 		self.dragOffset = nil
 		
@@ -345,8 +345,8 @@ class NodeView: NSView
 // MARK: NSAnimationDelegate conformance
 extension NodeView: NSAnimationDelegate
 {
-	func animation(_ animation: NSAnimation,
-				   valueForProgress progress: NSAnimation.Progress)
+	internal func animation(_ animation: NSAnimation,
+							valueForProgress progress: NSAnimation.Progress)
 		-> Float
 	{
 		self.nodeMapView?.refresh()
