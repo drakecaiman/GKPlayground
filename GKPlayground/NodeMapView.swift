@@ -20,7 +20,7 @@ class NodeMapView: NSView
 	/// The distance on each side between the content of this view and its edges
 	open var margins = NSEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
 	/// The width to use when drawing connections between nodes.
-	open var connectionLineWidth    : CGFloat = 2.0
+	open var connectionLineWidth    : CGFloat = 2.7
 	/// The color of node connection lines.
 	open var connectionColor        : NSColor = #colorLiteral(red: 0.8694332242, green: 0.8694332242, blue: 0.8694332242, alpha: 1)
 	
