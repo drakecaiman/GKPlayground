@@ -37,6 +37,19 @@ extension Array: CustomPlaygroundDisplayConvertible where Element == GKState
 {
 	public var playgroundDescription: Any
 	{
+		let scrollViewRect = CGRect(x: 0, y: 0, width: 600, height: 400)
+		let nodeScrollView = NSScrollView(frame: scrollViewRect)
+		nodeScrollView.drawsBackground = false
+		nodeScrollView.documentView = self.stateNodeMapView
+		nodeScrollView.hasVerticalScroller = true
+		nodeScrollView.hasHorizontalScroller = true
+		
+		return nodeScrollView
+	}
+	
+	// TODO: Make public? (I: 🔅)
+	var stateNodeMapView: NodeMapView
+	{
 //      Get connections between states
 		var connections = [String : NSMutableOrderedSet]()
 		for currentState in self
@@ -55,14 +68,7 @@ extension Array: CustomPlaygroundDisplayConvertible where Element == GKState
 		}
 		
 		var nodeViews = [String : NodeView]()
-		let viewRect = CGRect(x: 0, y: 0, width: 800, height: 800)
-		let view = NodeMapView(frame: viewRect)
-		let scrollViewRect = CGRect(x: 0, y: 0, width: 400, height: 400)
-		let nodeScrollView = NSScrollView(frame: scrollViewRect)
-		nodeScrollView.drawsBackground = false
-		nodeScrollView.documentView = view
-		nodeScrollView.hasVerticalScroller = true
-		nodeScrollView.hasHorizontalScroller = true
+		let view = NodeMapView(frame: .zero)
 		
 		let nodeSpacing: CGFloat = 25.0
 		var nodeOrigin = CGPoint(x: view.margins.left + NodeMapView.arrowClearance,
@@ -97,7 +103,7 @@ extension Array: CustomPlaygroundDisplayConvertible where Element == GKState
 			}
 		}
 		
-		return nodeScrollView
+		return view
 	}
 }
 
