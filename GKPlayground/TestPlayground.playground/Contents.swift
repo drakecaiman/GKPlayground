@@ -3,6 +3,16 @@ import GameplayKit
 import PlaygroundSupport
 import GKPlayground
 
+extension Array: PlaygroundLiveViewable where Element == GKState
+{
+	public var playgroundLiveViewRepresentation: PlaygroundLiveViewRepresentation
+	{
+//		let liveView = self.playgroundDescription as! NSScrollView
+//		liveView.frame = CGRect(x: 0.0, y: 0.0, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
+		return .view(self.playgroundDescription as! NSView)
+	}
+}
+
 // Define some example states
 class Loop1State : GKState
 {
@@ -148,7 +158,4 @@ let states = [TestingForAStateWithALongNameState(),
               Out2State(),
               Out3State()]
 
-if let view = (states.playgroundDescription as? NSView)
-{
-    PlaygroundPage.current.liveView = view
-}
+PlaygroundPage.current.liveView = states

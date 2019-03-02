@@ -15,6 +15,7 @@ extension GKState: CustomPlaygroundDisplayConvertible
 		return self.stateNodeView
 	}
 	
+	// TODO: Make public? (I: 🔅)
 	/// A `NodeView` formatted and populated to represent this state.
 	var stateNodeView: NodeView
 	{
@@ -99,3 +100,9 @@ extension Array: CustomPlaygroundDisplayConvertible where Element == GKState
 		return nodeScrollView
 	}
 }
+
+// TODO: PlaygroundLiveViewable defined in this file and not playground (I: 🔆)
+//extension Array: PlaygroundLiveViewable where Element == GKState
+//{
+//	public playgroun
+//}
