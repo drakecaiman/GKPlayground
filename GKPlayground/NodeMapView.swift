@@ -166,7 +166,10 @@ class NodeMapView: NSView
 	
 	 - Returns: A `BezierPath` representing the desired arrow.
 	 */
-	private func arrow(from fromView: NodeView, to toView: NodeView, clearing: ArrowClearingBehavior = .out) -> NSBezierPath
+	private func arrow(from fromView: NodeView,
+					   to toView: NodeView,
+					   clearing: ArrowClearingBehavior = .out)
+		-> NSBezierPath
 	{
 		let arrowPath = self.newArrowPath()
 		guard   fromView.isDescendant(of: self),
@@ -175,8 +178,8 @@ class NodeMapView: NSView
 			let nextArrowEnd    = toView.inPoint(forView: fromView)
 			else { return arrowPath }
 		
-		let clearedOutPoint	: CGPoint
-		let clearedInPoint	: CGPoint
+		let clearedOutPoint: CGPoint
+		let clearedInPoint: CGPoint
 		switch clearing
 		{
 		case .out:

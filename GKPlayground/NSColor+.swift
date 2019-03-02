@@ -28,5 +28,5 @@ extension NSColor
 	}
 }
 
-// TODO: UIColor equivalent? (II:  🔅)
-// TODO: CGColor equivalent? (II:  🔅)
+// TODO: UIColor equivalent? (II: 🔅)
+// TODO: CGColor equivalent? (II: 🔅)
