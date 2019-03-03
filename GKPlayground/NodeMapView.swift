@@ -25,6 +25,7 @@ open class NodeMapView: NSView
 	open var connectionColor        : NSColor = #colorLiteral(red: 0.8694332242, green: 0.8694332242, blue: 0.8694332242, alpha: 1)
 	
 	// MARK: - NSView properties
+	// TODO: Add check for isFlipped to drawing now that open? (I: 🔅)
 	override open var isFlipped: Bool { return true }
 	
 	// MARK: -

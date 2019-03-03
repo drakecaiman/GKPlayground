@@ -95,9 +95,9 @@
 				AE0A40852210407D00910538 /* NodeView.swift */,
 				AEE809BD2211E0FC0009E017 /* NodeMapView.swift */,
 				AE1FF94C22258585001C713F /* NSBezierPath+Arrows.swift */,
-				AE05AD5E22196F260038FD28 /* NSPoint+.swift */,
 				AE05AD6022196F7E0038FD28 /* String+.swift */,
 				AE7CF3A92221C29F005E435A /* Comparable+.swift */,
+				AE05AD5E22196F260038FD28 /* NSPoint+.swift */,
 				AE186DFD2214235C0066DEFD /* NSColor+.swift */,
 			);
 			path = GKPlayground;
