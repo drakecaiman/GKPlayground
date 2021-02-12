@@ -3,6 +3,8 @@ import GameplayKit
 import PlaygroundSupport
 import GKPlayground
 
+// TODO: Normalize comparison expression for `isValidNextState` overrides
+// TODO: Move Array extension to package?
 extension Array: PlaygroundLiveViewable where Element == GKState
 {
 	public var playgroundLiveViewRepresentation: PlaygroundLiveViewRepresentation
@@ -72,11 +74,7 @@ class MultipleOutState : GKState
     {
         switch stateClass
         {
-        case is Out1State.Type:
-            fallthrough
-        case is Out2State.Type:
-            fallthrough
-        case is Out3State.Type:
+        case Out1State.Type, Out2State.Type, Out3State.Type:
             return true
         default:
             return false

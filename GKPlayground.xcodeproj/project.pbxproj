@@ -12,9 +12,7 @@
 		AE0A40862210407D00910538 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0A40852210407D00910538 /* NodeView.swift */; };
 		AE186DFE2214235C0066DEFD /* NSColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE186DFD2214235C0066DEFD /* NSColor+.swift */; };
 		AE1FF94D22258585001C713F /* NSBezierPath+Arrows.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1FF94C22258585001C713F /* NSBezierPath+Arrows.swift */; };
-		AE1FF94F222C0366001C713F /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1FF94E222C0366001C713F /* Node.swift */; };
 		AE7CF3AA2221C29F005E435A /* Comparable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7CF3A92221C29F005E435A /* Comparable+.swift */; };
-		AE8FCB852237EAD200769C46 /* demo.gif in Resources */ = {isa = PBXBuildFile; fileRef = AE8FCB842237EAD200769C46 /* demo.gif */; };
 		AEB131CE220ABFC800005B8F /* GKPlayground.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEB131C4220ABFC700005B8F /* GKPlayground.framework */; };
 		AEB131D3220ABFC800005B8F /* GKPlaygroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB131D2220ABFC800005B8F /* GKPlaygroundTests.swift */; };
 		AEB131D5220ABFC800005B8F /* GKPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = AEB131C7220ABFC700005B8F /* GKPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -38,10 +36,7 @@
 		AE0A40852210407D00910538 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
 		AE186DFD2214235C0066DEFD /* NSColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+.swift"; sourceTree = "<group>"; };
 		AE1FF94C22258585001C713F /* NSBezierPath+Arrows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+Arrows.swift"; sourceTree = "<group>"; };
-		AE1FF94E222C0366001C713F /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		AE7CF3A92221C29F005E435A /* Comparable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+.swift"; sourceTree = "<group>"; };
-		AE8FCB832237E7A300769C46 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		AE8FCB842237EAD200769C46 /* demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = demo.gif; sourceTree = "<group>"; };
 		AEB131C4220ABFC700005B8F /* GKPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GKPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEB131C7220ABFC700005B8F /* GKPlayground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKPlayground.h; sourceTree = "<group>"; };
 		AEB131C8220ABFC700005B8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -93,12 +88,10 @@
 		AEB131C6220ABFC700005B8F /* GKPlayground */ = {
 			isa = PBXGroup;
 			children = (
-				AE8FCB842237EAD200769C46 /* demo.gif */,
 				AEB131E0220AC35900005B8F /* TestPlayground.playground */,
 				AEB131C7220ABFC700005B8F /* GKPlayground.h */,
 				AEB131C8220ABFC700005B8F /* Info.plist */,
 				AEB131DE220AC26000005B8F /* GKStateMachine+ CustomPlaygroundDisplayConvertible .swift */,
-				AE1FF94E222C0366001C713F /* Node.swift */,
 				AE0A40852210407D00910538 /* NodeView.swift */,
 				AEE809BD2211E0FC0009E017 /* NodeMapView.swift */,
 				AE1FF94C22258585001C713F /* NSBezierPath+Arrows.swift */,
@@ -106,7 +99,6 @@
 				AE7CF3A92221C29F005E435A /* Comparable+.swift */,
 				AE05AD5E22196F260038FD28 /* NSPoint+.swift */,
 				AE186DFD2214235C0066DEFD /* NSColor+.swift */,
-				AE8FCB832237E7A300769C46 /* README.md */,
 			);
 			path = GKPlayground;
 			sourceTree = "<group>";
@@ -182,10 +174,11 @@
 				TargetAttributes = {
 					AEB131C3220ABFC700005B8F = {
 						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1240;
 					};
 					AEB131CC220ABFC800005B8F = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1240;
 					};
 				};
 			};
@@ -212,7 +205,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE8FCB852237EAD200769C46 /* demo.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,7 +225,6 @@
 				AE7CF3AA2221C29F005E435A /* Comparable+.swift in Sources */,
 				AE05AD5F22196F260038FD28 /* NSPoint+.swift in Sources */,
 				AE05AD6122196F7E0038FD28 /* String+.swift in Sources */,
-				AE1FF94F222C0366001C713F /* Node.swift in Sources */,
 				AE186DFE2214235C0066DEFD /* NSColor+.swift in Sources */,
 				AE1FF94D22258585001C713F /* NSBezierPath+Arrows.swift in Sources */,
 				AE0A40862210407D00910538 /* NodeView.swift in Sources */,
@@ -406,7 +397,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -433,7 +424,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = highjacks.GKPlayground;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -452,7 +443,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = highjacks.GKPlaygroundTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -471,7 +462,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = highjacks.GKPlaygroundTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

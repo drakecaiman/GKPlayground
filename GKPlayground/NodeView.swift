@@ -345,7 +345,7 @@ open class NodeView: NSView
 // MARK: NSAnimationDelegate conformance
 extension NodeView: NSAnimationDelegate
 {
-	internal func animation(_ animation: NSAnimation,
+  public func animation(_ animation: NSAnimation,
 							valueForProgress progress: NSAnimation.Progress)
 		-> Float
 	{
