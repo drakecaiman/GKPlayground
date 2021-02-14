@@ -32,6 +32,7 @@ class Loop2State : GKState
     }
     
 }
+
 class Loop3State : GKState
 {
     override func isValidNextState(_ stateClass: AnyClass) -> Bool
@@ -74,7 +75,7 @@ class MultipleOutState : GKState
     {
         switch stateClass
         {
-        case Out1State.Type, Out2State.Type, Out3State.Type:
+        case is Out1State.Type, is Out2State.Type, is Out3State.Type:
             return true
         default:
             return false

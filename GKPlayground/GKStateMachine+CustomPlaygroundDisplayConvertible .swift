@@ -1,5 +1,5 @@
 //
-//  GKStateMachine+ CustomPlaygroundDisplayConvertible .swift
+//  GKStateMachine+CustomPlaygroundDisplayConvertible .swift
 //  GKPlayground
 //
 //  Created by Duncan on 2/6/19.
