@@ -7,68 +7,139 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		47891D5125D70FC800637AD1 /* GKPlayground */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GKPlayground; path = "../../../../Library/Autosave Information/GKPlayground"; sourceTree = "<group>"; };
-		AEB131CD220ABFC800005B8F /* GKPlaygroundTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GKPlaygroundTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AEB131E0220AC35900005B8F /* TestPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TestPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		471F677025D998100024F40E /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
+		471F677225D998100024F40E /* GKPlaygroundTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GKPlaygroundTests.swift; sourceTree = "<group>"; };
+		471F677325D998100024F40E /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
+		471F677425D998100024F40E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		471F677525D998100024F40E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		471F677625D998100024F40E /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		471F677925D998100024F40E /* NSColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+.swift"; sourceTree = "<group>"; };
+		471F677A25D998100024F40E /* Comparable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+.swift"; sourceTree = "<group>"; };
+		471F677B25D998100024F40E /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		471F677C25D998100024F40E /* NSPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPoint+.swift"; sourceTree = "<group>"; };
+		471F677D25D998100024F40E /* NodeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeMapView.swift; sourceTree = "<group>"; };
+		471F677E25D998100024F40E /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
+		471F677F25D998100024F40E /* GKStateMachine+CustomPlaygroundDisplayConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GKStateMachine+CustomPlaygroundDisplayConvertible.swift"; sourceTree = "<group>"; };
+		471F678025D998100024F40E /* NSBezierPath+Arrows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+Arrows.swift"; sourceTree = "<group>"; };
+		471F678625D998100024F40E /* xcschememanagement.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcschememanagement.plist; sourceTree = "<group>"; };
+		471F678925D998100024F40E /* GKPlayground.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GKPlayground.xcscheme; sourceTree = "<group>"; };
+		471F678A25D9993F0024F40E /* demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = demo.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFrameworksBuildPhase section */
-		AEB131CA220ABFC800005B8F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
 /* Begin PBXGroup section */
+		471F676E25D998100024F40E /* GKPlayground */ = {
+			isa = PBXGroup;
+			children = (
+				471F677625D998100024F40E /* Package.swift */,
+				471F677425D998100024F40E /* README.md */,
+				471F678A25D9993F0024F40E /* demo.gif */,
+				471F677725D998100024F40E /* Sources */,
+				471F676F25D998100024F40E /* Tests */,
+				471F677525D998100024F40E /* .gitignore */,
+				471F678125D998100024F40E /* .swiftpm */,
+			);
+			name = GKPlayground;
+			path = "../../../Library/Autosave Information/GKPlayground";
+			sourceTree = "<group>";
+		};
+		471F676F25D998100024F40E /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				471F677025D998100024F40E /* LinuxMain.swift */,
+				471F677125D998100024F40E /* GKPlaygroundTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		471F677125D998100024F40E /* GKPlaygroundTests */ = {
+			isa = PBXGroup;
+			children = (
+				471F677225D998100024F40E /* GKPlaygroundTests.swift */,
+				471F677325D998100024F40E /* XCTestManifests.swift */,
+			);
+			path = GKPlaygroundTests;
+			sourceTree = "<group>";
+		};
+		471F677725D998100024F40E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				471F677925D998100024F40E /* NSColor+.swift */,
+				471F677A25D998100024F40E /* Comparable+.swift */,
+				471F677B25D998100024F40E /* String+.swift */,
+				471F677C25D998100024F40E /* NSPoint+.swift */,
+				471F677D25D998100024F40E /* NodeMapView.swift */,
+				471F677E25D998100024F40E /* NodeView.swift */,
+				471F677F25D998100024F40E /* GKStateMachine+CustomPlaygroundDisplayConvertible.swift */,
+				471F678025D998100024F40E /* NSBezierPath+Arrows.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		471F678125D998100024F40E /* .swiftpm */ = {
+			isa = PBXGroup;
+			children = (
+				471F678225D998100024F40E /* xcode */,
+			);
+			path = .swiftpm;
+			sourceTree = "<group>";
+		};
+		471F678225D998100024F40E /* xcode */ = {
+			isa = PBXGroup;
+			children = (
+				471F678325D998100024F40E /* xcuserdata */,
+				471F678725D998100024F40E /* xcshareddata */,
+			);
+			path = xcode;
+			sourceTree = "<group>";
+		};
+		471F678325D998100024F40E /* xcuserdata */ = {
+			isa = PBXGroup;
+			children = (
+				471F678425D998100024F40E /* duncanoliver.xcuserdatad */,
+			);
+			path = xcuserdata;
+			sourceTree = "<group>";
+		};
+		471F678425D998100024F40E /* duncanoliver.xcuserdatad */ = {
+			isa = PBXGroup;
+			children = (
+				471F678525D998100024F40E /* xcschemes */,
+			);
+			path = duncanoliver.xcuserdatad;
+			sourceTree = "<group>";
+		};
+		471F678525D998100024F40E /* xcschemes */ = {
+			isa = PBXGroup;
+			children = (
+				471F678625D998100024F40E /* xcschememanagement.plist */,
+			);
+			path = xcschemes;
+			sourceTree = "<group>";
+		};
+		471F678725D998100024F40E /* xcshareddata */ = {
+			isa = PBXGroup;
+			children = (
+				471F678825D998100024F40E /* xcschemes */,
+			);
+			path = xcshareddata;
+			sourceTree = "<group>";
+		};
+		471F678825D998100024F40E /* xcschemes */ = {
+			isa = PBXGroup;
+			children = (
+				471F678925D998100024F40E /* GKPlayground.xcscheme */,
+			);
+			path = xcschemes;
+			sourceTree = "<group>";
+		};
 		AEB131BA220ABFC700005B8F = {
 			isa = PBXGroup;
 			children = (
-				AEB131C6220ABFC700005B8F /* GKPlayground */,
-				AEB131C5220ABFC700005B8F /* Products */,
+				471F676E25D998100024F40E /* GKPlayground */,
 			);
-			sourceTree = "<group>";
-		};
-		AEB131C5220ABFC700005B8F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AEB131CD220ABFC800005B8F /* GKPlaygroundTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AEB131C6220ABFC700005B8F /* GKPlayground */ = {
-			isa = PBXGroup;
-			children = (
-				47891D5125D70FC800637AD1 /* GKPlayground */,
-				AEB131E0220AC35900005B8F /* TestPlayground.playground */,
-			);
-			path = GKPlayground;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		AEB131CC220ABFC800005B8F /* GKPlaygroundTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AEB131DB220ABFC800005B8F /* Build configuration list for PBXNativeTarget "GKPlaygroundTests" */;
-			buildPhases = (
-				AEB131C9220ABFC800005B8F /* Sources */,
-				AEB131CA220ABFC800005B8F /* Frameworks */,
-				AEB131CB220ABFC800005B8F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = GKPlaygroundTests;
-			productName = GKPlaygroundTests;
-			productReference = AEB131CD220ABFC800005B8F /* GKPlaygroundTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-/* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		AEB131BB220ABFC700005B8F /* Project object */ = {
@@ -77,12 +148,6 @@
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = Duncan;
-				TargetAttributes = {
-					AEB131CC220ABFC800005B8F = {
-						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1240;
-					};
-				};
 			};
 			buildConfigurationList = AEB131BE220ABFC700005B8F /* Build configuration list for PBXProject "GKPlayground" */;
 			compatibilityVersion = "Xcode 9.3";
@@ -93,34 +158,13 @@
 				Base,
 			);
 			mainGroup = AEB131BA220ABFC700005B8F;
-			productRefGroup = AEB131C5220ABFC700005B8F /* Products */;
+			productRefGroup = AEB131BA220ABFC700005B8F;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AEB131CC220ABFC800005B8F /* GKPlaygroundTests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		AEB131CB220ABFC800005B8F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		AEB131C9220ABFC800005B8F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 		AEB131D6220ABFC800005B8F /* Debug */ = {
@@ -246,42 +290,6 @@
 			};
 			name = Release;
 		};
-		AEB131DC220ABFC800005B8F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 957R77FUYX;
-				INFOPLIST_FILE = GKPlaygroundTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = highjacks.GKPlaygroundTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		AEB131DD220ABFC800005B8F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 957R77FUYX;
-				INFOPLIST_FILE = GKPlaygroundTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = highjacks.GKPlaygroundTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -290,15 +298,6 @@
 			buildConfigurations = (
 				AEB131D6220ABFC800005B8F /* Debug */,
 				AEB131D7220ABFC800005B8F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AEB131DB220ABFC800005B8F /* Build configuration list for PBXNativeTarget "GKPlaygroundTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AEB131DC220ABFC800005B8F /* Debug */,
-				AEB131DD220ABFC800005B8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
