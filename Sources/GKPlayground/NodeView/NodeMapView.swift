@@ -44,6 +44,7 @@ open class NodeMapView: NSView
 	 */
 	private func layoutNodes()
 	{
+//  TODO: Layout (Things)
 		//        var layoutGrid = [Int : (Int, Int)]()
 		//        var nextPosition = (0,0)
 		//        var nodeOrigin = CGPoint(x: NodeMapView.margin.width + NodeMapView.arrowClearance,
@@ -209,19 +210,6 @@ open class NodeMapView: NSView
 						controlPoint2: clearedInPoint)
 		
 		arrowPath.addArrowhead()
-		
-		//        if connections[nextExitState]?.contains(nextStateName) ?? false
-		//        {
-		//            arrowPath.move(to: nextArrowStart)
-		//            arrowPath.relativeLine(to: CGPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
-		//                                               y: arrowheadLength * sin(CGFloat.pi / 4)))
-		//            arrowPath.move(to: nextArrowStart)
-		//            arrowPath.relativeLine(to: CGPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
-		//                                               y: -arrowheadLength * sin(CGFloat.pi / 4)))
-		//
-		//            //                      Remove state
-		//            connections[nextExitState]?.remove(nextStateName)
-		//        }
 		
 		return arrowPath
 	}

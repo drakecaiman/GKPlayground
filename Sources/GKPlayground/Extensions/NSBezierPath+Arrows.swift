@@ -23,4 +23,18 @@ extension NSBezierPath
 		self.relativeLine(to: CGPoint(x: -NodeMapView.arrowheadLength * cos(CGFloat.pi / 4),
 									  y: NodeMapView.arrowheadLength * sin(CGFloat.pi / 4)))
 	}
+
+//  TODO: Add start-point arrowhead
+//  if connections[nextExitState]?.contains(nextStateName) ?? false
+//  {
+//  arrowPath.move(to: nextArrowStart)
+//  arrowPath.relativeLine(to: CGPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
+//  y: arrowheadLength * sin(CGFloat.pi / 4)))
+//  arrowPath.move(to: nextArrowStart)
+//  arrowPath.relativeLine(to: CGPoint(x: arrowheadLength * cos(CGFloat.pi / 4),
+//  y: -arrowheadLength * sin(CGFloat.pi / 4)))
+//
+//  //                      Remove state
+//  connections[nextExitState]?.remove(nextStateName)
+//  }
 }
