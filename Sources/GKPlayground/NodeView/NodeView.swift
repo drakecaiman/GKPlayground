@@ -14,7 +14,7 @@ import Cocoa
  */
 open class NodeView: NSView
 {
-	// MARK: Constants
+  // MARK: Constants
 	/// The mininum width and height for a `NodeView`.
 	public static let minSize = CGSize(width: 100.0, height: 32.0)
 	/// The maximum width and height for a `NodeView`.
@@ -278,7 +278,7 @@ open class NodeView: NSView
 		guard newOrigin != self.frame.origin else { return }
 		let newRect = CGRect(origin: newOrigin, size: self.frame.size)
 		
-		//      Make move animations
+//  Make move animations
 		let moveAnimations : [NSViewAnimation.Key : Any] = [.startFrame:    self.frame,
 															.endFrame:      newRect,
 															.target:        self]
@@ -294,14 +294,14 @@ open class NodeView: NSView
 	 */
 	private func resizeNode()
 	{
-//      Caluclate height based on the most number of connections on a side
+//  Calculate height based on the most number of connections on a side
 		let maxConnectionPerSide    = max(self.inConnections.count, self.outConnections.count)
 		let currentBorderWidth      = self.layer?.borderWidth ?? 0.0
 		let currentCornerRadius     = self.layer?.cornerRadius ?? 0.0
 		let nodeHeight =
 			2.0 * (currentCornerRadius + currentBorderWidth)
 				+ (CGFloat(max(maxConnectionPerSide - 1, 0)) * NodeView.connectionSpacing)
-//      Calculate width based on node name
+//  Calculate width based on node name
 		let maxStringSize = self.nameAttributedString?.size() ?? .zero
 		let nodeWidth = ceil(maxStringSize.width)
 			+ self.padding.left
@@ -309,7 +309,7 @@ open class NodeView: NSView
 		self.frame.size = CGSize(
 			width:  nodeWidth.clamped(to: NodeView.minSize.width...NodeView.maxSize.width),
 			height: nodeHeight.clamped(to: NodeView.minSize.height...NodeView.maxSize.height))
-//      Recalculate name layer height
+//  Recalculate name layer height
 		self.nameLayer.frame.size.height = maxStringSize.height
 		
 		self.nodeMapView?.refresh()
