@@ -89,12 +89,24 @@ open class NodeMapView: NSView
 			let maxY = furthestYView?.frame.maxY
 			else { return }
 		
-		let newFrameRect = CGRect(x:        0.0,
-								  y:        0.0,
-								  width:    maxX + self.margins.left + self.margins.right,
+		let newFrameRect = CGRect(x:  0.0,
+                              y:  0.0,
+                              width:  maxX + self.margins.left + self.margins.right,
 								  height:   maxY + self.margins.top + self.margins.bottom)
 		self.frame = newFrameRect
 	}
+
+  /**
+   Clear all connection sublayers in view.
+   */
+  private func clearConnections()
+  {
+    guard let sublayers = (self.layer?.sublayers?.filter { $0.name == "connection" }) else { return }
+    for nextLayer in sublayers
+    {
+      nextLayer.removeFromSuperlayer()
+    }
+  }
 	
 	/**
 	 Draw all connections for each `NodeView` in this view.
@@ -116,7 +128,7 @@ open class NodeMapView: NSView
 	{
 		for nextConnection in nodeView.outConnections
 		{
-			let nextArrow: NSBezierPath
+      let nextArrow : CGPath
 			if (nextConnection == nodeView)
 			{
 				nextArrow = self.arrow(from: nodeView, to: nodeView, clearing: .over)
@@ -127,8 +139,15 @@ open class NodeMapView: NSView
 					nodeView.frame.origin.x <= nextConnection.frame.origin.x ? .out : .under
 				nextArrow = self.arrow(from: nodeView, to: nextConnection, clearing: clearing)
 			}
-			self.connectionColor.setStroke()
-			nextArrow.stroke()
+
+      let layer = CAShapeLayer()
+      layer.path = nextArrow
+      layer.name = "connection"
+      layer.fillColor = .clear
+      layer.strokeColor = connectionColor.cgColor
+      layer.lineCap = .square
+      layer.lineWidth = connectionLineWidth
+      self.layer?.addSublayer(layer)
 		}
 	}
 	
@@ -158,7 +177,63 @@ open class NodeMapView: NSView
 		/// The arrow travels below the node.
 		case under
 	}
-	// TODO: Make optional? (I: 🔅)
+//TODO: Make optional? (I: 🔅)
+//TODO: Consolidate with `NSBezierPath` method
+  /**
+   Creates a new `CGPath` for an arrow pointing from one `NodeView` to another.
+
+   - Parameter fromView:  The `NodeView` the resulting arrow is pointing away from.
+   - Parameter toView:    The `NodeView` the resulting arrow is pointing towards.
+   - Parameter clearing:  A `ArrowClearingBehavior` value describing  the direction the arrow
+                          should travel
+
+   - Returns: A `CGPath` representing the desired arrow.
+   */
+  private func arrow(from fromView: NodeView,
+                     to   toView: NodeView,
+                          clearing: ArrowClearingBehavior = .out)
+    -> CGPath
+  {
+    let arrowPath = CGMutablePath()
+    guard   fromView.isDescendant(of: self),
+            toView.isDescendant(of: self),
+            let nextArrowStart  = fromView.outPoint(forView: toView),
+            let nextArrowEnd    = toView.inPoint(forView: fromView)
+            else { return arrowPath }
+
+    let clearedOutPoint: CGPoint
+    let clearedInPoint: CGPoint
+    switch clearing
+    {
+    case .out:
+      let lateralDistance = max(abs(nextArrowEnd.x - nextArrowStart.x),
+                    NodeMapView.arrowClearance)
+      clearedOutPoint = CGPoint(x: nextArrowStart.x + lateralDistance, y: nextArrowStart.y)
+      clearedInPoint  = CGPoint(x: nextArrowEnd.x - lateralDistance, y: nextArrowEnd.y)
+    case .over:
+//    TODO: Factor out constant
+      let distanceFromTopOut = nextArrowStart.y - fromView.frame.minY
+      clearedOutPoint = CGPoint(x: nextArrowStart.x + fromView.frame.width,
+                    y: nextArrowStart.y - 3.25 * distanceFromTopOut)
+      let distanceFromTopIn = nextArrowEnd.y - toView.frame.minY
+      clearedInPoint = CGPoint(x: nextArrowEnd.x - toView.frame.width,
+                   y: nextArrowEnd.y - 3.25 * distanceFromTopIn)
+    case .under:
+      let distanceFromBottomOut = fromView.frame.maxY - nextArrowStart.y
+      clearedOutPoint = CGPoint(x: nextArrowStart.x + fromView.frame.width,
+                    y: nextArrowStart.y + 3.25 * distanceFromBottomOut)
+      let distanceFromBottomIn = toView.frame.maxY - nextArrowEnd.y
+      clearedInPoint = CGPoint(x: nextArrowEnd.x - toView.frame.width,
+                   y: nextArrowEnd.y + 3.25 * distanceFromBottomIn)
+    }
+    arrowPath.move(to: nextArrowStart)
+    arrowPath.addCurve(to: nextArrowEnd, control1: clearedOutPoint, control2: clearedInPoint)
+
+    arrowPath.addArrowhead()
+
+    return arrowPath
+  }
+
 	/**
 	 Creates a new `NSBezierPath` for an arrow pointing from one `NodeView` to another.
 	
@@ -167,7 +242,7 @@ open class NodeMapView: NSView
 	 - Parameter clearing:  A `ArrowClearingBehavior` value describing  the direction the arrow
                           should travel
 	
-	 - Returns: A `BezierPath` representing the desired arrow.
+	 - Returns: A `NSBezierPath` representing the desired arrow.
 	 */
 	private func arrow(from fromView: NodeView,
 					   to toView: NodeView,
@@ -219,6 +294,7 @@ open class NodeMapView: NSView
 	// MARK: - NSView methods
 	override open func draw(_ dirtyRect: NSRect)
 	{
+    self.clearConnections()
 		self.drawConnections()
 	}
 	
