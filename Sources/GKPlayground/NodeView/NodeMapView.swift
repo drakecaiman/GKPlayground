@@ -140,6 +140,7 @@ open class NodeMapView: NSView
 	private func newArrowPath() -> NSBezierPath
 	{
 		let path = NSBezierPath()
+    path.lineCapStyle = .square
 		path.lineWidth = self.connectionLineWidth
 		
 		return path
@@ -164,7 +165,7 @@ open class NodeMapView: NSView
 	 - Parameter fromView:  The `NodeView` the resulting arrow is pointing away from.
 	 - Parameter toView:    The `NodeView` the resulting arrow is pointing towards.
 	 - Parameter clearing:  A `ArrowClearingBehavior` value describing  the direction the arrow
-							should travel
+                          should travel
 	
 	 - Returns: A `BezierPath` representing the desired arrow.
 	 */
@@ -190,6 +191,7 @@ open class NodeMapView: NSView
 			clearedOutPoint = CGPoint(x: nextArrowStart.x + lateralDistance, y: nextArrowStart.y)
 			clearedInPoint  = CGPoint(x: nextArrowEnd.x - lateralDistance, y: nextArrowEnd.y)
 		case .over:
+//    TODO: Factor out constant
 			let distanceFromTopOut = nextArrowStart.y - fromView.frame.minY
 			clearedOutPoint = CGPoint(x: nextArrowStart.x + fromView.frame.width,
 									  y: nextArrowStart.y - 3.25 * distanceFromTopOut)

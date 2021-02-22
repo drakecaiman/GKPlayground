@@ -1,4 +1,3 @@
-import Cocoa
 import GameplayKit
 import PlaygroundSupport
 import GKPlayground
