@@ -1,5 +1,6 @@
 import GameplayKit
 import PlaygroundSupport
+import SwiftUI
 import GKPlayground
 
 // TODO: Normalize comparison expression for `isValidNextState` overrides
@@ -11,7 +12,14 @@ extension Array: PlaygroundLiveViewable where Element == GKState
 //		let liveView = self.playgroundDescription as! NSScrollView
 //		liveView.frame = CGRect(x: 0.0, y: 0.0, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
 		return .view(self.playgroundDescription as! NSView)
+//    return .view(self.playgroundDescription as! View)
 	}
+}
+
+extension GKState
+{
+  var node : Node
+//  var node : Node {  }
 }
 
 // Define some example states
@@ -157,3 +165,4 @@ let states = [TestingForAStateWithALongNameState(),
               Out3State()]
 
 PlaygroundPage.current.liveView = states
+//PlaygroundPage.current.setLiveView(sta)
