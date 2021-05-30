@@ -138,7 +138,7 @@ struct Test_Previews : PreviewProvider
   {
     let states = [TestingForAStateWithALongNameState(),
                   Loop1State(),
-                  Loop2State(),ß
+                  Loop2State(),
                   Loop3State(),
                   NoneState(),
                   SelfState(),
