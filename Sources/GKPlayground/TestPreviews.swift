@@ -1,9 +1,14 @@
-import GameplayKit
-import PlaygroundSupport
-import SwiftUI
-import GKPlayground
+//
+//  File.swift
+//  
+//
+//  Created by Duncan Oliver on 5/4/21.
+//
 
-// TODO: Normalize comparison expression for `isValidNextState` overrides
+import Foundation
+import GameplayKit
+import SwiftUI
+
 // Define some example states
 class Loop1State : GKState
 {
@@ -26,7 +31,7 @@ class Loop3State : GKState
     {
         return stateClass == Loop1State.self
     }
-    
+
 }
 class NoneState : GKState
 {
@@ -127,26 +132,35 @@ class TestingForAStateWithALongNameState : GKState
     }
 }
 
-let states = [TestingForAStateWithALongNameState(),
-              Loop1State(),
-              Loop2State(),
-              Loop3State(),
-              NoneState(),
-              SelfState(),
-              OutState(),
-              InState(),
-              In1State(),
-              In2State(),
-              In3State(),
-              MultipleInState(),
-              MultipleOutState(),
-              Out1State(),
-              Out2State(),
-              Out3State()]
-
-let view =
-  ScrollView
+struct Test_Previews : PreviewProvider
+{
+  static var previews: some View
   {
-    states.nodeMapView
+    let states = [TestingForAStateWithALongNameState(),
+                  Loop1State(),
+                  Loop2State(),ß
+                  Loop3State(),
+                  NoneState(),
+                  SelfState(),
+                  OutState(),
+                  InState(),
+                  In1State(),
+                  In2State(),
+                  In3State(),
+                  MultipleInState(),
+                  MultipleOutState(),
+                  Out1State(),
+                  Out2State(),
+                  Out3State()]
+
+    let nodeMap = NodeMap(fromStates: states)
+    let bodyMap = BodyMap(withNodeMap: nodeMap)
+    let view = NodeMapView(withBodyMap: bodyMap)
+
+    ScrollView([.horizontal, .vertical], showsIndicators: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+    {
+      view
+    }
   }
-PlaygroundPage.current.setLiveView(view)
+}
+

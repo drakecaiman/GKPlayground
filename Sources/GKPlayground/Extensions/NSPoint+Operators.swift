@@ -61,3 +61,8 @@ extension CGPoint
 		lhs.y -= rhs.y
 	}
 }
+
+func abs(_ point: CGPoint) -> CGPoint
+{
+  return CGPoint(x: abs(point.x), y: abs(point.y))
+}

@@ -7,10 +7,25 @@
 
 import Foundation
 
-struct Node : Identifiable
+public struct Node : Identifiable, Element
 {
-  var id : UUID = UUID()
-  var name : String
-  var input : [Node]?
-  var output : [Node]?
+  public var name : String?
+  public var inIDs : [Port.ID]?
+  public var outIDs : [Port.ID]?
+  public let id : String = UUID().uuidString
+}
+
+// MARK: Initializers
+extension Node
+{
+  public init(withName name: String)
+  {
+    self.name = name
+  }
+}
+
+// MARK: ProducesBody
+extension Node
+{
+  public var body : Body { NodeBody(withNode: self) }
 }
