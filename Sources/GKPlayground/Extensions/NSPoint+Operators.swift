@@ -60,6 +60,19 @@ extension CGPoint
 		lhs.x -= rhs.x
 		lhs.y -= rhs.y
 	}
+  
+  /**
+   Add the components of a `CGPoint` instance and `CGSize` instance and return the sums as a new point.
+  
+   - Parameter lhs: The `CGPoint` to the left of the operator.
+   - Parameter rhs: The `CGSize` to the right of the operator.
+  
+   - Returns: A new `CGPoint` composed of the sum of each given point's components.
+   */
+  public static func +(lhs: CGPoint, rhs: CGSize) -> CGPoint
+  {
+    return CGPoint(x: lhs.x + rhs.width, y: lhs.y + rhs.height)
+  }
 }
 
 func abs(_ point: CGPoint) -> CGPoint

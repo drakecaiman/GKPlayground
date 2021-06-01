@@ -12,7 +12,7 @@ extension GKState
 //TODO: Pascal case conversion (I: 🔆)
   public var node : Node { Node(withName: String(describing: type(of: self))) }
   public var nodeBody : NodeBody { NodeBody(withNode: node) }
-  public var nodeView : NodeView { NodeView(nodeBody: .constant(self.nodeBody)) }
+  public var nodeView : NodeView { NodeView(nodeBody: .constant(self.nodeBody), bodyMap: .constant(nil)) }
 
   func validNextStates(fromStates states : [GKState]) -> [GKState]
   {

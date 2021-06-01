@@ -26,6 +26,8 @@ struct ConnectionView : View, Identifiable
 //  public var connectionColor        : NSColor = #colorLiteral(red: 0.8694332242, green: 0.8694332242, blue: 0.8694332242, alpha: 1)
 
   var id : String { self.connectionBody.connection.id }
+  
+  @EnvironmentObject private var dragController : DragController
 
   @Binding var bodyMap : BodyMap
   @Binding var connectionBody : ConnectionBody
@@ -53,16 +55,20 @@ struct ConnectionView : View, Identifiable
     guard let inPortBody = bodyMap.idBodyDictionary[self.connectionBody.connection.inID] as? PortBody,
           let outPortBody = bodyMap.idBodyDictionary[self.connectionBody.connection.outID] as? PortBody
           else { return nil }
-    let inControl = CGPoint(x: outPortBody.frame.center.x, y: inPortBody.frame.center.y)
-    let outControl = CGPoint(x: inPortBody.frame.center.x, y: outPortBody.frame.center.y)
+    let inPoint = inPortBody.frame.center + dragController.dragOffset(forViewWithID: inPortBody.port.id)
+    let outPoint = outPortBody.frame.center + dragController.dragOffset(forViewWithID: outPortBody.port.id)
+    let inControl = CGPoint(x: outPoint.x, y: inPoint.y)
+//      + dragController.dragOffset(forViewWithID: inPortBody.port.id)
+    let outControl = CGPoint(x: inPoint.x, y: outPoint.y)
+//      + dragController.dragOffset(forViewWithID: outPortBody.port.id)
     let inClearancePoint = (try? self.getClearancePoint(forPortBody: inPortBody)) ?? inPortBody.frame.center
     let outClearancePoint = (try? self.getClearancePoint(forPortBody: outPortBody)) ?? outPortBody.frame.center
     let path = CGMutablePath()
-    path.move(to: inPortBody.frame.center)
+    path.move(to: inPoint)
     path.addDot()
     path.addLine(to: inClearancePoint)
     path.addCurve(to: outClearancePoint, control1: inControl, control2: outControl)
-    path.addLine(to: outPortBody.frame.center)
+    path.addLine(to: outPoint)
     path.addDot()
 
     return path
@@ -72,11 +78,13 @@ struct ConnectionView : View, Identifiable
   private func getClearancePoint(forPortBody portBody: PortBody) throws -> CGPoint
   {
     guard let nodeBody = try? bodyMap.body(forID: portBody.port.parentID) as? NodeBody
-      else { throw ConnectionPathError.inNodeNotFound }
-      let inEdge = nodeBody.frame.preferredEdge(forPoint: portBody.frame.origin)
-      var length = ConnectionView.arrowClearance
-      if inEdge.isMin { length.negate() }
-      return portBody.frame.center + (inEdge.isX ? CGPoint(x: length, y: 0.0) : CGPoint(x: 0.0, y: length))
+    else { throw ConnectionPathError.inNodeNotFound }
+    let inEdge = nodeBody.frame.preferredEdge(forPoint: portBody.frame.origin)
+    var length = ConnectionView.arrowClearance
+    if inEdge.isMin { length.negate() }
+    let clearencePoint = portBody.frame.center + dragController.dragOffset(forViewWithID: portBody.port.id)
+    return clearencePoint
+      + (inEdge.isX ? CGPoint(x: length, y: 0.0) : CGPoint(x: 0.0, y: length))
   }
 }
 

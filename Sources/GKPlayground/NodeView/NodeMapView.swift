@@ -15,13 +15,13 @@ public struct NodeMapView : View
     case port
     case connection
   }
-
+  
+  @StateObject var dragController = DragController()
+  
   // MARK: State
-//TODO: ObservedObject?
+  //TODO: ObservedObject?
   @State public var bodyMap : BodyMap
-
-  @GestureState private var isDragging : Bool = false
-
+  
   // MARK: -
   /// The distance on each side between the content of this view and its edges
   public var margins = EdgeInsets(top: 12.0, leading: 12.0, bottom: 12.0, trailing: 12.0)
@@ -29,25 +29,21 @@ public struct NodeMapView : View
   public var body : some View
   {
     let frame = self.frameContainingAllBodies()
-    ZStack {
+    ZStack
+    {
       ForEach(self.bodyMap.bodies, id:\.id)
       {
         body in
         self.view(forBody: body)
+          .offset(self.dragController.dragOffset(forViewWithID: body.id))
       }
     }
     .frame(width: frame.width, height: frame.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     .padding(self.margins)
     .coordinateSpace(name: "parentNodeMapView")
-    .background(self.isDragging ? Color.green : Color.clear)
-    .gesture(DragGesture()
-              .updating($isDragging)
-              {
-                gesture, state, transaction in
-                state = true
-              })
+    .environmentObject(self.dragController)
   }
-
+  
   //TODO: Move (to extension)?
   //TODO: Static?
   //TODO: Move to each conforming `Body` struct
@@ -64,7 +60,17 @@ public struct NodeMapView : View
             self.update(forID: nodeBody.id)
           }
       )
-      NodeView(nodeBody: nodeBodyBinding)
+      let bodyMapBinding : Binding<BodyMap?> = Binding(
+        get: { self.bodyMap },
+        set:
+          {
+            if let bodyMap = $0
+            {
+              self.bodyMap = bodyMap
+            }
+          }
+      )
+      NodeView(nodeBody: nodeBodyBinding, bodyMap: bodyMapBinding)
         .zIndex(ViewDepth.node.rawValue)
     }
     else if let portBody = body as? PortBody
@@ -90,10 +96,10 @@ public struct NodeMapView : View
         .zIndex(ViewDepth.connection.rawValue)
     }
   }
-
+  
   private func update(forID id: String)
   {
-//  TODO: Make sure nodes are updated before connections
+    //  TODO: Make sure nodes are updated before connections
     let relatedBodyKeys = self.bodyMap.idBodyDictionary.keys.filter
     { $0.contains(id) }
     let relatedBodies = self.bodyMap.idBodyDictionary.filter
@@ -109,32 +115,32 @@ public struct NodeMapView : View
               let position = nodeBody.positionForPort(withID: id)
         else { continue }
         portBody.frame.center = position
-//        for nextConnection in portBody.port.connectionIDs
-//        {
-//          guard let connectionBody = self.bodyMap.idBodyDictionary[nextConnection] as? ConnectionBody else { continue }
-//          connectionBody
-//          self.bodyMap.idBodyDictionary[nextConnection] =
-//            connectionBody
-//        }
-//      TODO: Replace direct dictionary call with `save` method
+        //        for nextConnection in portBody.port.connectionIDs
+        //        {
+        //          guard let connectionBody = self.bodyMap.idBodyDictionary[nextConnection] as? ConnectionBody else { continue }
+        //          connectionBody
+        //          self.bodyMap.idBodyDictionary[nextConnection] =
+        //            connectionBody
+        //        }
+        //      TODO: Replace direct dictionary call with `save` method
         self.bodyMap.idBodyDictionary[id] = portBody
-
+        
       }
-//      else if var connectionBody = body as? ConnectionBody
-//      {
-//        connectionBody.bodyMap
-//        self.bodyMap.idBodyDictionary[id] = connectionBody
-////        connectionBody.connection.inID
-////        if connectionBody.connection.inID == id
-////        {
-////
-//        }
-//        else if connectionBody.connection.outID == id
-//        guard portBody = self.bodyMap.idBodyDictionary[portBody.port.parentID]
-//      }
+      //      else if var connectionBody = body as? ConnectionBody
+      //      {
+      //        connectionBody.bodyMap
+      //        self.bodyMap.idBodyDictionary[id] = connectionBody
+      ////        connectionBody.connection.inID
+      ////        if connectionBody.connection.inID == id
+      ////        {
+      ////
+      //        }
+      //        else if connectionBody.connection.outID == id
+      //        guard portBody = self.bodyMap.idBodyDictionary[portBody.port.parentID]
+      //      }
     }
   }
-
+  
   private func frameContainingAllBodies() -> CGRect
   {
     return CGRect.union(self.bodyMap.idBodyDictionary.values.map { $0.frame })

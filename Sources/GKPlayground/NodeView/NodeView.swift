@@ -15,10 +15,11 @@ public struct NodeView : View, Identifiable
   @State var textColor : Color = .black
   @State var nodeColor : Color = .white
   @Binding var nodeBody : NodeBody
+  @Binding var bodyMap : BodyMap?
 
   public var id : String { self.nodeBody.node.id }
 
-  @GestureState private var offset : CGSize = .zero
+  @EnvironmentObject private var dragController : DragController
 
   @State private var isDragging = false
 
@@ -43,8 +44,7 @@ public struct NodeView : View, Identifiable
     .frame(width: nodeBody.frame.width, height: nodeBody.frame.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     .position(nodeBody.frame.center)
 //    .opacity(self.isDragging ? 0.5 : 1.0)
-//    .gesture(self.drag)
-    .offset(offset)
+    .gesture(self.drag)
     //  TOOD: Use ideal instead?
     //    .frame(minWidth: 24.0, idealWidth: 64.0, maxWidth: .infinity,
     //           minHeight: 48.0, idealHeight: 48.0, maxHeight: 48.0,
@@ -56,18 +56,21 @@ public struct NodeView : View, Identifiable
   private var drag : some Gesture
   {
     DragGesture(coordinateSpace: .named("parentNodeMapView"))
-      .updating($offset)
+      .onChanged
       {
-        gesture, state, transaction in
-        state = gesture.translation
-        self.isDragging = true
+        gesture in
+        self.dragController.offset = gesture.translation
+        if let relatedBodyKeys = self.bodyMap?.idBodyDictionary.keys.filter { $0.contains(id) }
+        {
+          self.dragController.setDragging(forIDs: relatedBodyKeys)
+        }
       }
       .onEnded
       {
         gesture in
         self.nodeBody.frame.origin += CGPoint(x: gesture.translation.width,
                                               y: gesture.translation.height)
-        self.isDragging = false
+        self.dragController.clearDragging()
       }
   }
 
@@ -80,8 +83,8 @@ public struct NodeView : View, Identifiable
 // MARK: Initializers
 extension NodeView
 {
-  public init(withNodeBody nodeBody: Binding<NodeBody>)
-  {
-    self.init(nodeBody: nodeBody)
-  }
+//  public init(withNodeBody nodeBody: Binding<NodeBody>)
+//  {
+//    self.init(nodeBody: nodeBody)
+//  }
 }
